@@ -70,7 +70,7 @@ AddEventHandler('qb-cityhall:server:ApplyJob', function(job)
     local Player = QBCore.Functions.GetPlayer(src)
     local JobInfo = QBCore.Shared.Jobs[job]
 
-    Player.Functions.SetJob(job)
+    Player.Functions.SetJob(job, 0)
 
     TriggerClientEvent('QBCore:Notify', src, 'Congratulations with your new job! ('..JobInfo.label..')')
 end)
