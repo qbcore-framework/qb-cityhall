@@ -9,8 +9,8 @@ City Services for QB-Core Framework :us:
 ## Screenshots
 ![City Services](https://imgur.com/czVg0Ze.png)
 ![Request Birth Certificate](https://imgur.com/l6KSzPf.png)
-![Request Driver License](https://imgur.com/undefined.png)
-![Apply For a Job](https://imgur.com/undefined.png)
+![Request Driver License](https://imgur.com/pP24GEw.png)
+![Apply For a Job](https://imgur.com/dXKKsn0.png)
 
 ## Features
 - Ability to request birth certificate when lost
