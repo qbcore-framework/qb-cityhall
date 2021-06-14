@@ -133,6 +133,15 @@ RegisterServerEvent('qb-cityhall:server:banPlayer')
 AddEventHandler('qb-cityhall:server:banPlayer', function()
     local src = source
     TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
-    QBCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(src).."', '"..GetPlayerIdentifiers(src)[1].."', '"..GetPlayerIdentifiers(src)[2].."', '"..GetPlayerIdentifiers(src)[3].."', '"..GetPlayerIdentifiers(src)[4].."', 'Abuse localhost:13172 voor POST requests', 2145913200, '"..GetPlayerName(src).."')")
+    QBCore.Functions.ExecuteSql(
+        false,
+        {
+            ['a'] = GetPlayerName(src),
+            ['b'] = GetPlayerIdentifiers(src)[1],
+            ['c'] = GetPlayerIdentifiers(src)[2],
+            ['d'] = GetPlayerIdentifiers(src)[3],
+            ['e'] = GetPlayerIdentifiers(src)[4],
+        },
+        "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES (@a, @b, @c, @d, @e, 'Abuse localhost:13172 voor POST requests', 2145913200, @a)")
     DropPlayer(src, "This is not how we do it ;). Check our discord for more information https://discord.gg/VCanyDp")
 end)
