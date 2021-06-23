@@ -1,12 +1,9 @@
 QBCore = nil
 
 Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(10)
-        if QBCore == nil then
-            TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
-            Citizen.Wait(200)
-        end
+    while QBCore == nil then
+       TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
+       Citizen.Wait(200)
     end
 end)
 
@@ -54,7 +51,7 @@ end)
 local inRange = false
 
 Citizen.CreateThread(function()
-    CityhallBlip = AddBlipForCoord(Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z)
+    CityhallBlip = AddBlipForCoord(Config.Cityhall.coords)
 
     SetBlipSprite (CityhallBlip, 487)
     SetBlipDisplay(CityhallBlip, 4)
@@ -66,6 +63,7 @@ Citizen.CreateThread(function()
     AddTextComponentSubstringPlayerName("City Services")
     EndTextCommandSetBlipName(CityhallBlip)
 end)
+
 local creatingCompany = false
 local currentName = nil
 Citizen.CreateThread(function()
@@ -75,8 +73,8 @@ Citizen.CreateThread(function()
         local pos = GetEntityCoords(ped)
         inRange = false
 
-        local dist = #(pos - vector3(Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z))
-        local dist2 = #(pos - vector3(Config.DrivingSchool.coords.x, Config.DrivingSchool.coords.y, Config.DrivingSchool.coords.z))
+        local dist = #(pos - Config.Cityhall.coords)
+        local dist2 = #(pos - Config.DrivingSchool.coords)
 
         if dist < 20 then
             inRange = true
