@@ -133,6 +133,15 @@ RegisterServerEvent('qb-cityhall:server:banPlayer')
 AddEventHandler('qb-cityhall:server:banPlayer', function()
     local src = source
     TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
-    QBCore.Functions.ExecuteSql(false, "INSERT INTO `bans` (`name`, `steam`, `license`, `discord`,`ip`, `reason`, `expire`, `bannedby`) VALUES ('"..GetPlayerName(src).."', '"..GetPlayerIdentifiers(src)[1].."', '"..GetPlayerIdentifiers(src)[2].."', '"..GetPlayerIdentifiers(src)[3].."', '"..GetPlayerIdentifiers(src)[4].."', 'Abuse localhost:13172 voor POST requests', 2145913200, '"..GetPlayerName(src).."')")
-    DropPlayer(src, "This is not how we do it ;). Check our discord for more information https://discord.gg/VCanyDp")
+    exports.ghmattimysql:execute('INSERT INTO bans (name, steam, license, discord, ip, reason, expire. bannedby) VALUES (@name, @steam, @license, @discord, @ip, @reason, @expire, @bannedby)', {
+        ['@name'] = GetPlayerName(src),
+        ['@steam'] = GetPlayerIdentifiers(src)[1],
+        ['@license'] = GetPlayerIdentifiers(src)[2],
+        ['@discord'] = GetPlayerIdentifiers(src)[3],
+        ['@ip'] = GetPlayerIdentifiers(src)[4],
+        ['@reason'] = 'Abuse localhost:13172 For POST Requests',
+        ['@expire'] = 2145913200,
+        ['@bannedby'] = GetPlayerName(src)
+    })
+    DropPlayer(src, 'Attempting To Exploit')
 end)
