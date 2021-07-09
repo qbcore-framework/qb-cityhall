@@ -130,12 +130,11 @@ RegisterServerEvent('qb-cityhall:server:banPlayer')
 AddEventHandler('qb-cityhall:server:banPlayer', function()
     local src = source
     TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
-    exports.ghmattimysql:execute('INSERT INTO bans (name, steam, license, discord, ip, reason, expire, bannedby) VALUES (@name, @steam, @license, @discord, @ip, @reason, @expire, @bannedby)', {
+    exports.ghmattimysql:execute('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (@name, @license, @discord, @ip, @reason, @expire, @bannedby)', {
         ['@name'] = GetPlayerName(src),
-        ['@steam'] = GetPlayerIdentifiers(src)[1],
-        ['@license'] = GetPlayerIdentifiers(src)[2],
-        ['@discord'] = GetPlayerIdentifiers(src)[3],
-        ['@ip'] = GetPlayerIdentifiers(src)[4],
+        ['@license'] = QBCore.Functions.GetIdentifier(src, 'license'),
+        ['@discord'] = QBCore.Functions.GetIdentifier(src, 'discord'),
+        ['@ip'] = QBCore.Functions.GetIdentifier(src, 'ip'),
         ['@reason'] = 'Abuse localhost:13172 For POST Requests',
         ['@expire'] = 2145913200,
         ['@bannedby'] = GetPlayerName(src)
