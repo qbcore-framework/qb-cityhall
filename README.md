@@ -29,20 +29,35 @@ ensure qb-cityhall
 ```
 
 ## Configuration
+Inside config.lua
 ```
 Config = Config or {}
 
-Config.Cityhall = { -- Location for City Sevices
-    coords = {x = -552.0, y = -191.68, z = 38.22},
+Config.CompanyPrice = 25000 -- NOT USED
+
+Config.Cityhall = {         -- Location for Cithall
+    coords = vector3(-265.0, -963.6, 31.2)
 }
 
-Config.DriverTest = { -- Not on use
-    coords = {x = -549.86, y = -191.75, z = 38.22},
+Config.DrivingSchool = {    -- Location for requesting DMV Lessons
+    coords = vector3(240.42, -1379.78, 33.74)
 }
 
-Config.DrivingSchool = { -- Not on use
-    coords = {x = 232.5, y = 368.7, z = 105.94},
+Config.WeaponSchool = {     --Location for requesting shooting lessons
+    coords = vector3(14.11, -1106.26, 29.8)
+}
+```
+
+To add driving and shooting instructors go to server/main.lua and edit the following: 
+```
+local DrivingSchools = {
+    "CITiZENID1",
+    "CITIZENID1"
 }
 
-Config.CompanyPrice = 25000 -- Not on use
+local WeaponSchools = {
+    "CITiZENID1",
+    "CITIZENID2"
+}
+
 ```
