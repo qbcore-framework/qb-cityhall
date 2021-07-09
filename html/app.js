@@ -57,41 +57,21 @@ $('.cityhall-option-block').click(function(e){
 
     if (blockPage == "identity") {
         $(".identity-page-blocks").html("");
-        $(".identity-page-blocks").html('<div class="identity-page-block" data-type="id_card" onmouseover="'+hoverDescription("id_card")+'" onmouseout="'+hoverDescription("id_card")+'"><p>Birth Certificate</p></div>');
+        $(".identity-page-blocks").html('<div class="identity-page-block" data-type="id_card"><p>Birth Certificate</p></div>');
 
         $.post('https://qb-cityhall/requestLicenses', JSON.stringify({}), function(licenses){
             $.each(licenses, function(i, license){
-                var elem = '<div class="identity-page-block" data-type="'+license.idType+'" onmouseover="hoverDescription("'+license.idType+'")" onmouseout="hoverDescription("'+license.idType+'")"><p>'+license.label+'</p></div>';
+                var elem = '<div class="identity-page-block" data-type="'+license.idType+'"><p>'+license.label+'</p></div>';
                 $(".identity-page-blocks").append(elem);
             });
         });
     }
 });
 
-hoverDescription = function(type) {
-    if (!mouseOver) {
-        if (type == "id_card") {
-            $(".hover-description").fadeIn(10);
-            $(".hover-description").html('<p>You are required to carry an ID card on you while driving.</p>');
-        } else if (type == "driver_license") {
-            $(".hover-description").fadeIn(10);
-            $(".hover-description").html('<p>If you are driving a vehicle, you are required to present a driving license <br> at the time it is requested</p>');
-        }
-    } else {
-        if(selectedIdentity == null) {
-            $(".hover-description").fadeOut(10);
-            $(".hover-description").html('');
-        }
-    }
-
-    mouseOver = !mouseOver;
-}
-
 $(document).on("click", ".identity-page-block", function(e){
     e.preventDefault();
 
     var idType = $(this).data('type');
-    console.log(idType)
 
     selectedIdentityType = idType;
 
@@ -99,13 +79,8 @@ $(document).on("click", ".identity-page-block", function(e){
         $(this).addClass("identity-selected");
         $(".hover-description").fadeIn(10);
         selectedIdentity = this;
-        if (idType == "id_card") {
-            $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Click Here to Buy a Birth Certificate for $50</p>")
-        } else {
-            $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Click Here to Buy a Driver License for $50</p>")
-        }
+        $(".request-identity-button").fadeIn(100);
+        $(".request-identity-button").html("<p>BUY for $50</p>")
     } else if (selectedIdentity == this) {
         $(this).removeClass("identity-selected");
         selectedIdentity = null;
@@ -114,11 +89,6 @@ $(document).on("click", ".identity-page-block", function(e){
         $(selectedIdentity).removeClass("identity-selected");
         $(this).addClass("identity-selected");
         selectedIdentity = this;
-        if($(this).data('type') == "id_card") {
-            $(".request-identity-button").html("<p>You paid $50 for a Birth Certificate</p>")
-        } else {
-            $(".request-identity-button").html("<p>You paid $50 for a Driver License</p>")
-        }
     }
 });
 

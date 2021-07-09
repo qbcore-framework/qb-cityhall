@@ -1,5 +1,7 @@
 local inCityhallPage = false
 local qbCityhall = {}
+local dmvrequest = false
+local weaponrequest = false
 
 qbCityhall.Open = function()
     SendNUIMessage({
@@ -64,6 +66,7 @@ Citizen.CreateThread(function()
 
         local dist = #(pos - Config.Cityhall.coords)
         local dist2 = #(pos - Config.DrivingSchool.coords)
+        local dist3 = #(pos - Config.WeaponSchool.coords)
 
         if dist < 20 then
             inRange = true
@@ -72,6 +75,38 @@ Citizen.CreateThread(function()
                 qbCityhall.DrawText3Ds(Config.Cityhall.coords, '~g~E~w~ - City Services Menu')
                 if IsControlJustPressed(0, 38) then
                     qbCityhall.Open()
+                end
+            end
+        end
+
+        if dist2 < 20 then
+            inRange = true
+            DrawMarker(2, Config.DrivingSchool.coords.x, Config.DrivingSchool.coords.y, Config.DrivingSchool.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
+            if #(pos - vector3(Config.DrivingSchool.coords.x, Config.DrivingSchool.coords.y, Config.DrivingSchool.coords.z)) < 1.5 then
+                qbCityhall.DrawText3Ds(Config.DrivingSchool.coords, '~g~E~w~ - Request driving lessons')
+                if IsControlJustPressed(0, 38) then
+                    if not dmvrequest then
+                        dmvrequest = true
+                        TriggerServerEvent('qb-cityhall:server:sendDriverTest')                       
+                    else
+                        QBCore.Functions.Notify("You have allready requested lessons!", 'error', 5000)
+                    end
+                end
+            end
+        end
+
+        if dist3 < 20 then
+            inRange = true
+            DrawMarker(2, Config.WeaponSchool.coords.x, Config.WeaponSchool.coords.y, Config.WeaponSchool.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
+            if #(pos - vector3(Config.WeaponSchool.coords.x, Config.WeaponSchool.coords.y, Config.WeaponSchool.coords.z)) < 1.5 then
+                qbCityhall.DrawText3Ds(Config.WeaponSchool.coords, '~g~E~w~ - Request shooting lessons')
+                if IsControlJustPressed(0, 38) then
+                    if not weaponrequest then
+                        weaponrequest = true
+                        TriggerServerEvent('qb-cityhall:server:sendWeaponTest')
+                    else
+                        QBCore.Functions.Notify("You have allready requested lessons!", 'error', 5000)
+                    end
                 end
             end
         end
@@ -100,7 +135,25 @@ AddEventHandler('qb-cityhall:client:sendDriverEmail', function(charinfo)
         TriggerServerEvent('qb-phone:server:sendNewMail', {
             sender = "Township",
             subject = "Driving lessons request",
-            message = "Hello " .. gender .. " " .. charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons<br />If you are willing to teach, please contact us:<br />Naam: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
+            message = "Hello " .. gender .. " " .. charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons<br />If you are willing to teach, please contact us:<br />Name: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
+            button = {}
+        })
+    end)
+end)
+
+
+RegisterNetEvent('qb-cityhall:client:sendWeaponEmail')
+AddEventHandler('qb-cityhall:client:sendWeaponEmail', function(charinfo)
+    SetTimeout(math.random(2500, 4000), function()
+        local gender = "Mr"
+        if QBCore.Functions.GetPlayerData().charinfo.gender == 1 then
+            gender = "Mrs"
+        end
+        local charinfo = QBCore.Functions.GetPlayerData().charinfo
+        TriggerServerEvent('qb-phone:server:sendNewMail', {
+            sender = "Township",
+            subject = "Driving lessons request",
+            message = "Hello " .. gender .. " " .. charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take shooting lessons.<br />If you are willing to teach, please contact us:<br />Name: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
             button = {}
         })
     end)
@@ -114,6 +167,10 @@ local idTypes = {
     ["driver_license"] = {
         label = "Drivers License",
         item = "driver_license"
+    },
+    ["weaponlicense"] = {
+        label = "Weapons License",
+        item = "weaponlicense"
     }
 }
 
@@ -138,7 +195,13 @@ RegisterNUICallback('requestLicenses', function(data, cb)
             local licenseType = nil
             local label = nil
 
-            if type == "driver" then licenseType = "driver_license" label = "Drivers Licences" end
+            if type == "driver" then 
+                licenseType = "driver_license" 
+                label = "Drivers Licences"
+            elseif type == "weapon" then
+                licenseType = "weaponlicense" 
+                label = "Weapons Licences"
+            end
 
             table.insert(availableLicenses, {
                 idType = licenseType,

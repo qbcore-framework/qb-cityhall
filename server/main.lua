@@ -1,5 +1,19 @@
+[[-- Exemple
+local DrivingSchools = {
+    "Instructor1_CITZENID",
+    "Instructor2_CITIZENID"
+}--]]
 local DrivingSchools = {
     
+}
+
+[[-- Exemple
+local WeaponSchools = {
+    "Instructor1_CITZENID",
+    "Instructor2_CITIZENID"
+}--]]
+local WeaponSchools = {
+
 }
 
 RegisterServerEvent('qb-cityhall:server:requestId')
@@ -9,6 +23,7 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
 
     local licenses = {
         ["driver"] = true,
+        ["weapon"] = false,
         ["business"] = false
     }
 
@@ -25,6 +40,11 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
         info.type = "A1-A2-A | AM-B | C1-C-CE"
+    elseif identityData.item == "weaponlicense" then
+        info.firstname = Player.PlayerData.charinfo.firstname
+        info.lastname = Player.PlayerData.charinfo.lastname
+        info.birthdate = Player.PlayerData.charinfo.birthdate
+        info.type = "Firearm's license"
     end
 
     Player.Functions.AddItem(identityData.item, 1, nil, info)
@@ -49,16 +69,48 @@ AddEventHandler('qb-cityhall:server:sendDriverTest', function()
         if SchoolPlayer ~= nil then 
             TriggerClientEvent("qb-cityhall:client:sendDriverEmail", SchoolPlayer.PlayerData.source, Player.PlayerData.charinfo)
         else
-            local mailData = {
-                sender = "Township",
-                subject = "Driving lessons request",
-                message = "Hello,<br /><br />We have just received a message that someone wants to take driving lessons.<br />If you are willing to teach, please contact us:<br />Naam: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telephone number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Kind regards,<br />City of Los Santos",
-                button = {}
-            }
-            TriggerEvent("qb-phone:server:sendNewEventMail", v, mailData)
+            local OfflinePlayerData = GetOfflinePlayerDataByCitizenId(v)
+            if OfflinePlayerData ~= nil then
+                local mailData = {
+                    sender = "Township",
+                    subject = "Driving lessons request",
+                    message = "Hello " .. gender .. " " .. OfflinePlayerData.charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons.<br />If you are willing to teach, please contact us:<br />Name: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telephone number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Kind regards,<br />City of Los Santos",
+                    button = {}
+                }
+                TriggerEvent("qb-phone:server:sendNewEventMail", v, mailData)
+            end
+        end
+    end 
+    TriggerClientEvent('QBCore:Notify', src, 'An email has been sent to driving schools, and you will be contacted automatically', "success", 5000)
+end)
+
+RegisterServerEvent('qb-cityhall:server:sendWeaponTest')
+AddEventHandler('qb-cityhall:server:sendWeaponTest', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    for k, v in pairs(WeaponSchools) do 
+        local SchoolPlayer = QBCore.Functions.GetPlayerByCitizenId(v)
+        if SchoolPlayer ~= nil then 
+            TriggerClientEvent("qb-cityhall:client:sendWeaponEmail", SchoolPlayer.PlayerData.source, Player.PlayerData.charinfo)
+        else
+            local OfflinePlayerData = GetOfflinePlayerDataByCitizenId(v)
+            print(OfflinePlayerData)
+            if OfflinePlayerData ~= nil then
+                local gender = "Mr"
+                if OfflinePlayerData.charinfo.gender == 1 then
+                    gender = "Mrs"
+                end
+                local mailData = {
+                    sender = "Township",
+                    subject = "Shooting lessons request",
+                    message = "Hello " .. gender .. " " .. OfflinePlayerData.charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take shooting lessons.<br />If you are willing to teach, please contact us:<br />Name: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telephone number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Kind regards,<br />City of Los Santos",
+                    button = {}
+                }
+                TriggerEvent("qb-phone:server:sendNewEventMail", v, mailData)
+            end
         end
     end
-    TriggerClientEvent('QBCore:Notify', src, 'An email has been sent to driving schools, and you will be contacted automatically', "success", 5000)
+    TriggerClientEvent('QBCore:Notify', src, 'An email has been sent to weapon school instructors, and you will be contacted automatically', "success", 5000)
 end)
 
 RegisterServerEvent('qb-cityhall:server:ApplyJob')
@@ -73,25 +125,53 @@ AddEventHandler('qb-cityhall:server:ApplyJob', function(job)
 end)
 
 
--- QBCore.Commands.Add("drivinglicense", "Give a driver's license to someone", {{"id", "ID of a person"}}, true, function(source, args)
---     local Player = QBCore.Functions.GetPlayer(source)
+QBCore.Commands.Add("drivinglicense", "Give a driver's license to someone", {{"id", "ID of a person"}}, true, function(source, args)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if IsWhitelistedSchool(Player.PlayerData.citizenid) then
+        local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
+        if SearchedPlayer ~= nil then
+            local driverLicense = SearchedPlayer.PlayerData.metadata["licences"]["driver"]
+            if not driverLicense then
+                local licenses = {
+                    ["driver"] = true,
+                    ["weapon"] = SearchedPlayer.PlayerData.metadata["licences"]["weapon"],
+                    ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"]
+                }
+                SearchedPlayer.Functions.SetMetaData("licences", licenses)
+                TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, "You have passed! Pick up your driver's license at the town hall", "success", 5000)
+            else
+                TriggerClientEvent('QBCore:Notify', src, "Can't give driver's license ..", "error")
+            end
+        end
+    else
+        TriggerClientEvent('QBCore:Notify', src, "You are not an DMV examiner!", "error")
+    end
+end)
 
---         local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
---         if SearchedPlayer ~= nil then
---             local driverLicense = SearchedPlayer.PlayerData.metadata["licences"]["driver"]
---             if not driverLicense then
---                 local licenses = {
---                     ["driver"] = true,
---                     ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"]
---                 }
---                 SearchedPlayer.Functions.SetMetaData("licences", licenses)
---                 TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, "You have passed! Pick up your driver's license at the town hall", "success", 5000)
---             else
---                 TriggerClientEvent('QBCore:Notify', src, "Can't give driver's license ..", "error")
---             end
---         end
-
--- end)
+QBCore.Commands.Add("weaponlicense", "Give a weapon's license to someone", {{"id", "ID of a person"}}, true, function(source, args)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if IsWhitelistedWeaponSchool(Player.PlayerData.citizenid) then
+        local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
+        if SearchedPlayer ~= nil then
+            local weaponLicense = SearchedPlayer.PlayerData.metadata["licences"]["weapon"]
+            if not weaponLicense then
+                local licenses = {
+                    ["driver"] = SearchedPlayer.PlayerData.metadata["licences"]["driver"],
+                    ["weapon"] = true,
+                    ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"]
+                }
+                SearchedPlayer.Functions.SetMetaData("licences", licenses)
+                TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, "You have passed! Pick up your driver's license at the town hall", "success", 5000)
+            else
+                TriggerClientEvent('QBCore:Notify', src, "Can't give driver's license ..", "error")
+            end
+        end
+    else
+        TriggerClientEvent('QBCore:Notify', src, "You are not an DMV examiner!", "error")
+    end
+end)
 
 function GiveStarterItems(source)
     local src = source
@@ -124,6 +204,35 @@ function IsWhitelistedSchool(citizenid)
         end
     end
     return retval
+end
+
+function IsWhitelistedWeaponSchool(citizenid)
+    local retval = false
+    for k, v in pairs(WeaponSchools) do 
+        if v == citizenid then
+            retval = true
+        end
+    end
+    return retval
+end
+
+function GetOfflinePlayerDataByCitizenId(citizenid)
+    local PlayerData
+    if citizenid then
+        QBCore.Functions.ExecuteSql(true, "SELECT * FROM `players` WHERE `citizenid` = '"..citizenid.."'", function(result)
+            PlayerData = result[1]
+            if PlayerData ~= nil then
+                PlayerData.money = json.decode(PlayerData.money)
+                PlayerData.job = json.decode(PlayerData.job)
+                PlayerData.position = json.decode(PlayerData.position)
+                PlayerData.metadata = json.decode(PlayerData.metadata)
+                PlayerData.charinfo = json.decode(PlayerData.charinfo)
+            end
+        end)
+    else
+        return false
+    end
+    return PlayerData
 end
 
 RegisterServerEvent('qb-cityhall:server:banPlayer')
