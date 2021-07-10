@@ -152,7 +152,7 @@ AddEventHandler('qb-cityhall:client:sendWeaponEmail', function(charinfo)
         local charinfo = QBCore.Functions.GetPlayerData().charinfo
         TriggerServerEvent('qb-phone:server:sendNewMail', {
             sender = "Township",
-            subject = "Driving lessons request",
+            subject = "Shooting lessons request",
             message = "Hello " .. gender .. " " .. charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take shooting lessons.<br />If you are willing to teach, please contact us:<br />Name: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
             button = {}
         })
