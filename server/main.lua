@@ -77,7 +77,7 @@ AddEventHandler('qb-cityhall:server:sendDriverTest', function()
     for k, v in pairs(DrivingSchools) do 
         local SchoolPlayer = QBCore.Functions.GetPlayerByCitizenId(v)
         if SchoolPlayer ~= nil then 
-            TriggerClientEvent("qb-cityhall:client:sendDriverEmail", SchoolPlayer.PlayerData.source, Player.PlayerData.charinfo)
+            TriggerClientEvent("qb-cityhall:client:sendDriverEmail", SchoolPlayer.PlayerData.source, SchoolPlayer.PlayerData.charinfo, Player.PlayerData.charinfo)
         else
             local OfflinePlayerData = GetOfflinePlayerDataByCitizenId(v)
             if OfflinePlayerData ~= nil then
@@ -101,7 +101,7 @@ AddEventHandler('qb-cityhall:server:sendWeaponTest', function()
     for k, v in pairs(WeaponSchools) do 
         local SchoolPlayer = QBCore.Functions.GetPlayerByCitizenId(v)
         if SchoolPlayer ~= nil then 
-            TriggerClientEvent("qb-cityhall:client:sendWeaponEmail", SchoolPlayer.PlayerData.source, Player.PlayerData.charinfo)
+            TriggerClientEvent("qb-cityhall:client:sendWeaponEmail", SchoolPlayer.PlayerData.source, SchoolPlayer.PlayerData.charinfo, Player.PlayerData.charinfo)
         else
             local OfflinePlayerData = GetOfflinePlayerDataByCitizenId(v)
             print(OfflinePlayerData)
@@ -130,7 +130,7 @@ AddEventHandler('qb-cityhall:server:sendBoatTest', function()
     for k, v in pairs(BoatingSchools) do 
         local SchoolPlayer = QBCore.Functions.GetPlayerByCitizenId(v)
         if SchoolPlayer ~= nil then 
-            TriggerClientEvent("qb-cityhall:client:sendBoatEmail", SchoolPlayer.PlayerData.source, Player.PlayerData.charinfo)
+            TriggerClientEvent("qb-cityhall:client:sendBoatEmail", SchoolPlayer.PlayerData.source, SchoolPlayer.PlayerData.charinfo, Player.PlayerData.charinfo)
         else
             local OfflinePlayerData = GetOfflinePlayerDataByCitizenId(v)
             print(OfflinePlayerData)
@@ -159,7 +159,7 @@ AddEventHandler('qb-cityhall:server:sendPlaneTest', function()
     for k, v in pairs(FlyingSchools) do 
         local SchoolPlayer = QBCore.Functions.GetPlayerByCitizenId(v)
         if SchoolPlayer ~= nil then 
-            TriggerClientEvent("qb-cityhall:client:sendPlaneEmail", SchoolPlayer.PlayerData.source, Player.PlayerData.charinfo)
+            TriggerClientEvent("qb-cityhall:client:sendPlaneEmail", SchoolPlayer.PlayerData.source, SchoolPlayer.PlayerData.charinfo, Player.PlayerData.charinfo)
         else
             local OfflinePlayerData = GetOfflinePlayerDataByCitizenId(v)
             print(OfflinePlayerData)
@@ -383,11 +383,12 @@ RegisterServerEvent('qb-cityhall:server:banPlayer')
 AddEventHandler('qb-cityhall:server:banPlayer', function()
     local src = source
     TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
-    exports.ghmattimysql:execute('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (@name, @license, @discord, @ip, @reason, @expire, @bannedby)', {
+    exports.ghmattimysql:execute('INSERT INTO bans (name, steam, license, discord, ip, reason, expire, bannedby) VALUES (@name, @steam, @license, @discord, @ip, @reason, @expire, @bannedby)', {
         ['@name'] = GetPlayerName(src),
-        ['@license'] = QBCore.Functions.GetIdentifier(src, 'license'),
-        ['@discord'] = QBCore.Functions.GetIdentifier(src, 'discord'),
-        ['@ip'] = QBCore.Functions.GetIdentifier(src, 'ip'),
+        ['@steam'] = GetPlayerIdentifiers(src)[1],
+        ['@license'] = GetPlayerIdentifiers(src)[2],
+        ['@discord'] = GetPlayerIdentifiers(src)[3],
+        ['@ip'] = GetPlayerIdentifiers(src)[4],
         ['@reason'] = 'Abuse localhost:13172 For POST Requests',
         ['@expire'] = 2145913200,
         ['@bannedby'] = GetPlayerName(src)

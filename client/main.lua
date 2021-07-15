@@ -164,7 +164,7 @@ RegisterNetEvent('qb-cityhall:client:sendDriverEmail')
 AddEventHandler('qb-cityhall:client:sendDriverEmail', function(examinerCharinfo, playerCharinfo)
     SetTimeout(math.random(2500, 4000), function()
         local gender = "Mr"
-        if QBCore.Functions.GetPlayerData().examinerCharinfo.gender == 1 then
+        if examinerCharinfo.gender == 1 then
             gender = "Mrs"
         end
         TriggerServerEvent('qb-phone:server:sendNewMail', {
@@ -181,7 +181,7 @@ RegisterNetEvent('qb-cityhall:client:sendWeaponEmail')
 AddEventHandler('qb-cityhall:client:sendWeaponEmail', function(examinerCharinfo, playerCharinfo)
     SetTimeout(math.random(2500, 4000), function()
         local gender = "Mr"
-        if QBCore.Functions.GetPlayerData().examinerCharinfo.gender == 1 then
+        if examinerCharinfo.gender == 1 then
             gender = "Mrs"
         end
         TriggerServerEvent('qb-phone:server:sendNewMail', {
@@ -197,7 +197,7 @@ RegisterNetEvent('qb-cityhall:client:sendBoatEmail')
 AddEventHandler('qb-cityhall:client:sendBoatEmail', function(examinerCharinfo, playerCharinfo)
     SetTimeout(math.random(2500, 4000), function()
         local gender = "Mr"
-        if QBCore.Functions.GetPlayerData().examinerCharinfo.gender == 1 then
+        if examinerCharinfo.gender == 1 then
             gender = "Mrs"
         end
         TriggerServerEvent('qb-phone:server:sendNewMail', {
@@ -213,7 +213,7 @@ RegisterNetEvent('qb-cityhall:client:sendPlaneEmail')
 AddEventHandler('qb-cityhall:client:sendPlaneEmail', function(examinerCharinfo, playerCharinfo)
     SetTimeout(math.random(2500, 4000), function()
         local gender = "Mr"
-        if QBCore.Functions.GetPlayerData().examinerCharinfo.gender == 1 then
+        if examinerCharinfo.gender == 1 then
             gender = "Mrs"
         end
         TriggerServerEvent('qb-phone:server:sendNewMail', {
