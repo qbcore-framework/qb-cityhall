@@ -13,3 +13,11 @@ Config.DrivingSchool = {
 Config.WeaponSchool = {
     coords = vector3(14.11, -1106.26, 29.8)
 }
+
+Config.BoatingSchool = {
+    coords = vector3(-712.18, -1299.04, 5.1)
+}
+
+Config.FlyingSchool = {
+    coords = vector3(-1154.42, -2715.46, 19.89)
+}

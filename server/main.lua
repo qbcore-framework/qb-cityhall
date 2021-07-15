@@ -1,19 +1,17 @@
-[[-- Exemple
 local DrivingSchools = {
-    "Instructor1_CITZENID",
-    "Instructor2_CITIZENID"
-}--]]
-local DrivingSchools = {
-    
+    "AUB86840"
 }
 
-[[-- Exemple
 local WeaponSchools = {
-    "Instructor1_CITZENID",
-    "Instructor2_CITIZENID"
-}--]]
-local WeaponSchools = {
+    "AUB86840"
+}
 
+local BoatingSchools = {
+    "AUB86840"
+}
+
+local FlyingSchools = {
+    "AUB86840"
 }
 
 RegisterServerEvent('qb-cityhall:server:requestId')
@@ -24,6 +22,8 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
     local licenses = {
         ["driver"] = true,
         ["weapon"] = false,
+        ["boat"] = false,
+        ["plane"] = false,
         ["business"] = false
     }
 
@@ -45,6 +45,16 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
         info.type = "Firearm's license"
+    elseif identityData.item == "boat_license" then
+        info.firstname = Player.PlayerData.charinfo.firstname
+        info.lastname = Player.PlayerData.charinfo.lastname
+        info.birthdate = Player.PlayerData.charinfo.birthdate
+        info.type = "Watercraft license"
+    elseif identityData.item == "plane_license" then
+        info.firstname = Player.PlayerData.charinfo.firstname
+        info.lastname = Player.PlayerData.charinfo.lastname
+        info.birthdate = Player.PlayerData.charinfo.birthdate
+        info.type = "Aircraft license"
     end
 
     Player.Functions.AddItem(identityData.item, 1, nil, info)
@@ -74,7 +84,7 @@ AddEventHandler('qb-cityhall:server:sendDriverTest', function()
                 local mailData = {
                     sender = "Township",
                     subject = "Driving lessons request",
-                    message = "Hello " .. gender .. " " .. OfflinePlayerData.charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons.<br />If you are willing to teach, please contact us:<br />Name: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telephone number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Kind regards,<br />City of Los Santos",
+                    message = "Hello " .. gender .. " " .. OfflinePlayerData.charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons.<br />If you are willing to teach, please contact us:<br />Naam: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telephone number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Kind regards,<br />City of Los Santos",
                     button = {}
                 }
                 TriggerEvent("qb-phone:server:sendNewEventMail", v, mailData)
@@ -103,7 +113,7 @@ AddEventHandler('qb-cityhall:server:sendWeaponTest', function()
                 local mailData = {
                     sender = "Township",
                     subject = "Shooting lessons request",
-                    message = "Hello " .. gender .. " " .. OfflinePlayerData.charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take shooting lessons.<br />If you are willing to teach, please contact us:<br />Name: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telephone number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Kind regards,<br />City of Los Santos",
+                    message = "Hello " .. gender .. " " .. OfflinePlayerData.charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take shooting lessons.<br />If you are willing to teach, please contact us:<br />Naam: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telephone number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Kind regards,<br />City of Los Santos",
                     button = {}
                 }
                 TriggerEvent("qb-phone:server:sendNewEventMail", v, mailData)
@@ -111,6 +121,64 @@ AddEventHandler('qb-cityhall:server:sendWeaponTest', function()
         end
     end
     TriggerClientEvent('QBCore:Notify', src, 'An email has been sent to weapon school instructors, and you will be contacted automatically', "success", 5000)
+end)
+
+RegisterServerEvent('qb-cityhall:server:sendBoatTest')
+AddEventHandler('qb-cityhall:server:sendBoatTest', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    for k, v in pairs(BoatingSchools) do 
+        local SchoolPlayer = QBCore.Functions.GetPlayerByCitizenId(v)
+        if SchoolPlayer ~= nil then 
+            TriggerClientEvent("qb-cityhall:client:sendBoatEmail", SchoolPlayer.PlayerData.source, Player.PlayerData.charinfo)
+        else
+            local OfflinePlayerData = GetOfflinePlayerDataByCitizenId(v)
+            print(OfflinePlayerData)
+            if OfflinePlayerData ~= nil then
+                local gender = "Mr"
+                if OfflinePlayerData.charinfo.gender == 1 then
+                    gender = "Mrs"
+                end
+                local mailData = {
+                    sender = "Township",
+                    subject = "Boating lessons request",
+                    message = "Hello " .. gender .. " " .. OfflinePlayerData.charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take boating lessons.<br />If you are willing to teach, please contact us:<br />Naam: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telephone number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Kind regards,<br />City of Los Santos",
+                    button = {}
+                }
+                TriggerEvent("qb-phone:server:sendNewEventMail", v, mailData)
+            end
+        end
+    end
+    TriggerClientEvent('QBCore:Notify', src, 'An email has been sent to boating school instructors, and you will be contacted automatically', "success", 5000)
+end)
+
+RegisterServerEvent('qb-cityhall:server:sendPlaneTest')
+AddEventHandler('qb-cityhall:server:sendPlaneTest', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    for k, v in pairs(FlyingSchools) do 
+        local SchoolPlayer = QBCore.Functions.GetPlayerByCitizenId(v)
+        if SchoolPlayer ~= nil then 
+            TriggerClientEvent("qb-cityhall:client:sendPlaneEmail", SchoolPlayer.PlayerData.source, Player.PlayerData.charinfo)
+        else
+            local OfflinePlayerData = GetOfflinePlayerDataByCitizenId(v)
+            print(OfflinePlayerData)
+            if OfflinePlayerData ~= nil then
+                local gender = "Mr"
+                if OfflinePlayerData.charinfo.gender == 1 then
+                    gender = "Mrs"
+                end
+                local mailData = {
+                    sender = "Township",
+                    subject = "Flying lessons request",
+                    message = "Hello " .. gender .. " " .. OfflinePlayerData.charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take flying lessons.<br />If you are willing to teach, please contact us:<br />Naam: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Telephone number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br/><br/>Kind regards,<br />City of Los Santos",
+                    button = {}
+                }
+                TriggerEvent("qb-phone:server:sendNewEventMail", v, mailData)
+            end
+        end
+    end
+    TriggerClientEvent('QBCore:Notify', src, 'An email has been sent to flying school instructors, and you will be contacted automatically', "success", 5000)
 end)
 
 RegisterServerEvent('qb-cityhall:server:ApplyJob')
@@ -136,6 +204,8 @@ QBCore.Commands.Add("drivinglicense", "Give a driver's license to someone", {{"i
                 local licenses = {
                     ["driver"] = true,
                     ["weapon"] = SearchedPlayer.PlayerData.metadata["licences"]["weapon"],
+                    ["boat"] = SearchedPlayer.PlayerData.metadata["licences"]["boat"],
+                    ["plane"] = SearchedPlayer.PlayerData.metadata["licences"]["plane"],
                     ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"]
                 }
                 SearchedPlayer.Functions.SetMetaData("licences", licenses)
@@ -160,6 +230,8 @@ QBCore.Commands.Add("weaponlicense", "Give a weapon's license to someone", {{"id
                 local licenses = {
                     ["driver"] = SearchedPlayer.PlayerData.metadata["licences"]["driver"],
                     ["weapon"] = true,
+                    ["boat"] = SearchedPlayer.PlayerData.metadata["licences"]["boat"],
+                    ["plane"] = SearchedPlayer.PlayerData.metadata["licences"]["plane"],
                     ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"]
                 }
                 SearchedPlayer.Functions.SetMetaData("licences", licenses)
@@ -169,7 +241,59 @@ QBCore.Commands.Add("weaponlicense", "Give a weapon's license to someone", {{"id
             end
         end
     else
-        TriggerClientEvent('QBCore:Notify', src, "You are not an DMV examiner!", "error")
+        TriggerClientEvent('QBCore:Notify', src, "You are not an Weapons examiner!", "error")
+    end
+end)
+
+QBCore.Commands.Add("watercraftlicense", "Give a watercraft license to someone", {{"id", "ID of a person"}}, true, function(source, args)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if IsWhitelistedBoatingSchool(Player.PlayerData.citizenid) then
+        local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
+        if SearchedPlayer ~= nil then
+            local boatLicense = SearchedPlayer.PlayerData.metadata["licences"]["boat"]
+            if not boatLicense then
+                local licenses = {
+                    ["driver"] = SearchedPlayer.PlayerData.metadata["licences"]["driver"],
+                    ["weapon"] = SearchedPlayer.PlayerData.metadata["licences"]["weapon"],
+                    ["boat"] = true,
+                    ["plane"] = SearchedPlayer.PlayerData.metadata["licences"]["plane"],
+                    ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"]
+                }
+                SearchedPlayer.Functions.SetMetaData("licences", licenses)
+                TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, "You have passed! Pick up your watercraft license at the town hall", "success", 5000)
+            else
+                TriggerClientEvent('QBCore:Notify', src, "Can't give a watercraft license ..", "error")
+            end
+        end
+    else
+        TriggerClientEvent('QBCore:Notify', src, "You are not a Watercraft School examiner!", "error")
+    end
+end)
+
+QBCore.Commands.Add("aircraftlicense", "Give a aircraft license to someone", {{"id", "ID of a person"}}, true, function(source, args)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if IsWhitelistedFlyingSchool(Player.PlayerData.citizenid) then
+        local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
+        if SearchedPlayer ~= nil then
+            local planeLicense = SearchedPlayer.PlayerData.metadata["licences"]["plane"]
+            if not planeLicense then
+                local licenses = {
+                    ["driver"] = SearchedPlayer.PlayerData.metadata["licences"]["driver"],
+                    ["weapon"] = SearchedPlayer.PlayerData.metadata["licences"]["weapon"],
+                    ["boat"] = SearchedPlayer.PlayerData.metadata["licences"]["plane"],
+                    ["plane"] = true,
+                    ["business"] = SearchedPlayer.PlayerData.metadata["licences"]["business"]
+                }
+                SearchedPlayer.Functions.SetMetaData("licences", licenses)
+                TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, "You have passed! Pick up your aircraft license at the town hall", "success", 5000)
+            else
+                TriggerClientEvent('QBCore:Notify', src, "Can't give aircraft license ..", "error")
+            end
+        end
+    else
+        TriggerClientEvent('QBCore:Notify', src, "You are not a Flying School examiner!", "error")
     end
 end)
 
@@ -209,6 +333,26 @@ end
 function IsWhitelistedWeaponSchool(citizenid)
     local retval = false
     for k, v in pairs(WeaponSchools) do 
+        if v == citizenid then
+            retval = true
+        end
+    end
+    return retval
+end
+
+function IsWhitelistedBoatingSchool(citizenid)
+    local retval = false
+    for k, v in pairs(BoatingSchools) do 
+        if v == citizenid then
+            retval = true
+        end
+    end
+    return retval
+end
+
+function IsWhitelistedFlyingSchool(citizenid)
+    local retval = false
+    for k, v in pairs(FlyingSchools) do 
         if v == citizenid then
             retval = true
         end

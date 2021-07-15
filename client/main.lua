@@ -2,6 +2,8 @@ local inCityhallPage = false
 local qbCityhall = {}
 local dmvrequest = false
 local weaponrequest = false
+local boatingrequest = false
+local planerequest = false
 
 qbCityhall.Open = function()
     SendNUIMessage({
@@ -67,6 +69,8 @@ Citizen.CreateThread(function()
         local dist = #(pos - Config.Cityhall.coords)
         local dist2 = #(pos - Config.DrivingSchool.coords)
         local dist3 = #(pos - Config.WeaponSchool.coords)
+        local dist4 = #(pos - Config.BoatingSchool.coords)
+        local dist5 = #(pos - Config.FlyingSchool.coords)
 
         if dist < 20 then
             inRange = true
@@ -111,6 +115,38 @@ Citizen.CreateThread(function()
             end
         end
 
+        if dist4 < 20 then
+            inRange = true
+            DrawMarker(2, Config.BoatingSchool.coords.x, Config.BoatingSchool.coords.y, Config.BoatingSchool.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
+            if #(pos - vector3(Config.BoatingSchool.coords.x, Config.BoatingSchool.coords.y, Config.BoatingSchool.coords.z)) < 1.5 then
+                qbCityhall.DrawText3Ds(Config.BoatingSchool.coords, '~g~E~w~ - Request boating lessons')
+                if IsControlJustPressed(0, 38) then
+                    if not boatingrequest then
+                        boatingrequest = true
+                        TriggerServerEvent('qb-cityhall:server:sendBoatTest')
+                    else
+                        QBCore.Functions.Notify("You have allready requested lessons!", 'error', 5000)
+                    end
+                end
+            end
+        end
+
+        if dist5 < 20 then
+            inRange = true
+            DrawMarker(2, Config.FlyingSchool.coords.x, Config.FlyingSchool.coords.y, Config.FlyingSchool.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
+            if #(pos - vector3(Config.FlyingSchool.coords.x, Config.FlyingSchool.coords.y, Config.FlyingSchool.coords.z)) < 1.5 then
+                qbCityhall.DrawText3Ds(Config.FlyingSchool.coords, '~g~E~w~ - Request flying lessons')
+                if IsControlJustPressed(0, 38) then
+                    if not planerequest then
+                        planerequest = true
+                        TriggerServerEvent('qb-cityhall:server:sendPlaneTest')
+                    else
+                        QBCore.Functions.Notify("You have allready requested lessons!", 'error', 5000)
+                    end
+                end
+            end
+        end
+
         if not inRange then
             Citizen.Wait(1000)
         end
@@ -125,17 +161,16 @@ AddEventHandler('qb-cityhall:client:getIds', function()
 end)
 
 RegisterNetEvent('qb-cityhall:client:sendDriverEmail')
-AddEventHandler('qb-cityhall:client:sendDriverEmail', function(charinfo)
+AddEventHandler('qb-cityhall:client:sendDriverEmail', function(examinerCharinfo, playerCharinfo)
     SetTimeout(math.random(2500, 4000), function()
         local gender = "Mr"
-        if QBCore.Functions.GetPlayerData().charinfo.gender == 1 then
+        if QBCore.Functions.GetPlayerData().examinerCharinfo.gender == 1 then
             gender = "Mrs"
         end
-        local charinfo = QBCore.Functions.GetPlayerData().charinfo
         TriggerServerEvent('qb-phone:server:sendNewMail', {
             sender = "Township",
             subject = "Driving lessons request",
-            message = "Hello " .. gender .. " " .. charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons<br />If you are willing to teach, please contact us:<br />Name: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
+            message = "Hello " .. gender .. " " .. examinerCharinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons<br />If you are willing to teach, please contact us:<br />Name: <strong>".. playerCharinfo.firstname .. " " .. playerCharinfo.lastname .. "</strong><br />Phone Number: <strong>"..playerCharinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
             button = {}
         })
     end)
@@ -143,17 +178,48 @@ end)
 
 
 RegisterNetEvent('qb-cityhall:client:sendWeaponEmail')
-AddEventHandler('qb-cityhall:client:sendWeaponEmail', function(charinfo)
+AddEventHandler('qb-cityhall:client:sendWeaponEmail', function(examinerCharinfo, playerCharinfo)
     SetTimeout(math.random(2500, 4000), function()
         local gender = "Mr"
-        if QBCore.Functions.GetPlayerData().charinfo.gender == 1 then
+        if QBCore.Functions.GetPlayerData().examinerCharinfo.gender == 1 then
             gender = "Mrs"
         end
-        local charinfo = QBCore.Functions.GetPlayerData().charinfo
         TriggerServerEvent('qb-phone:server:sendNewMail', {
             sender = "Township",
-            subject = "Driving lessons request",
-            message = "Hello " .. gender .. " " .. charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take shooting lessons.<br />If you are willing to teach, please contact us:<br />Name: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
+            subject = "Shooting lessons request",
+            message = "Hello " .. gender .. " " .. examinerCharinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take shooting lessons.<br />If you are willing to teach, please contact us:<br />Name: <strong>".. playerCharinfo.firstname .. " " .. playerCharinfo.lastname .. "</strong><br />Phone Number: <strong>"..playerCharinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
+            button = {}
+        })
+    end)
+end)
+
+RegisterNetEvent('qb-cityhall:client:sendBoatEmail')
+AddEventHandler('qb-cityhall:client:sendBoatEmail', function(examinerCharinfo, playerCharinfo)
+    SetTimeout(math.random(2500, 4000), function()
+        local gender = "Mr"
+        if QBCore.Functions.GetPlayerData().examinerCharinfo.gender == 1 then
+            gender = "Mrs"
+        end
+        TriggerServerEvent('qb-phone:server:sendNewMail', {
+            sender = "Township",
+            subject = "Boating lessons request",
+            message = "Hello " .. gender .. " " .. examinerCharinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take boating lessons.<br />If you are willing to teach, please contact us:<br />Name: <strong>".. playerCharinfo.firstname .. " " .. playerCharinfo.lastname .. "</strong><br />Phone Number: <strong>"..playerCharinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
+            button = {}
+        })
+    end)
+end)
+
+RegisterNetEvent('qb-cityhall:client:sendPlaneEmail')
+AddEventHandler('qb-cityhall:client:sendPlaneEmail', function(examinerCharinfo, playerCharinfo)
+    SetTimeout(math.random(2500, 4000), function()
+        local gender = "Mr"
+        if QBCore.Functions.GetPlayerData().examinerCharinfo.gender == 1 then
+            gender = "Mrs"
+        end
+        TriggerServerEvent('qb-phone:server:sendNewMail', {
+            sender = "Township",
+            subject = "Flying lessons request",
+            message = "Hello " .. gender .. " " .. examinerCharinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take flying lessons.<br />If you are willing to teach, please contact us:<br />Name: <strong>".. playerCharinfo.firstname .. " " .. playerCharinfo.lastname .. "</strong><br />Phone Number: <strong>"..playerCharinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
             button = {}
         })
     end)
@@ -171,6 +237,14 @@ local idTypes = {
     ["weaponlicense"] = {
         label = "Weapons License",
         item = "weaponlicense"
+    },
+    ["boat_license"] = {
+        label = "Watercraft License",
+        item = "boat_license"
+    },
+    ["plane_license"] = {
+        label = "Aircraft License",
+        item = "plane_license"
     }
 }
 
@@ -201,6 +275,12 @@ RegisterNUICallback('requestLicenses', function(data, cb)
             elseif type == "weapon" then
                 licenseType = "weaponlicense" 
                 label = "Weapons Licences"
+            elseif type == "boat" then
+                licenseType = "boat_license" 
+                label = "Watercraft Licences"
+            elseif type == "plane" then
+                licenseType = "plane_license" 
+                label = "Aircraft Licences"
             end
 
             table.insert(availableLicenses, {

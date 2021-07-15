@@ -46,6 +46,14 @@ Config.DrivingSchool = {    -- Location for requesting DMV Lessons
 Config.WeaponSchool = {     --Location for requesting shooting lessons
     coords = vector3(14.11, -1106.26, 29.8)
 }
+
+Config.BoatingSchool = {
+    coords = vector3(-712.18, -1299.04, 5.1)
+}
+
+Config.FlyingSchool = {
+    coords = vector3(-1154.42, -2715.46, 19.89)
+}
 ```
 
 To add driving and shooting instructors go to server/main.lua and edit the following: 
@@ -60,4 +68,13 @@ local WeaponSchools = {
     "CITIZENID2"
 }
 
+local BoatingSchools = {
+    "CITiZENID1",
+    "CITIZENID2"
+}
+
+local FlyingSchools = {
+    "CITiZENID1",
+    "CITIZENID2"
+}
 ```
