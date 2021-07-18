@@ -1,16 +1,16 @@
 # qb-cityhall
-City Services for QB-Core Framework :us:
+Updated vers
+
 
 ## Dependencies
-- [qb-core](https://github.com/qbcore-framework/qb-core)
-- [qb-phone](https://github.com/qbcore-framework/qb-phone) - For E-Mail
-- [qb-logs](https://github.com/qbcore-framework/qb-logs) - Log System
+For everything to work properly update the following
+- [qb-phone](https://github.com/Jakats/qb-phone) - Email Notifications
+- [qb-inventory](https://github.com/Jakats/qb-inventory) - Added new licenses as items
+- [qb-policejob](https://github.com/Jakats/qb-policejob) - Added seizing for new licenses
 
-## Screenshots
-![City Services](https://imgur.com/czVg0Ze.png)
-![Request Birth Certificate](https://imgur.com/l6KSzPf.png)
-![Request Driver License](https://imgur.com/pP24GEw.png)
-![Apply For a Job](https://imgur.com/dXKKsn0.png)
+Extra:
+- [qb-shops](https://github.com/Jakats/qb-shops) - Require weapon license to purchase weapons
+- [qb-logs](https://github.com/qbcore-framework/qb-logs) - Log System
 
 ## Features
 - Ability to request birth certificate when lost
@@ -26,6 +26,11 @@ ensure qb-core
 ensure qb-phone
 ensure qb-logs
 ensure qb-cityhall
+```
+- Add new licenses to qb-core shared.lua
+```
+    ["boat_license"] 				 = {["name"] = "boat_license",				    ["label"] = "Watercraft License",			["weight"] = 0,			["type"] = "item",		["image"] = "boat_license.png",		["unique"] = true,		["useable"] = true,		["shouldClose"] = true,		["combinable"] = nil,	["description"] = "Watercraft License"},
+	["plane_license"] 				 = {["name"] = "plane_license",				    ["label"] = "Aircraft License",			["weight"] = 0,			["type"] = "item",		["image"] = "weapon_license.png",		["unique"] = true,		["useable"] = true,		["shouldClose"] = true,		["combinable"] = nil,	["description"] = "Aircraft License"},
 ```
 
 ## Configuration
