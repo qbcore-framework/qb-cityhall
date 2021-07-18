@@ -1,6 +1,10 @@
 # qb-cityhall
-Updated vers
+Updated version of qb-cityhall with extra license options + license examiners.
 
+## New Features
+- Ability to get driving lessons when drivers license has been seized
+- New weapon, watercraft and aircraft licenses
+- Examiners for weapon, watercraft and aircraft licenses
 
 ## Dependencies
 For everything to work properly update the following
@@ -12,10 +16,7 @@ Extra:
 - [qb-shops](https://github.com/Jakats/qb-shops) - Require weapon license to purchase weapons
 - [qb-logs](https://github.com/qbcore-framework/qb-logs) - Log System
 
-## Features
-- Ability to request birth certificate when lost
-- Ability to request driver license when lost
-- Ability to apply to government jobs
+
 
 ## Installation
 ### Manual
