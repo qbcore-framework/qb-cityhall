@@ -61,15 +61,37 @@ AddEventHandler('qb-cityhall:server:sendDriverTest', function()
     TriggerClientEvent('QBCore:Notify', src, 'An email has been sent to driving schools, and you will be contacted automatically', "success", 5000)
 end)
 
+
+local AvailableJobs = {
+    "trucker",
+    "taxi",
+    "tow",
+    "reporter",
+    "garbage",
+}
+
+function IsAvailableJob(job)
+    local retval = false
+    for k, v in pairs(AvailableJobs) do
+        if v == job then
+            retval = true
+        end
+    end
+    return retval
+end
+
 RegisterServerEvent('qb-cityhall:server:ApplyJob')
 AddEventHandler('qb-cityhall:server:ApplyJob', function(job)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local JobInfo = QBCore.Shared.Jobs[job]
 
-    Player.Functions.SetJob(job, 0)
-
-    TriggerClientEvent('QBCore:Notify', src, 'Congratulations with your new job! ('..JobInfo.label..')')
+    if IsAvailableJob(job) then 
+        Player.Functions.SetJob(job, 0)
+        TriggerClientEvent('QBCore:Notify', src, 'Congratulations with your new job! ('..JobInfo.label..')')
+    else
+        BanPlayer(src, job)
+    end
 end)
 
 
@@ -126,18 +148,18 @@ function IsWhitelistedSchool(citizenid)
     return retval
 end
 
-RegisterServerEvent('qb-cityhall:server:banPlayer')
-AddEventHandler('qb-cityhall:server:banPlayer', function()
+
+function BanPlayer(source, job)
     local src = source
-    TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
+    TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for exploiting")
     exports.ghmattimysql:execute('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (@name, @license, @discord, @ip, @reason, @expire, @bannedby)', {
         ['@name'] = GetPlayerName(src),
         ['@license'] = QBCore.Functions.GetIdentifier(src, 'license'),
         ['@discord'] = QBCore.Functions.GetIdentifier(src, 'discord'),
         ['@ip'] = QBCore.Functions.GetIdentifier(src, 'ip'),
-        ['@reason'] = 'Abuse localhost:13172 For POST Requests',
+        ['@reason'] = 'Tried to give a unavailable job using CityHall (Job: ' ..job .. ')',
         ['@expire'] = 2145913200,
         ['@bannedby'] = GetPlayerName(src)
     })
     DropPlayer(src, 'Attempting To Exploit')
-end)
+end
