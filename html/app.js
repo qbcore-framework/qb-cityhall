@@ -10,7 +10,7 @@ qbCityhall.Open = function(data) {
 }
 
 qbCityhall.Close = function() {
-    $(".container").fadeOut(150, function(){
+    $(".container").fadeOut(150, function() {
         qbCityhall.ResetPages();
     });
     $.post('https://qb-cityhall/close');
@@ -25,9 +25,9 @@ qbCityhall.ResetPages = function() {
     $(".cityhall-job-page").hide();
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
     window.addEventListener('message', function(event) {
-        switch(event.data.action) {
+        switch (event.data.action) {
             case "open":
                 qbCityhall.Open(event.data);
                 break;
@@ -39,29 +39,29 @@ $(document).ready(function(){
 });
 
 $(document).on('keydown', function() {
-    switch(event.keyCode) {
+    switch (event.keyCode) {
         case 27: // ESC
             qbCityhall.Close();
             break;
     }
 });
 
-$('.cityhall-option-block').click(function(e){
+$('.cityhall-option-block').click(function(e) {
     e.preventDefault();
 
     var blockPage = $(this).data('page');
 
-    $(".cityhall-option-blocks").fadeOut(100, function(){
-        $(".cityhall-"+blockPage+"-page").fadeIn(100);
+    $(".cityhall-option-blocks").fadeOut(100, function() {
+        $(".cityhall-" + blockPage + "-page").fadeIn(100);
     });
 
     if (blockPage == "identity") {
         $(".identity-page-blocks").html("");
-        $(".identity-page-blocks").html('<div class="identity-page-block" data-type="id_card" onmouseover="'+hoverDescription("id_card")+'" onmouseout="'+hoverDescription("id_card")+'"><p>Birth Certificate</p></div>');
+        $(".identity-page-blocks").html('<div class="identity-page-block" data-type="id_card" onmouseover="' + hoverDescription("id_card") + '" onmouseout="' + hoverDescription("id_card") + '"><p>Birth Certificate</p></div>');
 
-        $.post('https://qb-cityhall/requestLicenses', JSON.stringify({}), function(licenses){
-            $.each(licenses, function(i, license){
-                var elem = '<div class="identity-page-block" data-type="'+license.idType+'" onmouseover="hoverDescription("'+license.idType+'")" onmouseout="hoverDescription("'+license.idType+'")"><p>'+license.label+'</p></div>';
+        $.post('https://qb-cityhall/requestLicenses', JSON.stringify({}), function(licenses) {
+            $.each(licenses, function(i, license) {
+                var elem = '<div class="identity-page-block" data-type="' + license.idType + '" onmouseover="hoverDescription("' + license.idType + '")" onmouseout="hoverDescription("' + license.idType + '")"><p>' + license.label + '</p></div>';
                 $(".identity-page-blocks").append(elem);
             });
         });
@@ -78,7 +78,7 @@ hoverDescription = function(type) {
             $(".hover-description").html('<p>If you are driving a vehicle, you are required to present a driving license <br> at the time it is requested</p>');
         }
     } else {
-        if(selectedIdentity == null) {
+        if (selectedIdentity == null) {
             $(".hover-description").fadeOut(10);
             $(".hover-description").html('');
         }
@@ -87,7 +87,7 @@ hoverDescription = function(type) {
     mouseOver = !mouseOver;
 }
 
-$(document).on("click", ".identity-page-block", function(e){
+$(document).on("click", ".identity-page-block", function(e) {
     e.preventDefault();
 
     var idType = $(this).data('type');
@@ -114,15 +114,15 @@ $(document).on("click", ".identity-page-block", function(e){
         $(selectedIdentity).removeClass("identity-selected");
         $(this).addClass("identity-selected");
         selectedIdentity = this;
-        if($(this).data('type') == "id_card") {
-            $(".request-identity-button").html("<p>You paid $50 for a Birth Certificate</p>")
+        if ($(this).data('type') == "id_card") {
+            $(".request-identity-button").html("<p>Pay $50 for a Birth Certificate</p>")
         } else {
-            $(".request-identity-button").html("<p>You paid $50 for a Driver License</p>")
+            $(".request-identity-button").html("<p>Pay $50 for a Driver License</p>")
         }
     }
 });
 
-$(".request-identity-button").click(function(e){
+$(".request-identity-button").click(function(e) {
     e.preventDefault();
 
     $.post('https://qb-cityhall/requestId', JSON.stringify({
@@ -132,7 +132,7 @@ $(".request-identity-button").click(function(e){
     qbCityhall.ResetPages();
 });
 
-$(document).on("click", ".job-page-block", function(e){
+$(document).on("click", ".job-page-block", function(e) {
     e.preventDefault();
 
     var job = $(this).data('job');
@@ -154,7 +154,7 @@ $(document).on("click", ".job-page-block", function(e){
     }
 });
 
-$(document).on('click', '.apply-job-button', function(e){
+$(document).on('click', '.apply-job-button', function(e) {
     e.preventDefault();
 
     $.post('https://qb-cityhall/applyJob', JSON.stringify({
@@ -164,7 +164,7 @@ $(document).on('click', '.apply-job-button', function(e){
     qbCityhall.ResetPages();
 });
 
-$(document).on('click', '.back-to-main', function(e){
+$(document).on('click', '.back-to-main', function(e) {
     e.preventDefault();
 
     $(selectedJob).removeClass("job-selected");
