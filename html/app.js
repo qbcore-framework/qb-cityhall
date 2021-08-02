@@ -106,7 +106,7 @@ $(document).on("click", ".identity-page-block", function(e){
             $(".request-identity-button").html("<p>Click Here to Buy a Driver License for $50</p>")
         } else if (idType == "weaponlicense") {
             $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Click Here to Buy a Weapon License for $50</p>")
+            $(".request-identity-button").html("<p>Click Here to Buy a Firearms License for $50</p>")
         }
     } else if (selectedIdentity == this) {
         $(this).removeClass("identity-selected");
@@ -121,7 +121,7 @@ $(document).on("click", ".identity-page-block", function(e){
         } else if (idType == "driver_license") {
             $(".request-identity-button").html("<p>You paid $50 for a Driver License</p>")
         } else if (idType == "weaponlicense") {
-            $(".request-identity-button").html("<p>You paid $50 for a Weapon License</p>")
+            $(".request-identity-button").html("<p>You paid $50 for a Firearms License</p>")
         }
     }
 });
