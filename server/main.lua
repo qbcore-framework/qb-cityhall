@@ -6,12 +6,6 @@ RegisterServerEvent('qb-cityhall:server:requestId')
 AddEventHandler('qb-cityhall:server:requestId', function(identityData)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-
-    local licenses = {
-        ["driver"] = true,
-        ["business"] = false
-    }
-
     local info = {}
     if identityData.item == "id_card" then
         info.citizenid = Player.PlayerData.citizenid
