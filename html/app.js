@@ -57,35 +57,16 @@ $('.cityhall-option-block').click(function(e){
 
     if (blockPage == "identity") {
         $(".identity-page-blocks").html("");
-        $(".identity-page-blocks").html('<div class="identity-page-block" data-type="id_card" onmouseover="'+hoverDescription("id_card")+'" onmouseout="'+hoverDescription("id_card")+'"><p>Birth Certificate</p></div>');
+        $(".identity-page-blocks").html('<div class="identity-page-block" data-type="id_card"><p>Birth Certificate</p></div>');
 
         $.post('https://qb-cityhall/requestLicenses', JSON.stringify({}), function(licenses){
             $.each(licenses, function(i, license){
-                var elem = '<div class="identity-page-block" data-type="'+license.idType+'" onmouseover="hoverDescription("'+license.idType+'")" onmouseout="hoverDescription("'+license.idType+'")"><p>'+license.label+'</p></div>';
+                var elem = '<div class="identity-page-block" data-type="'+license.idType+'"><p>'+license.label+'</p></div>';
                 $(".identity-page-blocks").append(elem);
             });
         });
     }
 });
-
-hoverDescription = function(type) {
-    if (!mouseOver) {
-        if (type == "id_card") {
-            $(".hover-description").fadeIn(10);
-            $(".hover-description").html('<p>You are required to carry an ID card on you while driving.</p>');
-        } else if (type == "driver_license") {
-            $(".hover-description").fadeIn(10);
-            $(".hover-description").html('<p>If you are driving a vehicle, you are required to present a driving license <br> at the time it is requested</p>');
-        }
-    } else {
-        if(selectedIdentity == null) {
-            $(".hover-description").fadeOut(10);
-            $(".hover-description").html('');
-        }
-    }
-
-    mouseOver = !mouseOver;
-}
 
 $(document).on("click", ".identity-page-block", function(e){
     e.preventDefault();
