@@ -19,6 +19,10 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
         info.type = "A1-A2-A | AM-B | C1-C-CE"
+    elseif identityData.item == "weaponlicense" then
+        info.firstname = Player.PlayerData.charinfo.firstname
+        info.lastname = Player.PlayerData.charinfo.lastname
+        info.birthdate = Player.PlayerData.charinfo.birthdate
     end
 
     Player.Functions.AddItem(identityData.item, 1, nil, info)
