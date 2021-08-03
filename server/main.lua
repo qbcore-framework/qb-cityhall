@@ -6,12 +6,6 @@ RegisterServerEvent('qb-cityhall:server:requestId')
 AddEventHandler('qb-cityhall:server:requestId', function(identityData)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-
-    local licenses = {
-        ["driver"] = true,
-        ["business"] = false
-    }
-
     local info = {}
     if identityData.item == "id_card" then
         info.citizenid = Player.PlayerData.citizenid
@@ -25,6 +19,10 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
         info.type = "A1-A2-A | AM-B | C1-C-CE"
+    elseif identityData.item == "weaponlicense" then
+        info.firstname = Player.PlayerData.charinfo.firstname
+        info.lastname = Player.PlayerData.charinfo.lastname
+        info.birthdate = Player.PlayerData.charinfo.birthdate
     end
 
     Player.Functions.AddItem(identityData.item, 1, nil, info)
