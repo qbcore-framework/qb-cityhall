@@ -1,7 +1,3 @@
-local DrivingSchools = {
-    
-}
-
 RegisterServerEvent('qb-cityhall:server:requestId')
 AddEventHandler('qb-cityhall:server:requestId', function(identityData)
     local src = source
