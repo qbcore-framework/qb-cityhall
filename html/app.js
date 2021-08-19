@@ -81,13 +81,13 @@ $(document).on("click", ".identity-page-block", function(e){
         selectedIdentity = this;
         if (idType == "id_card") {
             $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Click Here to Buy a Birth Certificate for $50</p>")
+            $(".request-identity-button").html("<p>Buy $50</p>")
         } else if (idType == "driver_license") {
             $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Click Here to Buy a Driver License for $50</p>")
+            $(".request-identity-button").html("<p>Buy $50</p>")
         } else if (idType == "weaponlicense") {
             $(".request-identity-button").fadeIn(100);
-            $(".request-identity-button").html("<p>Click Here to Buy a Firearms License for $50</p>")
+            $(".request-identity-button").html("<p>Buy $50</p>")
         }
     } else if (selectedIdentity == this) {
         $(this).removeClass("identity-selected");
@@ -98,11 +98,11 @@ $(document).on("click", ".identity-page-block", function(e){
         $(this).addClass("identity-selected");
         selectedIdentity = this;
         if (idType == "id_card") {
-            $(".request-identity-button").html("<p>You paid $50 for a Birth Certificate</p>")
+            $(".request-identity-button").html("<p>Bought</p>")
         } else if (idType == "driver_license") {
-            $(".request-identity-button").html("<p>You paid $50 for a Driver License</p>")
+            $(".request-identity-button").html("<p>Bought</p>")
         } else if (idType == "weaponlicense") {
-            $(".request-identity-button").html("<p>You paid $50 for a Firearms License</p>")
+            $(".request-identity-button").html("<p>Bought</p>")
         }
     }
 });

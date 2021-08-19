@@ -17,7 +17,5 @@ client_script 'client/main.lua'
 files {
     'html/*.js',
     'html/*.html',
-    'html/*.css',
-    'html/img/*.png',
-    'html/img/*.jpg'
+    'html/*.css'
 }
