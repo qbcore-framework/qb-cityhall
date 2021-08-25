@@ -18,7 +18,7 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
         info.firstname = Player.PlayerData.charinfo.firstname
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
-        info.type = "A1-A2-A | AM-B | C1-C-CE"
+        info.type = "Class C Driver License"
     elseif identityData.item == "weaponlicense" then
         info.firstname = Player.PlayerData.charinfo.firstname
         info.lastname = Player.PlayerData.charinfo.lastname
@@ -108,7 +108,7 @@ function GiveStarterItems(source)
             info.firstname = Player.PlayerData.charinfo.firstname
             info.lastname = Player.PlayerData.charinfo.lastname
             info.birthdate = Player.PlayerData.charinfo.birthdate
-            info.type = "A1-A2-A | AM-B | C1-C-CE"
+            info.type = "Class C Driver License"
         end
         Player.Functions.AddItem(v.item, 1, false, info)
     end
