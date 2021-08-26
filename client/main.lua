@@ -17,19 +17,19 @@ qbCityhall.Close = function()
     inCityhallPage = false
 end
 
-qbCityhall.DrawText3Ds = function(coords, text)
+DrawText3Ds = function(coords, text)
 	SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(true)
-    AddTextComponentString(text)
-    SetDrawOrigin(coords.x, coords.y, coords.z, 0)
-    DrawText(0.0, 0.0)
-    local factor = (string.len(text)) / 370
-    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
-    ClearDrawOrigin()
+	SetTextFont(4)
+	SetTextProportional(1)
+	SetTextColour(255, 255, 255, 215)
+	SetTextEntry("STRING")
+	SetTextCentre(true)
+	AddTextComponentString(text)
+	SetDrawOrigin(coords.x, coords.y, coords.z, 0)
+	DrawText(0.0, 0.0)
+	local factor = (string.len(text)) / 370
+	DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
+	ClearDrawOrigin()
 end
 
 RegisterNUICallback('close', function()
@@ -69,7 +69,7 @@ Citizen.CreateThread(function()
             inRange = true
             DrawMarker(2, Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
             if #(pos - vector3(Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z)) < 1.5 then
-                qbCityhall.DrawText3Ds(Config.Cityhall.coords, '~g~E~w~ - City Services Menu')
+                DrawText3Ds(Config.Cityhall.coords, '~g~E~w~ - City Services Menu')
                 if IsControlJustPressed(0, 38) then
                     qbCityhall.Open()
                 end
