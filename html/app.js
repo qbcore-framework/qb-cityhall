@@ -57,7 +57,7 @@ $('.cityhall-option-block').click(function(e){
 
     if (blockPage == "identity") {
         $(".identity-page-blocks").html("");
-        $(".identity-page-blocks").html('<div class="identity-page-block" data-type="id_card"><p>Birth Certificate</p></div>');
+        $(".identity-page-blocks").html('<div class="identity-page-block" data-type="id_card"><p>ID Card</p></div>');
 
         $.post('https://qb-cityhall/requestLicenses', JSON.stringify({}), function(licenses){
             $.each(licenses, function(i, license){
@@ -98,11 +98,11 @@ $(document).on("click", ".identity-page-block", function(e){
         $(this).addClass("identity-selected");
         selectedIdentity = this;
         if (idType == "id_card") {
-            $(".request-identity-button").html("<p>Bought</p>")
+            $(".request-identity-button").html("<p>Buy</p>")
         } else if (idType == "driver_license") {
-            $(".request-identity-button").html("<p>Bought</p>")
+            $(".request-identity-button").html("<p>Buy</p>")
         } else if (idType == "weaponlicense") {
-            $(".request-identity-button").html("<p>Bought</p>")
+            $(".request-identity-button").html("<p>Buy</p>")
         }
     }
 });

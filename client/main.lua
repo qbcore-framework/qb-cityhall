@@ -108,7 +108,7 @@ end)
 
 local idTypes = {
     ["id_card"] = {
-        label = "Birth Certificate",
+        label = "ID Card",
         item = "id_card"
     },
     ["driver_license"] = {
