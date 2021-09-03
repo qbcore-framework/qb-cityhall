@@ -7,10 +7,10 @@ City Services for QB-Core Framework :us:
 - [qb-logs](https://github.com/qbcore-framework/qb-logs) - Log System
 
 ## Screenshots
-![City Services](https://imgur.com/czVg0Ze.png)
-![Request Birth Certificate](https://imgur.com/l6KSzPf.png)
-![Request Driver License](https://imgur.com/pP24GEw.png)
-![Apply For a Job](https://imgur.com/dXKKsn0.png)
+![City Services](https://i.imgur.com/KAFkAVO.png)
+![Request Birth Certificate](https://i.imgur.com/GJp5m49.png)
+![Request Driver License](https://i.imgur.com/xn6udGI.png)
+![Apply For a Job](https://i.imgur.com/gl4SNjX.png)
 
 ## Features
 - Ability to request birth certificate when lost
@@ -32,17 +32,17 @@ ensure qb-cityhall
 ```
 Config = Config or {}
 
-Config.Cityhall = { -- Location for City Sevices
-    coords = {x = -552.0, y = -191.68, z = 38.22},
+Config.CompanyPrice = 25000
+
+Config.Cityhall = {
+    coords = vector3(-265.0, -963.6, 31.2)
 }
 
-Config.DriverTest = { -- Not on use
-    coords = {x = -549.86, y = -191.75, z = 38.22},
+Config.DriverTest = {
+    coords = vector3(-549.86, -191.75, 38.22)
 }
 
-Config.DrivingSchool = { -- Not on use
-    coords = {x = 232.5, y = 368.7, z = 105.94},
+Config.DrivingSchool = {
+    coords = vector3(232.5, 368.7, 105.94)
 }
-
-Config.CompanyPrice = 25000 -- Not on use
 ```
