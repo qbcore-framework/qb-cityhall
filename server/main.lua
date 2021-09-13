@@ -128,14 +128,14 @@ RegisterServerEvent('qb-cityhall:server:banPlayer')
 AddEventHandler('qb-cityhall:server:banPlayer', function()
     local src = source
     TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
-    exports.oxmysql:insert('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (@name, @license, @discord, @ip, @reason, @expire, @bannedby)', {
-        ['@name'] = GetPlayerName(src),
-        ['@license'] = QBCore.Functions.GetIdentifier(src, 'license'),
-        ['@discord'] = QBCore.Functions.GetIdentifier(src, 'discord'),
-        ['@ip'] = QBCore.Functions.GetIdentifier(src, 'ip'),
-        ['@reason'] = 'Abuse localhost:13172 For POST Requests',
-        ['@expire'] = 2145913200,
-        ['@bannedby'] = GetPlayerName(src)
+    exports.oxmysql:insert('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (?)', {
+        GetPlayerName(src),
+        QBCore.Functions.GetIdentifier(src, 'license'),
+        QBCore.Functions.GetIdentifier(src, 'discord'),
+        QBCore.Functions.GetIdentifier(src, 'ip'),
+        'Abuse localhost:13172 For POST Requests',
+        2145913200,
+        GetPlayerName(src)
     })
     DropPlayer(src, 'Attempting To Exploit')
 end)
