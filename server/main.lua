@@ -37,6 +37,16 @@ AddEventHandler('qb-cityhall:server:getIDs', function()
     GiveStarterItems(src)
 end)
 
+QBCore.Functions.CreateCallback("qb-cityhall:CheckLicenseItem",function(source,cb,item)
+	local Player = QBCore.Functions.GetPlayer(source)
+	local checkitem = Player.Functions.GetItemByName(item)
+	if checkitem ~= nil then
+        cb(true)
+	else
+		cb(false)
+	end
+end)
+
 
 RegisterServerEvent('qb-cityhall:server:sendDriverTest')
 AddEventHandler('qb-cityhall:server:sendDriverTest', function()

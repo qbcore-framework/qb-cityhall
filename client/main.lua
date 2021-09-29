@@ -124,9 +124,14 @@ local idTypes = {
 RegisterNUICallback('requestId', function(data)
     if inRange then
         local idType = data.idType
-
-        TriggerServerEvent('qb-cityhall:server:requestId', idTypes[idType])
-        QBCore.Functions.Notify('You have recived your '..idTypes[idType].label..' for $50', 'success', 3500)
+        QBCore.Functions.TriggerCallback("qb-cityhall:CheckLicenseItem",function(checkLicense)
+            if checkLicense then
+                QBCore.Functions.Notify('You already have the license', 'error', 3500)
+            else
+                TriggerServerEvent('qb-cityhall:server:requestId', idTypes[idType])
+                QBCore.Functions.Notify('You have recived your '..idTypes[idType].label..' for $50', 'success', 3500)
+            end
+        end,idType)
     else
         QBCore.Functions.Notify('This will not work', 'error')
     end
