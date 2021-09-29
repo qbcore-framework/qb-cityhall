@@ -129,7 +129,7 @@ RegisterNUICallback('requestId', function(data)
                 QBCore.Functions.Notify('You already have the license', 'error', 3500)
             else
                 TriggerServerEvent('qb-cityhall:server:requestId', idTypes[idType])
-                QBCore.Functions.Notify('You have recived your '..idTypes[idType].label..' for $50', 'success', 3500)
+                QBCore.Functions.Notify('You have received your '..idTypes[idType].label..' for $50', 'success', 3500)
             end
         end,idType)
     else
