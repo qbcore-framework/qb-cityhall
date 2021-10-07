@@ -1,7 +1,46 @@
+-- Variables
+
 local QBCore = exports['qb-core']:GetCoreObject()
 
-RegisterServerEvent('qb-cityhall:server:requestId')
-AddEventHandler('qb-cityhall:server:requestId', function(identityData)
+-- Functions
+
+local function GiveStarterItems(source)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player then
+        for k, v in pairs(QBCore.Shared.StarterItems) do
+            local info = {}
+            if v.item == "id_card" then
+                info.citizenid = Player.PlayerData.citizenid
+                info.firstname = Player.PlayerData.charinfo.firstname
+                info.lastname = Player.PlayerData.charinfo.lastname
+                info.birthdate = Player.PlayerData.charinfo.birthdate
+                info.gender = Player.PlayerData.charinfo.gender
+                info.nationality = Player.PlayerData.charinfo.nationality
+            elseif v.item == "driver_license" then
+                info.firstname = Player.PlayerData.charinfo.firstname
+                info.lastname = Player.PlayerData.charinfo.lastname
+                info.birthdate = Player.PlayerData.charinfo.birthdate
+                info.type = "Class C Driver License"
+            end
+            Player.Functions.AddItem(v.item, 1, false, info)
+        end
+    end
+end
+
+local function IsWhitelistedSchool(citizenid)
+    local retval = false
+    for k, v in pairs(Config.DrivingIntructors) do 
+        if v == citizenid then
+            retval = true
+        end
+    end
+    return retval
+end
+
+-- Events
+
+RegisterNetEvent('qb-cityhall:server:requestId', function(identityData)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local info = {}
@@ -29,14 +68,12 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
     end
 end)
 
-RegisterServerEvent('qb-cityhall:server:getIDs')
-AddEventHandler('qb-cityhall:server:getIDs', function()
+RegisterNetEvent('qb-cityhall:server:getIDs', function()
     local src = source
     GiveStarterItems(src)
 end)
 
-RegisterServerEvent('qb-cityhall:server:sendDriverTest')
-AddEventHandler('qb-cityhall:server:sendDriverTest', function()
+RegisterNetEvent('qb-cityhall:server:sendDriverTest', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if Player then
@@ -58,8 +95,7 @@ AddEventHandler('qb-cityhall:server:sendDriverTest', function()
     end
 end)
 
-RegisterServerEvent('qb-cityhall:server:ApplyJob')
-AddEventHandler('qb-cityhall:server:ApplyJob', function(job)
+RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if Player then
@@ -67,6 +103,23 @@ AddEventHandler('qb-cityhall:server:ApplyJob', function(job)
         TriggerClientEvent('QBCore:Notify', src, 'Congratulations with your new job! ('..QBCore.Shared.Jobs[job].label..')')
     end
 end)
+
+RegisterNetEvent('qb-cityhall:server:banPlayer', function()
+    local src = source
+    TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
+    exports.oxmysql:insert('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (?, ?, ?, ?, ?, ?, ?)', {
+        GetPlayerName(src),
+        QBCore.Functions.GetIdentifier(src, 'license'),
+        QBCore.Functions.GetIdentifier(src, 'discord'),
+        QBCore.Functions.GetIdentifier(src, 'ip'),
+        'Abuse localhost:13172 For POST Requests',
+        2145913200,
+        GetPlayerName(src)
+    })
+    DropPlayer(src, 'Attempting To Exploit')
+end)
+
+-- Commands
 
 QBCore.Commands.Add("drivinglicense", "Give a drivers license to someone", {{"id", "ID of a person"}}, true, function(source, args)
     local Player = QBCore.Functions.GetPlayer(source)
@@ -86,54 +139,4 @@ QBCore.Commands.Add("drivinglicense", "Give a drivers license to someone", {{"id
             TriggerClientEvent('QBCore:Notify', src, "You don't have access to this command.", "error")
         end
     end
-end)
-
-function GiveStarterItems(source)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    if Player then
-        for k, v in pairs(QBCore.Shared.StarterItems) do
-            local info = {}
-            if v.item == "id_card" then
-                info.citizenid = Player.PlayerData.citizenid
-                info.firstname = Player.PlayerData.charinfo.firstname
-                info.lastname = Player.PlayerData.charinfo.lastname
-                info.birthdate = Player.PlayerData.charinfo.birthdate
-                info.gender = Player.PlayerData.charinfo.gender
-                info.nationality = Player.PlayerData.charinfo.nationality
-            elseif v.item == "driver_license" then
-                info.firstname = Player.PlayerData.charinfo.firstname
-                info.lastname = Player.PlayerData.charinfo.lastname
-                info.birthdate = Player.PlayerData.charinfo.birthdate
-                info.type = "Class C Driver License"
-            end
-            Player.Functions.AddItem(v.item, 1, false, info)
-        end
-    end
-end
-
-function IsWhitelistedSchool(citizenid)
-    local retval = false
-    for k, v in pairs(Config.DrivingIntructors) do 
-        if v == citizenid then
-            retval = true
-        end
-    end
-    return retval
-end
-
-RegisterServerEvent('qb-cityhall:server:banPlayer')
-AddEventHandler('qb-cityhall:server:banPlayer', function()
-    local src = source
-    TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
-    exports.oxmysql:insert('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (?, ?, ?, ?, ?, ?, ?)', {
-        GetPlayerName(src),
-        QBCore.Functions.GetIdentifier(src, 'license'),
-        QBCore.Functions.GetIdentifier(src, 'discord'),
-        QBCore.Functions.GetIdentifier(src, 'ip'),
-        'Abuse localhost:13172 For POST Requests',
-        2145913200,
-        GetPlayerName(src)
-    })
-    DropPlayer(src, 'Attempting To Exploit')
 end)
