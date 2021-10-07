@@ -1,4 +1,4 @@
-Config = Config or {}
+Config = {}
 
 Config.Cityhall = {
     coords = vector3(-265.0, -963.6, 31.2)
@@ -28,11 +28,26 @@ Config.DrivingInstructors = {
 }
 
 Config.AvailableJobs = {
-    ["trucker"] = true,
-    ["taxi"] = true,
-    ["tow"] = true,
-    ["reporter"] = true,
-    ["garbage"] = true,
+    ["trucker"] = {
+        job = "trucker",
+        label = "Trucker"
+    },
+    ["taxi"] = {
+        job = "taxi",
+        label = "Taxi Driver"
+    },
+    ["tow"] = {
+        job = "tow",
+        label = "Tow Truck"
+    },
+    ["reporter"] = {
+        job = "reporter",
+        label = "News Reporter"
+    },
+    ["garbage"] = {
+        job = "garbage",
+        label = "Garbage Collector"
+    },
 }
 
 Config.IDTypes = {
