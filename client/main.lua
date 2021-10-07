@@ -50,6 +50,11 @@ end
 -- Threads
 
 CreateThread(function()
+    SendNUIMessage({
+	action = "ready",
+	jobs = Config.AvailableJobs
+    })		
+
     CityhallBlip = AddBlipForCoord(Config.Cityhall.coords)
 
     SetBlipSprite(CityhallBlip, 487)
@@ -61,9 +66,7 @@ CreateThread(function()
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentSubstringPlayerName("City Services")
     EndTextCommandSetBlipName(CityhallBlip)
-end)
-
-CreateThread(function()
+		
     while true do
 	local sleep = 1000
         local ped = PlayerPedId()
