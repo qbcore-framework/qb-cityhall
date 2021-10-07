@@ -28,3 +28,26 @@ Config.DrivingInstructors = {
 Config.DrivingInstructors = {
 
 }
+
+Config.AvailableJobs = {
+    ["trucker"] = true,
+    ["taxi"] = true,
+    ["tow"] = true,
+    ["reporter"] = true,
+    ["garbage"] = true,
+}
+
+Config.IDTypes = {
+    ["id_card"] = {
+        label = "ID Card",
+        item = "id_card"
+    },
+    ["driver_license"] = {
+        label = "Drivers License",
+        item = "driver_license"
+    },
+    ["weaponlicense"] = {
+        label = "Firearms License",
+        item = "weaponlicense"
+    }
+}
