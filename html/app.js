@@ -1,17 +1,16 @@
-var qbCityhall = {}
 var mouseOver = false;
 var selectedIdentity = null;
 var selectedIdentityType = null;
 var selectedJob = null;
 var selectedJobId = null;
 
-qbCityhall.Open = function(data) {
+function OpenCityHall() {
     $(".container").fadeIn(150);
 }
 
-qbCityhall.Close = function() {
+function CloseCityHall() {
     $(".container").fadeOut(150, function(){
-        qbCityhall.ResetPages();
+        ResetPages();
     });
     $.post('https://qb-cityhall/close');
 
@@ -19,7 +18,14 @@ qbCityhall.Close = function() {
     $(selectedIdentity).removeClass("job-selected");
 }
 
-qbCityhall.ResetPages = function() {
+function GenerateJobs(data) {
+    const element = document.querySelector(".job-page-blocks");
+    data.jobs.forEach(function(item) {
+        element.innerHTML += '<div class="job-page-block" data-job=' + item.job + '><p>' + item.label + '</p></div>';
+    }
+}
+
+function ResetPages() {
     $(".cityhall-option-blocks").show();
     $(".cityhall-identity-page").hide();
     $(".cityhall-job-page").hide();
@@ -28,11 +34,14 @@ qbCityhall.ResetPages = function() {
 $(document).ready(function(){
     window.addEventListener('message', function(event) {
         switch(event.data.action) {
+            case "ready":
+                GenerateJobs(event.data);
+                break;
             case "open":
-                qbCityhall.Open(event.data);
+                OpenCityHall();
                 break;
             case "close":
-                qbCityhall.Close();
+                CloseCityHall();
                 break;
         }
     })
@@ -41,7 +50,7 @@ $(document).ready(function(){
 $(document).on('keydown', function() {
     switch(event.keyCode) {
         case 27: // ESC
-            qbCityhall.Close();
+            CloseCityHall();
             break;
     }
 });
@@ -114,7 +123,7 @@ $(".request-identity-button").click(function(e){
         idType: selectedIdentityType
     }))
 
-    qbCityhall.ResetPages();
+    ResetPages();
 });
 
 $(document).on("click", ".job-page-block", function(e){
@@ -146,7 +155,7 @@ $(document).on('click', '.apply-job-button', function(e){
         job: selectedJobId
     }))
 
-    qbCityhall.ResetPages();
+    ResetPages();
 });
 
 $(document).on('click', '.back-to-main', function(e){
@@ -155,5 +164,5 @@ $(document).on('click', '.back-to-main', function(e){
     $(selectedJob).removeClass("job-selected");
     $(selectedIdentity).removeClass("job-selected");
 
-    qbCityhall.ResetPages();
+    ResetPages();
 });
