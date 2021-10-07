@@ -1,7 +1,12 @@
-local inCityhallPage = false
-local qbCityhall = {}
+-- Variables
 
-qbCityhall.Open = function()
+local QBCore = exports['qb-core']:GetCoreObject()
+local inCityhallPage = false
+local inRange = false
+
+-- Functions
+
+local function OpenCityHall()
     SendNUIMessage({
         action = "open"
     })
@@ -9,7 +14,7 @@ qbCityhall.Open = function()
     inCityhallPage = true
 end
 
-qbCityhall.Close = function()
+local function CloseCityHall()
     SendNUIMessage({
         action = "close"
     })
@@ -17,7 +22,7 @@ qbCityhall.Close = function()
     inCityhallPage = false
 end
 
-DrawText3Ds = function(coords, text)
+local function DrawText3Ds(coords, text)
 	SetTextScale(0.35, 0.35)
 	SetTextFont(4)
 	SetTextProportional(1)
@@ -32,19 +37,24 @@ DrawText3Ds = function(coords, text)
 	ClearDrawOrigin()
 end
 
-RegisterNUICallback('close', function()
-    SetNuiFocus(false, false)
-    inCityhallPage = false
-end)
+local function IsAvailableJob(job)
+    local retval = false
+    for k, v in pairs(Config.AvailableJobs) do
+        if v == job then
+            retval = true
+        end
+    end
+    return retval
+end
 
-local inRange = false
+-- Threads
 
-Citizen.CreateThread(function()
+CreateThread(function()
     CityhallBlip = AddBlipForCoord(Config.Cityhall.coords)
 
-    SetBlipSprite (CityhallBlip, 487)
+    SetBlipSprite(CityhallBlip, 487)
     SetBlipDisplay(CityhallBlip, 4)
-    SetBlipScale  (CityhallBlip, 0.65)
+    SetBlipScale(CityhallBlip, 0.65)
     SetBlipAsShortRange(CityhallBlip, true)
     SetBlipColour(CityhallBlip, 0)
 
@@ -53,11 +63,9 @@ Citizen.CreateThread(function()
     EndTextCommandSetBlipName(CityhallBlip)
 end)
 
-local creatingCompany = false
-local currentName = nil
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
-
+	local sleep = 1000
         local ped = PlayerPedId()
         local pos = GetEntityCoords(ped)
         inRange = false
@@ -66,67 +74,54 @@ Citizen.CreateThread(function()
         local dist2 = #(pos - Config.DrivingSchool.coords)
 
         if dist < 20 then
+	    sleep = 5
             inRange = true
             DrawMarker(2, Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
             if #(pos - vector3(Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z)) < 1.5 then
                 DrawText3Ds(Config.Cityhall.coords, '~g~E~w~ - City Services Menu')
                 if IsControlJustPressed(0, 38) then
-                    qbCityhall.Open()
+                    OpenCityHall
                 end
             end
         end
-
-        if not inRange then
-            Citizen.Wait(1000)
-        end
-
-        Citizen.Wait(2)
+        Wait(sleep)
     end
 end)
 
-RegisterNetEvent('qb-cityhall:client:getIds')
-AddEventHandler('qb-cityhall:client:getIds', function()
+-- Events
+
+RegisterNetEvent('qb-cityhall:client:getIds', function()
     TriggerServerEvent('qb-cityhall:server:getIDs')
 end)
 
-RegisterNetEvent('qb-cityhall:client:sendDriverEmail')
-AddEventHandler('qb-cityhall:client:sendDriverEmail', function(charinfo)
+RegisterNetEvent('qb-cityhall:client:sendDriverEmail', function(charinfo)
+    local PlayerData = QBCore.Functions.GetPlayerData()
     SetTimeout(math.random(2500, 4000), function()
         local gender = "Mr"
-        if QBCore.Functions.GetPlayerData().charinfo.gender == 1 then
+        if PlayerData.charinfo.gender == 1 then
             gender = "Mrs"
         end
-        local charinfo = QBCore.Functions.GetPlayerData().charinfo
         TriggerServerEvent('qb-phone:server:sendNewMail', {
             sender = "Township",
             subject = "Driving lessons request",
-            message = "Hello " .. gender .. " " .. charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons<br />If you are willing to teach, please contact us:<br />Naam: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
+            message = "Hello " .. gender .. " " .. PlayerData.charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons<br />If you are willing to teach, please contact us:<br />Name: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
             button = {}
         })
     end)
 end)
 
-local idTypes = {
-    ["id_card"] = {
-        label = "ID Card",
-        item = "id_card"
-    },
-    ["driver_license"] = {
-        label = "Drivers License",
-        item = "driver_license"
-    },
-    ["weaponlicense"] = {
-        label = "Firearms License",
-        item = "weaponlicense"
-    }
-}
+-- NUI Callbacks
+
+RegisterNUICallback('close', function()
+    SetNuiFocus(false, false)
+    inCityhallPage = false
+end)
 
 RegisterNUICallback('requestId', function(data)
     if inRange then
         local idType = data.idType
-
-        TriggerServerEvent('qb-cityhall:server:requestId', idTypes[idType])
-        QBCore.Functions.Notify('You have recived your '..idTypes[idType].label..' for $50', 'success', 3500)
+        TriggerServerEvent('qb-cityhall:server:requestId', Config.IDTypes[idType])
+        QBCore.Functions.Notify('You have recived your '..Config.IDTypes[idType].label..' for $50', 'success', 3500)
     else
         QBCore.Functions.Notify('This will not work', 'error')
     end
@@ -136,7 +131,6 @@ RegisterNUICallback('requestLicenses', function(data, cb)
     local PlayerData = QBCore.Functions.GetPlayerData()
     local licensesMeta = PlayerData.metadata["licences"]
     local availableLicenses = {}
-
     for type,_ in pairs(licensesMeta) do
         if licensesMeta[type] then
             local licenseType = nil
@@ -159,33 +153,15 @@ RegisterNUICallback('requestLicenses', function(data, cb)
     cb(availableLicenses)
 end)
 
-local AvailableJobs = {
-    "trucker",
-    "taxi",
-    "tow",
-    "reporter",
-    "garbage",
-}
-
-function IsAvailableJob(job)
-    local retval = false
-    for k, v in pairs(AvailableJobs) do
-        if v == job then
-            retval = true
-        end
-    end
-    return retval
-end
-
 RegisterNUICallback('applyJob', function(data)
     if inRange then
         if IsAvailableJob(data.job) then
             TriggerServerEvent('qb-cityhall:server:ApplyJob', data.job)
         else
             TriggerServerEvent('qb-cityhall:server:banPlayer')
-            TriggerServerEvent("qb-log:server:CreateLog", "anticheat", "POST Request (Abuse)", "red", "** @everyone " ..GetPlayerName(player).. "** has been banned for abusing localhost:13172, sending POST request\'s")         
+            TriggerServerEvent("qb-log:server:CreateLog", "anticheat", "POST Request (Abuse)", "red", "** @everyone " ..GetPlayerName(PlayerId()).. "** has been banned for abusing localhost:13172, sending POST requests")         
         end
     else
-        QBCore.Functions.Notify('Unfortunately will not work ...', 'error')
+        QBCore.Functions.Notify('Unfortunately will not work...', 'error')
     end
 end)
