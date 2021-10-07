@@ -106,7 +106,7 @@ end)
 
 RegisterNetEvent('qb-cityhall:server:banPlayer', function()
     local src = source
-    TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
+    TriggerClientEvent('chatMessage', -1, "QB-Anticheat", "error", GetPlayerName(src).." has been banned for sending POST Requests")
     exports.oxmysql:insert('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (?, ?, ?, ?, ?, ?, ?)', {
         GetPlayerName(src),
         QBCore.Functions.GetIdentifier(src, 'license'),
