@@ -13,3 +13,18 @@ Config.DriverTest = {
 Config.DrivingSchool = {
     coords = vector3(232.5, 368.7, 105.94)
 }
+
+--[[
+
+Example to add driving instructors (needs citizenid)
+
+Config.DrivingInstructors = {
+    ["JDO85938"] = true,
+    ["AKB01845"] = true,
+}
+
+--]]
+
+Config.DrivingInstructors = {
+
+}
