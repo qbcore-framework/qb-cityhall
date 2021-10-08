@@ -77,7 +77,7 @@ RegisterNetEvent('qb-cityhall:server:sendDriverTest', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if Player then
-        for k, v in pairs(Config.DrivingInstructors)
+        for k, v in pairs(Config.DrivingInstructors) do
             local SchoolPlayer = QBCore.Functions.GetPlayerByCitizenId(k)
             if SchoolPlayer then 
                 TriggerClientEvent("qb-cityhall:client:sendDriverEmail", SchoolPlayer.PlayerData.source, Player.PlayerData.charinfo)
