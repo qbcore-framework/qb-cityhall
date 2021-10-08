@@ -83,7 +83,7 @@ CreateThread(function()
             if #(pos - vector3(Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z)) < 1.5 then
                 DrawText3Ds(Config.Cityhall.coords, '~g~E~w~ - City Services Menu')
                 if IsControlJustPressed(0, 38) then
-                    OpenCityHall
+                    OpenCityHall()
                 end
             end
         end
