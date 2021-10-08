@@ -20,7 +20,8 @@ function CloseCityHall() {
 
 function GenerateJobs(data) {
     const element = document.querySelector(".job-page-blocks");
-    data.jobs.forEach(function(item) {
+    const jobs = data.jobs;
+    jobs.forEach(function(item) {
         element.innerHTML += '<div class="job-page-block" data-job=' + item.job + '><p>' + item.label + '</p></div>';
     });
 }
