@@ -159,32 +159,9 @@ RegisterNUICallback('requestLicenses', function(data, cb)
     cb(availableLicenses)
 end)
 
-local AvailableJobs = {
-    "trucker",
-    "taxi",
-    "tow",
-    "reporter",
-    "garbage",
-}
-
-function IsAvailableJob(job)
-    local retval = false
-    for k, v in pairs(AvailableJobs) do
-        if v == job then
-            retval = true
-        end
-    end
-    return retval
-end
-
 RegisterNUICallback('applyJob', function(data)
     if inRange then
-        if IsAvailableJob(data.job) then
-            TriggerServerEvent('qb-cityhall:server:ApplyJob', data.job)
-        else
-            TriggerServerEvent('qb-cityhall:server:banPlayer')
-            TriggerServerEvent("qb-log:server:CreateLog", "anticheat", "POST Request (Abuse)", "red", "** @everyone " ..GetPlayerName(player).. "** has been banned for abusing localhost:13172, sending POST request\'s")         
-        end
+        TriggerServerEvent('qb-cityhall:server:ApplyJob', data.job)
     else
         QBCore.Functions.Notify('Unfortunately will not work ...', 'error')
     end
