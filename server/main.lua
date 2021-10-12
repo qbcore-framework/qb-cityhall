@@ -3,7 +3,7 @@ local DrivingSchools = {
 }
 
 
-RegisterServerEvent('qb-cityhall:server:requestId', function(identityData)
+RegisterNetEvent('qb-cityhall:server:requestId', function(identityData)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local info = {}
@@ -31,7 +31,7 @@ RegisterServerEvent('qb-cityhall:server:requestId', function(identityData)
 end)
 
 
-RegisterServerEvent('qb-cityhall:server:getIDs', function()
+RegisterNetEvent('qb-cityhall:server:getIDs', function()
     local src = source
     GiveStarterItems(src)
 end)
@@ -46,7 +46,7 @@ QBCore.Functions.CreateCallback("qb-cityhall:CheckLicenseItem",function(source,c
 	end
 end)
 
-RegisterServerEvent('qb-cityhall:server:sendDriverTest', function()
+RegisterNetEvent('qb-cityhall:server:sendDriverTest', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     for k, v in pairs(DrivingSchools) do 
@@ -85,7 +85,7 @@ function IsAvailableJob(job)
     return retval
 end
 
-RegisterServerEvent('qb-cityhall:server:ApplyJob', function(job)
+RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local Ped = GetPlayerPed(src)
@@ -155,7 +155,7 @@ function IsWhitelistedSchool(citizenid)
 end
 
 
-RegisterServerEvent('qb-cityhall:server:banPlayer', function()
+RegisterNetEvent('qb-cityhall:server:banPlayer', function()
     local src = source
     TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
     exports.oxmysql:insert('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (?, ?, ?, ?, ?, ?, ?)', {
