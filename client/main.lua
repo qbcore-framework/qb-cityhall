@@ -84,13 +84,11 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent('qb-cityhall:client:getIds')
-AddEventHandler('qb-cityhall:client:getIds', function()
+RegisterNetEvent('qb-cityhall:client:getIds', function()
     TriggerServerEvent('qb-cityhall:server:getIDs')
 end)
 
-RegisterNetEvent('qb-cityhall:client:sendDriverEmail')
-AddEventHandler('qb-cityhall:client:sendDriverEmail', function(charinfo)
+RegisterNetEvent('qb-cityhall:client:sendDriverEmail', function(charinfo)
     SetTimeout(math.random(2500, 4000), function()
         local gender = "Mr"
         if QBCore.Functions.GetPlayerData().charinfo.gender == 1 then
@@ -124,9 +122,14 @@ local idTypes = {
 RegisterNUICallback('requestId', function(data)
     if inRange then
         local idType = data.idType
-
-        TriggerServerEvent('qb-cityhall:server:requestId', idTypes[idType])
-        QBCore.Functions.Notify('You have recived your '..idTypes[idType].label..' for $50', 'success', 3500)
+        QBCore.Functions.TriggerCallback("qb-cityhall:CheckLicenseItem",function(checkLicense)
+            if checkLicense then
+                QBCore.Functions.Notify('You already have the license', 'error', 3500)
+            else
+                TriggerServerEvent('qb-cityhall:server:requestId', idTypes[idType])
+                QBCore.Functions.Notify('You have recived your '..idTypes[idType].label..' for $50', 'success', 3500)
+            end
+        end,idType)
     else
         QBCore.Functions.Notify('This will not work', 'error')
     end

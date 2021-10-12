@@ -2,8 +2,8 @@ local DrivingSchools = {
     
 }
 
-RegisterServerEvent('qb-cityhall:server:requestId')
-AddEventHandler('qb-cityhall:server:requestId', function(identityData)
+
+RegisterServerEvent('qb-cityhall:server:requestId', function(identityData)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local info = {}
@@ -31,15 +31,22 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
 end)
 
 
-RegisterServerEvent('qb-cityhall:server:getIDs')
-AddEventHandler('qb-cityhall:server:getIDs', function()
+RegisterServerEvent('qb-cityhall:server:getIDs', function()
     local src = source
     GiveStarterItems(src)
 end)
 
+QBCore.Functions.CreateCallback("qb-cityhall:CheckLicenseItem",function(source,cb,item)
+	local Player = QBCore.Functions.GetPlayer(source)
+	local checkitem = Player.Functions.GetItemByName(item)
+	if checkitem ~= nil then
+        cb(true)
+	else
+		cb(false)
+	end
+end)
 
-RegisterServerEvent('qb-cityhall:server:sendDriverTest')
-AddEventHandler('qb-cityhall:server:sendDriverTest', function()
+RegisterServerEvent('qb-cityhall:server:sendDriverTest', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     for k, v in pairs(DrivingSchools) do 
@@ -65,6 +72,7 @@ local AvailableJobs = {
     "tow",
     "reporter",
     "garbage",
+    "vineyard",
 }
 
 function IsAvailableJob(job)
@@ -77,8 +85,7 @@ function IsAvailableJob(job)
     return retval
 end
 
-RegisterServerEvent('qb-cityhall:server:ApplyJob')
-AddEventHandler('qb-cityhall:server:ApplyJob', function(job)
+RegisterServerEvent('qb-cityhall:server:ApplyJob', function(job)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local Ped = GetPlayerPed(src)
@@ -147,8 +154,8 @@ function IsWhitelistedSchool(citizenid)
     return retval
 end
 
-RegisterServerEvent('qb-cityhall:server:banPlayer')
-AddEventHandler('qb-cityhall:server:banPlayer', function()
+
+RegisterServerEvent('qb-cityhall:server:banPlayer', function()
     local src = source
     TriggerClientEvent('chatMessage', -1, "QB Anti-Cheat", "error", GetPlayerName(src).." has been banned for sending POST Request's ")
     exports.oxmysql:insert('INSERT INTO bans (name, license, discord, ip, reason, expire, bannedby) VALUES (?, ?, ?, ?, ?, ?, ?)', {
