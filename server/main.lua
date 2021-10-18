@@ -18,6 +18,7 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
         info.firstname = Player.PlayerData.charinfo.firstname
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
+        info.gender = Player.PlayerData.charinfo.gender
         info.type = "Class C Driver License"
     elseif identityData.item == "weaponlicense" then
         info.firstname = Player.PlayerData.charinfo.firstname
