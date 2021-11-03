@@ -142,18 +142,18 @@ RegisterNUICallback('requestLicenses', function(data, cb)
             local licenseType = nil
             local label = nil
 
-            if type == "driver" then 
-                licenseType = "driver_license" 
-                label = "Drivers Licence" 
+            if type == "driver" then
+                licenseType = "driver_license"
+                label = "Drivers Licence"
             elseif type == "weapon" then
                 licenseType = "weaponlicense"
                 label = "Firearms License"
             end
 
-            table.insert(availableLicenses, {
+            availableLicenses[#availableLicenses+1] = {
                 idType = licenseType,
                 label = label
-            })
+            }
         end
     end
     cb(availableLicenses)
