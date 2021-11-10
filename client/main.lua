@@ -1,3 +1,4 @@
+local QBCore = exports['qb-core']:GetCoreObject()
 local inCityhallPage = false
 local qbCityhall = {}
 
