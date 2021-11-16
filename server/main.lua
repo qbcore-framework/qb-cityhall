@@ -28,8 +28,8 @@ AddEventHandler('qb-cityhall:server:requestId', function(identityData)
     end
 
     Player.Functions.AddItem(identityData.item, 1, nil, info)
-
     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[identityData.item], 'add')
+    Player.Functions.RemoveMoney("cash", 50)
 end)
 
 
