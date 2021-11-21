@@ -40,15 +40,13 @@ end)
 
 local inRange = false
 
-Citizen.CreateThread(function()
+CreateThread(function()
     CityhallBlip = AddBlipForCoord(Config.Cityhall.coords)
-
     SetBlipSprite (CityhallBlip, 487)
     SetBlipDisplay(CityhallBlip, 4)
     SetBlipScale  (CityhallBlip, 0.65)
     SetBlipAsShortRange(CityhallBlip, true)
     SetBlipColour(CityhallBlip, 0)
-
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentSubstringPlayerName("City Services")
     EndTextCommandSetBlipName(CityhallBlip)
@@ -56,7 +54,8 @@ end)
 
 local creatingCompany = false
 local currentName = nil
-Citizen.CreateThread(function()
+
+CreateThread(function()
     while true do
 
         local ped = PlayerPedId()
@@ -78,20 +77,18 @@ Citizen.CreateThread(function()
         end
 
         if not inRange then
-            Citizen.Wait(1000)
+            Wait(1000)
         end
 
-        Citizen.Wait(2)
+        Wait(2)
     end
 end)
 
-RegisterNetEvent('qb-cityhall:client:getIds')
-AddEventHandler('qb-cityhall:client:getIds', function()
+RegisterNetEvent('qb-cityhall:client:getIds', function()
     TriggerServerEvent('qb-cityhall:server:getIDs')
 end)
 
-RegisterNetEvent('qb-cityhall:client:sendDriverEmail')
-AddEventHandler('qb-cityhall:client:sendDriverEmail', function(charinfo)
+RegisterNetEvent('qb-cityhall:client:sendDriverEmail', function(charinfo)
     SetTimeout(math.random(2500, 4000), function()
         local gender = "Mr"
         if QBCore.Functions.GetPlayerData().charinfo.gender == 1 then
