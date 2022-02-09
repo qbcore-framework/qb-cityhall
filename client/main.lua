@@ -48,7 +48,7 @@ CreateThread(function()
     SetBlipAsShortRange(CityhallBlip, true)
     SetBlipColour(CityhallBlip, 0)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("City Services")
+    AddTextComponentSubstringPlayerName(Lang:t('info.bilp_text'))
     EndTextCommandSetBlipName(CityhallBlip)
 end)
 
@@ -69,7 +69,7 @@ CreateThread(function()
             inRange = true
             DrawMarker(2, Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.2, 0.2, 155, 152, 234, 155, false, false, false, true, false, false, false)
             if #(pos - vector3(Config.Cityhall.coords.x, Config.Cityhall.coords.y, Config.Cityhall.coords.z)) < 1.5 then
-                DrawText3Ds(Config.Cityhall.coords, '~g~E~w~ - City Services Menu')
+                DrawText3Ds(Config.Cityhall.coords, Lang:t('info.city_services_menu'))
                 if IsControlJustPressed(0, 38) then
                     qbCityhall.Open()
                 end
@@ -90,15 +90,15 @@ end)
 
 RegisterNetEvent('qb-cityhall:client:sendDriverEmail', function(charinfo)
     SetTimeout(math.random(2500, 4000), function()
-        local gender = "Mr"
+        local gender = Lang:t('email.mr')
         if QBCore.Functions.GetPlayerData().charinfo.gender == 1 then
-            gender = "Mrs"
+            gender = Lang:t('email.mrs')
         end
         local charinfo = QBCore.Functions.GetPlayerData().charinfo
         TriggerServerEvent('qb-phone:server:sendNewMail', {
-            sender = "Township",
-            subject = "Driving lessons request",
-            message = "Hello " .. gender .. " " .. charinfo.lastname .. ",<br /><br />We have just received a message that someone wants to take driving lessons<br />If you are willing to teach, please contact us:<br />Naam: <strong>".. charinfo.firstname .. " " .. charinfo.lastname .. "</strong><br />Phone Number: <strong>"..charinfo.phone.."</strong><br/><br/>Kind regards,<br />Township Los Santos",
+            sender = Lang:t('email.sender'),
+            subject = Lang:t('email.subject'),
+            message =  Lang:t('email.message', {gender = gender, lastname = charinfo.lastname, firstname = charinfo.firstname, phone = charinfo.phone}),
             button = {}
         })
     end)
@@ -106,15 +106,15 @@ end)
 
 local idTypes = {
     ["id_card"] = {
-        label = "ID Card",
+        label = Lang:t('info.id_card'),
         item = "id_card"
     },
     ["driver_license"] = {
-        label = "Drivers License",
+        label = Lang:t('info.driver_license'),
         item = "driver_license"
     },
     ["weaponlicense"] = {
-        label = "Firearms License",
+        label = Lang:t('info.weaponlicense'),
         item = "weaponlicense"
     }
 }
@@ -124,9 +124,9 @@ RegisterNUICallback('requestId', function(data)
         local idType = data.idType
 
         TriggerServerEvent('qb-cityhall:server:requestId', idTypes[idType])
-        QBCore.Functions.Notify('You have recived your '..idTypes[idType].label..' for $50', 'success', 3500)
+        QBCore.Functions.Notify(Lang:t('success.recived_license',{value = idTypes[idType].label}), 'success', 3500)
     else
-        QBCore.Functions.Notify('This will not work', 'error')
+        QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
     end
 end)
 
@@ -142,10 +142,10 @@ RegisterNUICallback('requestLicenses', function(data, cb)
 
             if type == "driver" then
                 licenseType = "driver_license"
-                label = "Drivers Licence"
+                label = Lang:t('info.driver_license')
             elseif type == "weapon" then
                 licenseType = "weaponlicense"
-                label = "Firearms License"
+                label = Lang:t('info.weaponlicense')
             end
 
             availableLicenses[#availableLicenses+1] = {
@@ -161,6 +161,6 @@ RegisterNUICallback('applyJob', function(data)
     if inRange then
         TriggerServerEvent('qb-cityhall:server:ApplyJob', data.job)
     else
-        QBCore.Functions.Notify('Unfortunately will not work ...', 'error')
+        QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
     end
 end)
