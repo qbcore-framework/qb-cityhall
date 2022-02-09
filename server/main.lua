@@ -85,7 +85,7 @@ RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job)
     end
 
     Player.Functions.SetJob(job, 0)
-    TriggerClientEvent('QBCore:Notify', src, Lnag:t('info.new_job', {job = JobInfo.label}))
+    TriggerClientEvent('QBCore:Notify', src, Lang:t('info.new_job', {job = JobInfo.label}))
 end)
 
 -- QBCore.Commands.Add("drivinglicense", "Give a driver's license to someone", {{"id", "ID of a person"}}, true, function(source, args)
