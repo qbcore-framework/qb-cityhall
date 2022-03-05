@@ -3,6 +3,8 @@ City Services for QB-Core Framework :us:
 
 ## Dependencies
 - [qb-core](https://github.com/qbcore-framework/qb-core)
+- [PolyZone](https://github.com/mkafrin/PolyZone) - For Interaction (DrawText and qb-target both require this)
+- [qb-target](https://github.com/BerkieBb/qb-target) - For Interaction (Optional)
 - [qb-phone](https://github.com/qbcore-framework/qb-phone) - For E-Mail
 
 ## Features
@@ -19,7 +21,7 @@ City Services for QB-Core Framework :us:
 ## Installation
 ### Manual
 - Download the script and put it in the `[qb]` directory.
-- Add the following code to your server.cfg/resouces.cfg
+- Add the following code to your server.cfg/resources.cfg
 ```
 ensure qb-core
 ensure qb-target # Optional
