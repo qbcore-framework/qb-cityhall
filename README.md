@@ -1,5 +1,5 @@
 # qb-cityhall
-City Services for QB-Core Framework :us:
+City Services for QB-Core Framework
 
 ## Dependencies
 - [qb-core](https://github.com/qbcore-framework/qb-core)
