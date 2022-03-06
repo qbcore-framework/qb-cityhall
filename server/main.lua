@@ -105,12 +105,21 @@ RegisterNetEvent('qb-cityhall:server:getIDs', giveStarterItems)
 -- Commands
 
 QBCore.Commands.Add("drivinglicense", "Give a drivers license to someone", {{"id", "ID of a person"}}, true, function(source, args)
+    local Player = QBCore.Functions.GetPlayer(source)
     local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
     if SearchedPlayer then
         if not SearchedPlayer.PlayerData.metadata["licences"]["driver"] then
-            SearchedPlayer.PlayerData.metadata["licences"]["driver"] = true
-            SearchedPlayer.Functions.SetMetaData("licences", SearchedPlayer.PlayerData.metadata["licences"])
-            TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, "You have passed! Pick up your drivers license at the town hall", "success", 5000)
+            for i = 1, #Config.DrivingSchools do
+                for id = 1, #Config.DrivingSchools[i].instructors do
+                    if Config.DrivingSchools[i].instructors[id] == Player.PlayerData.citizenid then
+                        SearchedPlayer.PlayerData.metadata["licences"]["driver"] = true
+                        SearchedPlayer.Functions.SetMetaData("licences", SearchedPlayer.PlayerData.metadata["licences"])
+                        TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, "You have passed! Pick up your drivers license at the town hall", "success", 5000)
+                        TriggerClientEvent('QBCore:Notify', source, ("Player with ID %s has been granted access to a driving license"):format(SearchedPlayer.PlayerData.source), "success", 5000)
+                        break
+                    end
+                end
+            end
         else
             TriggerClientEvent('QBCore:Notify', source, "Can't give permission for a drivers license, this person already has permission", "error")
         end
