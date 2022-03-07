@@ -51,6 +51,8 @@ local function setCityhallPageState(bool, message)
     end
     SetNuiFocus(bool, bool)
     inCityhallPage = bool
+    if not Config.UseTarget or bool then return end
+    inRangeCityhall = false
 end
 
 local function createBlips()
@@ -108,6 +110,7 @@ local function spawnPeds()
                     label = 'Open Cityhall',
                     icon = 'fa-solid fa-city',
                     action = function()
+                        inRangeCityhall = true
                         setCityhallPageState(true, true)
                     end
                 }
