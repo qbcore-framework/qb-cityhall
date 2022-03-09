@@ -1,6 +1,6 @@
 Config = Config or {}
 
-Config.UseTarget = false -- Use qb-target interactions
+Config.UseTarget = GetConvar('UseTarget', 'false') -- Use qb-target interactions (don't change this, go to your server.cfg and add `setr UseTarget 'true'` to use this and just that from true to false or the other way around)
 
 Config.Cityhalls = {
     { -- Cityhall 1
