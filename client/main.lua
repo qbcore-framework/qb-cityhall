@@ -63,7 +63,6 @@ CreateThread(function()
         inRange = false
 
         local dist = #(pos - Config.Cityhall.coords)
-        local dist2 = #(pos - Config.DrivingSchool.coords)
 
         if dist < 20 then
             inRange = true
