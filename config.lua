@@ -60,7 +60,7 @@ Config.Peds = {
         zoneOptions = { -- Used for when UseTarget is false
             length = 3.0,
             width = 3.0,
-            debugPoly = true
+            debugPoly = false
         }
     },
     -- Driving School Ped
