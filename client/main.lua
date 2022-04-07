@@ -189,14 +189,14 @@ end)
 
 RegisterNetEvent('qb-cityhall:client:sendDriverEmail', function(charinfo)
     SetTimeout(math.random(2500, 4000), function()
-        local gender = "Mr"
+        local gender = Lang:t('email.mr')
         if PlayerData.charinfo.gender == 1 then
-            gender = "Mrs"
+            gender = Lang:t('email.mrs')
         end
         TriggerServerEvent('qb-phone:server:sendNewMail', {
-            sender = "Township",
-            subject = "Driving lessons request",
-            message = ("Hello %s %s,<br><br>We have just received a message that someone wants to take driving lessons<br>If you are willing to teach, please contact them:<br>Name: <strong>%s %s</strong><br>Phone Number: <strong>%s</strong><br><br>Kind regards,<br>Township Los Santos"):format(gender, PlayerData.charinfo.lastname, charinfo.firstname, charinfo.lastname, charinfo.phone),
+            sender = Lang:t('email.sender'),
+            subject = Lang:t('email.subject'),
+            message =  Lang:t('email.message', {gender = gender, lastname = charinfo.lastname, firstname = charinfo.firstname, phone = charinfo.phone}),
             button = {}
         })
     end)
@@ -221,7 +221,7 @@ RegisterNUICallback('requestId', function(id)
         TriggerServerEvent('qb-cityhall:server:requestId', id.type, id.cost)
         QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, id.cost), 'success', 3500)
     else
-        QBCore.Functions.Notify('This will not work', 'error')
+        QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
     end
 end)
 
@@ -240,7 +240,7 @@ RegisterNUICallback('applyJob', function(job)
     if inRangeCityhall then
         TriggerServerEvent('qb-cityhall:server:ApplyJob', job, Config.Cityhalls[closestCityhall].coords)
     else
-        QBCore.Functions.Notify('Unfortunately will not work ...', 'error')
+        QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
     end
 end)
 

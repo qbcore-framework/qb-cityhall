@@ -6,7 +6,12 @@ version '2.0.0'
 
 ui_page 'html/index.html'
 
-shared_script 'config.lua'
+shared_scripts {
+    '@qb-core/shared/locale.lua',
+    'locales/en.lua',
+    'config.lua'
+}
+
 server_script 'server/main.lua'
 
 client_scripts {
@@ -22,3 +27,4 @@ files {
 }
 
 lua54 'yes'
+use_fxv2_oal 'yes'
