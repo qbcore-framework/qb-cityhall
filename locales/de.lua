@@ -14,11 +14,11 @@ local Translations = {
         new_job = 'Herzlichen Glückwunsch zu deinem neuen Job! (%{job})'
     },
     email = {
-        mr = 'Herr',
-        mrs = 'Frau',
+        mr = 'Sehr geehrter Herr',
+        mrs = 'Sehr geehrte Frau',
         sender = 'Gemeinde',
         subject = 'Anfrage für Fahrstunden',
-        message = 'Sehr geehrter %{gender} %{lastname}<br /><br />Wir haben gerade eine Nachricht erhalten, dass jemand Fahrstunden nehmen möchte<br />Wenn Sie bereit sind zu unterrichten, nehmen Sie bitte Kontakt mit uns auf:<br />Name: <strong>%{firstname} %{lastname}</strong><br />Telefonnummer: <strong>%{phone}</strong><br/><br/>Mit freundlichen Grüßen,<br />Gemeinde Los Santos'
+        message = '%{gender} %{lastname}<br /><br />Wir haben gerade eine Nachricht erhalten, dass jemand Fahrstunden nehmen möchte<br />Wenn Sie bereit sind zu unterrichten, nehmen Sie bitte Kontakt mit uns auf:<br />Name: <strong>%{firstname} %{lastname}</strong><br />Telefonnummer: <strong>%{phone}</strong><br/><br/>Mit freundlichen Grüßen<br />Gemeinde Los Santos'
     }
 }
 
