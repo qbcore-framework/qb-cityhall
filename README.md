@@ -1,5 +1,45 @@
 # qb-cityhall
-City Services for QB-Core Framework :us:
+City Services for QB-Core Framework
+
+## Dependencies
+- [qb-core](https://github.com/qbcore-framework/qb-core)
+- [PolyZone](https://github.com/mkafrin/PolyZone) - For Interaction (DrawText and qb-target both require this)
+- [qb-target](https://github.com/BerkieBb/qb-target) - For Interaction (Optional)
+- [qb-phone](https://github.com/qbcore-framework/qb-phone) - For E-Mail
+
+## Features
+- Ability to request birth certificate when lost
+- Ability to request driver license when granted by a driving instructor
+- Ability to request weapon license when granted it by the police
+- Ability to apply to government jobs
+- Ability to add multiple cityhall locations
+- Ability to add nultiple driving school locations
+- Ability to take driving lessons
+- qb-target integration, this is optional
+- PolyZone and qb-core DrawText integration, this is optional
+
+## Installation
+### Manual
+- Download the script and put it in the `[qb]` directory.
+- Add the following code to your server.cfg/resources.cfg
+```
+ensure qb-core
+ensure qb-target # Optional
+ensure qb-phone
+ensure qb-cityhall
+```
+
+## Screenshots
+![City Services](https://i.imgur.com/l6ZRlXP.png)
+![Request Birth Certificate](https://i.imgur.com/zJRiuDI.png)
+![Request Driver License](https://i.imgur.com/2scxBew.png)
+![Request Weapon License](https://i.imgur.com/pSudfVl.png)
+![Apply For a Job](https://i.imgur.com/26Kd0FU.png)
+![Cityhall DrawText Interaction](https://i.imgur.com/Uxh2GZC.png)
+![Cityhall QB-Target Interaction](https://i.imgur.com/K54cMLt.png)
+![Driving School Sending And Receiving Mail](https://i.imgur.com/iJof4jI.png)
+![Driving School DrawText Interaction](https://i.imgur.com/32BPp8f.png)
+![Driving School QB-Target Interaction](https://i.imgur.com/P7jWBsV.png)
 
 # License
 
@@ -18,42 +58,3 @@ City Services for QB-Core Framework :us:
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>
-
-
-## Dependencies
-- [qb-core](https://github.com/qbcore-framework/qb-core)
-- [qb-phone](https://github.com/qbcore-framework/qb-phone) - For E-Mail
-- [qb-logs](https://github.com/qbcore-framework/qb-logs) - Log System
-
-## Screenshots
-![City Services](https://i.imgur.com/KAFkAVO.png)
-![Request Birth Certificate](https://i.imgur.com/GJp5m49.png)
-![Request Driver License](https://i.imgur.com/xn6udGI.png)
-![Apply For a Job](https://i.imgur.com/gl4SNjX.png)
-
-## Features
-- Ability to request birth certificate when lost
-- Ability to request driver license when lost
-- Ability to apply to government jobs
-
-## Installation
-### Manual
-- Download the script and put it in the `[qb]` directory.
-- Add the following code to your server.cfg/resouces.cfg
-```
-ensure qb-core
-ensure qb-phone
-ensure qb-logs
-ensure qb-cityhall
-```
-
-## Configuration
-```
-Config = Config or {}
-
-Config.CompanyPrice = 25000
-
-Config.Cityhall = {
-    coords = vector3(-265.0, -963.6, 31.2)
-}
-```
