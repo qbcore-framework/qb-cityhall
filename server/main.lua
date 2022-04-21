@@ -13,7 +13,7 @@ local availableJobs = {
 local function giveStarterItems()
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then return end
-    for k, v in pairs(QBCore.Shared.StarterItems) do
+    for _, v in pairs(QBCore.Shared.StarterItems) do
         local info = {}
         if v.item == "id_card" then
             info.citizenid = Player.PlayerData.citizenid
@@ -43,6 +43,7 @@ end)
 RegisterNetEvent('qb-cityhall:server:requestId', function(item, cost)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
     if not Player.Functions.RemoveMoney("cash", cost) then return TriggerClientEvent('QBCore:Notify', src, ('You don\'t have enough money on you, you need %s cash'):format(cost), 'error') end
     local info = {}
     if item == "id_card" then
@@ -61,6 +62,8 @@ RegisterNetEvent('qb-cityhall:server:requestId', function(item, cost)
         info.firstname = Player.PlayerData.charinfo.firstname
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
+    else
+        return DropPlayer(src, 'Attempted exploit abuse')
     end
     if not Player.Functions.AddItem(item, 1, nil, info) then return end
     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'add')
@@ -69,6 +72,7 @@ end)
 RegisterNetEvent('qb-cityhall:server:sendDriverTest', function(instructors)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
     for i = 1, #instructors do
         local citizenid = instructors[i]
         local SchoolPlayer = QBCore.Functions.GetPlayerByCitizenId(citizenid)
@@ -90,6 +94,7 @@ end)
 RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    if not Player then return end
     local ped = GetPlayerPed(src)
     local pedCoords = GetEntityCoords(ped)
     local JobInfo = QBCore.Shared.Jobs[job]
