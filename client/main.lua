@@ -94,6 +94,7 @@ local function spawnPeds()
         FreezeEntityPosition(ped, true)
         SetEntityInvincible(ped, true)
         SetBlockingOfNonTemporaryEvents(ped, true)
+        TaskStartScenarioInPlace(ped, current.scenario, true)
         current.pedHandle = ped
         if Config.UseTarget then
             local opts = nil
