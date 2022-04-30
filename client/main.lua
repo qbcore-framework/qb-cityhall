@@ -55,19 +55,18 @@ local function setCityhallPageState(bool, message)
     inRangeCityhall = false
 end
 
-local function createBlips()
-    for i = 1, #Config.Cityhalls do
-        local hall = Config.Cityhalls[i]
-        if hall.showBlip then
-            blips[#blips+1] = QBCore.Functions.CreateBlip(hall.coords, hall.blipData.sprite, hall.blipData.display, hall.blipData.scale, hall.blipData.colour, true, hall.blipData.title)
-        end
-    end
-    for i = 1, #Config.DrivingSchools do
-        local school = Config.DrivingSchools[i]
-        if school.showBlip then
-            blips[#blips+1] = QBCore.Functions.CreateBlip(school.coords, school.blipData.sprite, school.blipData.display, school.blipData.scale, school.blipData.colour, true, school.blipData.title)
-        end
-    end
+local function createBlip(options)
+    if not options.coords or type(options.coords) ~= 'table' and type(options.coords) ~= 'vector3' then return error(('createBlip() expected coords in a vector3 or table but received %s'):format(options.coords)) end
+    local blip = AddBlipForCoord(options.coords.x, options.coords.y, options.coords.z)
+    SetBlipSprite(blip, options.sprite or 1)
+    SetBlipDisplay(blip, options.display or 4)
+    SetBlipScale(blip, options.scale or 1.0)
+    SetBlipColour(blip, options.colour or 1)
+    SetBlipAsShortRange(blip, options.shortRange or false)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString(options.title or 'No Title Given')
+    EndTextCommandSetBlipName(blip)
+    return blip
 end
 
 local function deleteBlips()
@@ -79,6 +78,37 @@ local function deleteBlips()
         end
     end
     blips = {}
+end
+
+local function initBlips()
+    for i = 1, #Config.Cityhalls do
+        local hall = Config.Cityhalls[i]
+        if hall.showBlip then
+            blips[#blips+1] = createBlip({
+                coords = hall.coords,
+                sprite = hall.blipData.sprite,
+                display = hall.blipData.display,
+                scale = hall.blipData.scale,
+                colour = hall.blipData.colour,
+                shortRange = true,
+                title = hall.blipData.title
+            })
+        end
+    end
+    for i = 1, #Config.DrivingSchools do
+        local school = Config.DrivingSchools[i]
+        if school.showBlip then
+            blips[#blips+1] = createBlip({
+                coords = school.coords,
+                sprite = school.blipData.sprite,
+                display = school.blipData.display,
+                scale = school.blipData.scale,
+                colour = school.blipData.colour,
+                shortRange = true,
+                title = school.blipData.title
+            })
+        end
+    end
 end
 
 local function spawnPeds()
@@ -94,7 +124,7 @@ local function spawnPeds()
         FreezeEntityPosition(ped, true)
         SetEntityInvincible(ped, true)
         SetBlockingOfNonTemporaryEvents(ped, true)
-        TaskStartScenarioInPlace(ped, current.scenario, true)
+        TaskStartScenarioInPlace(ped, current.scenario, true, true)
         current.pedHandle = ped
         if Config.UseTarget then
             local opts = nil
@@ -260,7 +290,7 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    createBlips()
+    initBlips()
     spawnPeds()
     QBCore.Functions.TriggerCallback('qb-cityhall:server:receiveJobs', function(result)
         SendNUIMessage({
