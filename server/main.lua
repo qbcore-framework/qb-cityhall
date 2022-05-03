@@ -1,11 +1,11 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local availableJobs = {
-    ["trucker"] = "Trucker",
-    ["taxi"] = "Taxi",
-    ["tow"] = "Tow Truck",
-    ["reporter"] = "News Reporter",
-    ["garbage"] = "Garbage Collector",
-    ["bus"] = "Bus Driver",
+    ["trucker"] = Lang:t('info.trucker'),
+    ["taxi"] = Lang:t('info.taxi'),
+    ["tow"] = Lang:t('info.tow_truck'),
+    ["reporter"] = Lang:t('info.news_reporter'),
+    ["garbage"] = Lang:t('info.garbage_collector'),
+    ["bus"] = Lang:t('info.bus_driver'),
 }
 
 -- Functions
@@ -43,7 +43,7 @@ end)
 RegisterNetEvent('qb-cityhall:server:requestId', function(item, cost)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    if not Player.Functions.RemoveMoney("cash", cost) then return TriggerClientEvent('QBCore:Notify', src, ('You don\'t have enough money on you, you need %s cash'):format(cost), 'error') end
+    if not Player.Functions.RemoveMoney("cash", cost) then return TriggerClientEvent('QBCore:Notify', src, (Lang:t('error.not_enough_money')):format(cost), 'error') end
     local info = {}
     if item == "id_card" then
         info.citizenid = Player.PlayerData.citizenid
@@ -76,15 +76,15 @@ RegisterNetEvent('qb-cityhall:server:sendDriverTest', function(instructors)
             TriggerClientEvent("qb-cityhall:client:sendDriverEmail", SchoolPlayer.PlayerData.source, Player.PlayerData.charinfo)
         else
             local mailData = {
-                sender = "Township",
-                subject = "Driving lessons request",
-                message = "Hello,<br><br>We have just received a message that someone wants to take driving lessons.<br>If you are willing to teach, please contact them:<br>Name: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Phone Number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br><br>Kind regards,<br>Township Los Santos",
+                sender = Lang:t('email.sender'),
+                subject = Lang:t('email.subject'),
+                message = Lang:t('email.message'),
                 button = {}
             }
             TriggerEvent("qb-phone:server:sendNewMailToOffline", citizenid, mailData)
         end
     end
-    TriggerClientEvent('QBCore:Notify', src, "An email has been sent to driving schools, and you will be contacted automatically", "success", 5000)
+    TriggerClientEvent('QBCore:Notify', src, Lang:t('info.email_sent'), "success", 5000)
 end)
 
 RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
