@@ -130,7 +130,7 @@ local function spawnPeds()
             local opts = nil
             if current.drivingschool then
                 opts = {
-                    label = 'Take Driving Lessons',
+                    label = Lang:t('info.take_driving_lessons'),
                     icon = 'fa-solid fa-car-side',
                     action = function()
                         TriggerServerEvent('qb-cityhall:server:sendDriverTest', Config.DrivingSchools[closestDrivingSchool].instructors)
@@ -250,7 +250,7 @@ RegisterNUICallback('requestId', function(id)
     local license = Config.Cityhalls[closestCityhall].licenses[id.type]
     if inRangeCityhall and license and id.cost == license.cost then
         TriggerServerEvent('qb-cityhall:server:requestId', id.type, id.cost)
-        QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, id.cost), 'success', 3500)
+        QBCore.Functions.Notify((Lang:t('received_license')):format(license.label, id.cost), 'success', 3500)
     else
         QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
     end
