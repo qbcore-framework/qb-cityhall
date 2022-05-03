@@ -1,6 +1,7 @@
 local Translations = {
     error = {
-        not_in_range = 'Estás muy lejos de la municipalidad'
+        not_in_range = 'Estás muy lejos de la municipalidad',
+        not_enough_money = 'No tienes suficiente dinero contigo, necesitas %s en efectivo',
     },
     success = {
         recived_license = 'Has recibido tu %{value} por $50'
@@ -12,7 +13,16 @@ local Translations = {
         driver_license = 'Licencia de conducir',
         weaponlicense = 'Licencia de armas',
         new_job = '¡Felicidades por tu nuevo trabajo! (%{job})',
-        driving_school = 'Escuela de manejo'
+        driving_school = 'Escuela de manejo',
+        take_driving_lessons = 'Tomar clases de manejo',
+        open_city_hall = 'Abrir municipalidad',
+        trucker = 'Camionero',
+        taxi = 'Taxi',
+        tow_truck = 'Grúa',
+        news_reporter = 'Reportero',
+        garbage_collector = 'Recolector de basura',
+        bus_driver = 'Chofer de autobús',
+        email_sent = 'Un email ha sido enviado a las escuelas de manejo y serás contactad@ automáticamente',
     },
     email = {
         mr = 'Sr',
