@@ -94,7 +94,7 @@ RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
     local pedCoords = GetEntityCoords(ped)
     local JobInfo = QBCore.Shared.Jobs[job]
     if #(pedCoords - cityhallCoords) >= 20.0 or not availableJobs[job] then
-        return DropPlayer(source, "Attempted exploit abuse")
+        return DropPlayer(source, Lang:t('error.exploit_attempt'))
     end
     Player.Functions.SetJob(job, 0)
     TriggerClientEvent('QBCore:Notify', src, Lang:t('info.new_job', {job = JobInfo.label}))
@@ -104,7 +104,7 @@ RegisterNetEvent('qb-cityhall:server:getIDs', giveStarterItems)
 
 -- Commands
 
-QBCore.Commands.Add("drivinglicense", "Give a drivers license to someone", {{"id", "ID of a person"}}, true, function(source, args)
+QBCore.Commands.Add("drivinglicense", Lang:t('info.give_drivers_license'), {{"id", "ID of a person"}}, true, function(source, args)
     local Player = QBCore.Functions.GetPlayer(source)
     local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
     if SearchedPlayer then
@@ -114,16 +114,16 @@ QBCore.Commands.Add("drivinglicense", "Give a drivers license to someone", {{"id
                     if Config.DrivingSchools[i].instructors[id] == Player.PlayerData.citizenid then
                         SearchedPlayer.PlayerData.metadata["licences"]["driver"] = true
                         SearchedPlayer.Functions.SetMetaData("licences", SearchedPlayer.PlayerData.metadata["licences"])
-                        TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, "You have passed! Pick up your drivers license at the town hall", "success", 5000)
-                        TriggerClientEvent('QBCore:Notify', source, ("Player with ID %s has been granted access to a driving license"):format(SearchedPlayer.PlayerData.source), "success", 5000)
+                        TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, Lang:t('you_passed'), "success", 5000)
+                        TriggerClientEvent('QBCore:Notify', source, (Lang:t('drivers_license_granted')):format(SearchedPlayer.PlayerData.source), "success", 5000)
                         break
                     end
                 end
             end
         else
-            TriggerClientEvent('QBCore:Notify', source, "Can't give permission for a drivers license, this person already has permission", "error")
+            TriggerClientEvent('QBCore:Notify', source, Lang:t('already_has_permission'), "error")
         end
     else
-        TriggerClientEvent('QBCore:Notify', source, "Player Not Online", "error")
+        TriggerClientEvent('QBCore:Notify', source, Lang:t('player_not_online'), "error")
     end
 end)
