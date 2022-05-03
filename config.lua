@@ -24,7 +24,7 @@ Config.Cityhalls = {
                 metadata = "driver"
             },
             ["weaponlicense"] = {
-                label = Lang:t('indo.weapons_license'),
+                label = Lang:t('info.weapons_license'),
                 cost = 50,
                 metadata = "weapon"
             },
