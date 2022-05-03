@@ -26,7 +26,7 @@ local function giveStarterItems()
             info.firstname = Player.PlayerData.charinfo.firstname
             info.lastname = Player.PlayerData.charinfo.lastname
             info.birthdate = Player.PlayerData.charinfo.birthdate
-            info.type = "Class C Driver License"
+            info.type = Lang:t('info.class_c_license')
         end
         Player.Functions.AddItem(v.item, 1, nil, info)
     end
@@ -104,7 +104,7 @@ RegisterNetEvent('qb-cityhall:server:getIDs', giveStarterItems)
 
 -- Commands
 
-QBCore.Commands.Add("drivinglicense", Lang:t('info.give_drivers_license'), {{"id", "ID of a person"}}, true, function(source, args)
+QBCore.Commands.Add("drivinglicense", Lang:t('info.give_drivers_license'), {{"id", Lang:t('person_id')}}, true, function(source, args)
     local Player = QBCore.Functions.GetPlayer(source)
     local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
     if SearchedPlayer then

@@ -27,7 +27,9 @@ local Translations = {
         garbage_collector = 'Recolector de basura',
         bus_driver = 'Chofer de autobús',
         email_sent = 'Un email ha sido enviado a las escuelas de manejo y serás contactad@ automáticamente',
-        give_drivers_license = 'Dar licencia de conducir a alguien'
+        give_drivers_license = 'Dar licencia de conducir a alguien',
+        class_c_license = 'Licencia de conducir Clase C',
+        person_id = 'Identificación de una persona'
     },
     email = {
         mr = 'Sr',

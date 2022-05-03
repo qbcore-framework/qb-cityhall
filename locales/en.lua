@@ -27,7 +27,9 @@ local Translations = {
         garbage_collector = 'Garbage Collector',
         bus_driver = 'Bus Driver',
         email_sent = 'An email has been sent to driving schools, and you will be contacted automatically',
-        give_drivers_license = 'Give a drivers license to someone'
+        give_drivers_license = 'Give a drivers license to someone',
+        class_c_license = 'Class C Driver License',
+        person_id = 'ID of a person'
     },
     email = {
         mr = 'Mr',
