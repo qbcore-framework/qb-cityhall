@@ -21,14 +21,14 @@ local Translations = {
         take_driving_lessons = 'Tomar clases de manejo',
         open_city_hall = 'Abrir municipalidad',
         trucker = 'Camionero',
-        taxi = 'Taxi',
-        tow_truck = 'Grúa',
+        taxi = 'Taxista',
+        tow_truck = 'Conductor de grúa',
         news_reporter = 'Reportero',
         garbage_collector = 'Recolector de basura',
         bus_driver = 'Chofer de autobús',
         email_sent = 'Un email ha sido enviado a las escuelas de manejo y serás contactad@ automáticamente',
         give_drivers_license = 'Dar licencia de conducir a alguien',
-        class_c_license = 'Licencia de conducir Clase C',
+        class_c_license = 'Licencia de conducir clase C',
         person_id = 'Identificación de una persona'
     },
     email = {
