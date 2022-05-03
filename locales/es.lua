@@ -11,14 +11,14 @@ local Translations = {
         id_card = 'Identificación',
         driver_license = 'Licencia de conducir',
         weaponlicense = 'Licencia de armas',
-        new_job = '¡Felicidades con tu nuevo trabajo! (%{job})'
+        new_job = '¡Felicidades por tu nuevo trabajo! (%{job})'
     },
     email = {
         mr = 'Sr',
         mrs = 'Sra',
         sender = 'Municipio',
         subject = 'Solicitud de clases de manejo',
-        message = 'Hola %{gender} %{lastname}<br /><br />Acabamos de recibir un mensaje de alguien que quiere tomar clases de manejo<br />Si estás dispuesto a enseñar, por favor contáctanos:<br />Nombre: <strong>%{firstname} %{lastname}</strong><br />Número de teléfono: <strong>%{phone}</strong><br/><br/>Saludos,<br />Municipio de Los Santos'
+        message = 'Hola %{gender} %{lastname}<br /><br />Acabamos de recibir un mensaje de alguien que quiere tomar clases de manejo.<br />Si estás dispuesto a enseñar, por favor contáctanos:<br />Nombre: <strong>%{firstname} %{lastname}</strong><br />Número de teléfono: <strong>%{phone}</strong><br/><br/>Un cordial saludo,<br />Municipio de Los Santos'
     }
 }
 
