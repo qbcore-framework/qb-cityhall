@@ -6,7 +6,7 @@ local Translations = {
         recived_license = 'Has recibido tu %{value} por $50'
     },
     info = {
-        bilp_text = 'Servicios de la ciudad',
+        blip_text = 'Servicios de la ciudad',
         city_services_menu = '[E] - Menu de servicios de la ciudad',
         id_card = 'Identificación',
         driver_license = 'Licencia de conducir',
