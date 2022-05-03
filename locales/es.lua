@@ -7,7 +7,7 @@ local Translations = {
     },
     info = {
         bilp_text = 'Servicios de la ciudad',
-        city_services_menu = '~g~E~w~ - Menu de servicios de la ciudad',
+        city_services_menu = '[E] - Menu de servicios de la ciudad',
         id_card = 'Identificación',
         driver_license = 'Licencia de conducir',
         weaponlicense = 'Licencia de armas',
