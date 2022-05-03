@@ -43,7 +43,7 @@ end)
 RegisterNetEvent('qb-cityhall:server:requestId', function(item, cost)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    if not Player.Functions.RemoveMoney("cash", cost) then return TriggerClientEvent('QBCore:Notify', src, (Lang:t('error.not_enough_money')):format(cost), 'error') end
+    if not Player.Functions.RemoveMoney("cash", cost) then return TriggerClientEvent('QBCore:Notify', src, Lang:t('error.not_enough_money', {cost = cost}), 'error') end
     local info = {}
     if item == "id_card" then
         info.citizenid = Player.PlayerData.citizenid
@@ -115,7 +115,7 @@ QBCore.Commands.Add("drivinglicense", Lang:t('info.give_drivers_license'), {{"id
                         SearchedPlayer.PlayerData.metadata["licences"]["driver"] = true
                         SearchedPlayer.Functions.SetMetaData("licences", SearchedPlayer.PlayerData.metadata["licences"])
                         TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, Lang:t('success.you_passed'), "success", 5000)
-                        TriggerClientEvent('QBCore:Notify', source, (Lang:t('success.drivers_license_granted')):format(SearchedPlayer.PlayerData.source), "success", 5000)
+                        TriggerClientEvent('QBCore:Notify', source, Lang:t('success.drivers_license_granted', {value = SearchedPlayer.PlayerData.source}), "success", 5000)
                         break
                     end
                 end
