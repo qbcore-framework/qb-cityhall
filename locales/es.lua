@@ -4,7 +4,7 @@ local Translations = {
         not_enough_money = 'No tienes suficiente dinero contigo, necesitas %s en efectivo',
     },
     success = {
-        recived_license = 'Has recibido tu %{value} por $50'
+        received_license = 'Has recibido tu %{value} por $%s'
     },
     info = {
         blip_text = 'Servicios de la ciudad',
