@@ -1,14 +1,14 @@
 local Translations = {
     error = {
         not_in_range = 'Estás muy lejos de la municipalidad',
-        not_enough_money = 'No tienes suficiente dinero contigo, necesitas %s en efectivo',
+        not_enough_money = 'No tienes suficiente dinero contigo, necesitas %{cost} en efectivo',
         exploit_attempt = 'Intento de explotación de abuso',
         already_has_permission = 'No se puede dar permiso para la licencia de conducir, esta persona ya tiene permiso'
     },
     success = {
-        received_license = 'Has recibido tu %{value} por $%s',
+        received_license = 'Has recibido tu %{value} por $%{value2}',
         you_passed = '¡Has pasado tu prueba! Recoge tu licencia de conducir en la municipalidad',
-        drivers_license_granted = 'El jugador con ID %s ha obtenido acceso para una licencia de conducir'
+        drivers_license_granted = 'El jugador con ID %{value} ha obtenido acceso para una licencia de conducir'
     },
     info = {
         blip_text = 'Servicios de la ciudad',
