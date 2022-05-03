@@ -2,15 +2,13 @@ local Translations = {
     error = {
         not_in_range = 'Estás muy lejos de la municipalidad',
         not_enough_money = 'No tienes suficiente dinero contigo, necesitas %s en efectivo',
-        exploit_attempt = 'Attempted exploit abuse',
-        already_has_permission = 'Can\'t give permission for a drivers license, this person already has permission',
-        
+        exploit_attempt = 'Intento de explotación de abuso',
+        already_has_permission = 'No se puede dar permiso para la licencia de conducir, esta persona ya tiene permiso'
     },
     success = {
         received_license = 'Has recibido tu %{value} por $%s',
-        you_passed = 'You have passed! Pick up your drivers license at the town hall',
-        drivers_license_granted = 'Player with ID %s has been granted access to a driving license',
-        
+        you_passed = '¡Has pasado tu prueba! Recoge tu licencia de conducir en la municipalidad',
+        drivers_license_granted = 'El jugador con ID %s ha obtenido acceso para una licencia de conducir'
     },
     info = {
         blip_text = 'Servicios de la ciudad',
@@ -29,7 +27,7 @@ local Translations = {
         garbage_collector = 'Recolector de basura',
         bus_driver = 'Chofer de autobús',
         email_sent = 'Un email ha sido enviado a las escuelas de manejo y serás contactad@ automáticamente',
-        give_drivers_license = 'Give a drivers license to someone',
+        give_drivers_license = 'Dar licencia de conducir a alguien'
     },
     email = {
         mr = 'Sr',
