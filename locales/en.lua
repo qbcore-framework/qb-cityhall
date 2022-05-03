@@ -1,17 +1,33 @@
 local Translations = {
     error = {
-        not_in_range = 'Too far from the city hall'
+        not_in_range = 'Too far from the city hall',
+        not_enough_money = 'You don\'t have enough money on you, you need %s cash',
+        exploit_attempt = 'Attempted exploit abuse',
+        already_has_permission = 'Can\'t give permission for a drivers license, this person already has permission',
     },
     success = {
-        recived_license = 'You have recived your %{value} for $50'
+        received_license = 'You have recived your %{value} for $%s',
+        you_passed = 'You have passed! Pick up your drivers license at the town hall',
+        drivers_license_granted = 'Player with ID %s has been granted access to a driving license'
     },
     info = {
-        bilp_text = 'City Services',
-        city_services_menu = '~g~E~w~ - City Services Menu',
+        blip_text = 'City Services',
+        city_services_menu = '[E] - City Services Menu',
         id_card = 'ID Card',
-        driver_license = 'Drivers License',
-        weaponlicense = 'Firearms License',
-        new_job = 'Congratulations with your new job! (%{job})'
+        drivers_license = 'Drivers License',
+        weapons_license = 'Firearms License',
+        new_job = 'Congratulations with your new job! (%{job})',
+        driving_school = 'Driving School',
+        take_driving_lessons = 'Take Driving Lessons',
+        open_city_hall = 'Open City Hall',
+        trucker = 'Trucker',
+        taxi = 'Taxi',
+        tow_truck = 'Tow Truck',
+        news_reporter = 'News Reporter',
+        garbage_collector = 'Garbage Collector',
+        bus_driver = 'Bus Driver',
+        email_sent = 'An email has been sent to driving schools, and you will be contacted automatically',
+        give_drivers_license = 'Give a drivers license to someone'
     },
     email = {
         mr = 'Mr',
