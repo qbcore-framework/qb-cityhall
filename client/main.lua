@@ -138,7 +138,7 @@ local function spawnPeds()
                 }
             elseif current.cityhall then
                 opts = {
-                    label = 'Open Cityhall',
+                    label = Lang:t('info.open_city_hall'),
                     icon = 'fa-solid fa-city',
                     action = function()
                         inRangeCityhall = true
