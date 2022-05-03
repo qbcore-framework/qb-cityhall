@@ -11,7 +11,8 @@ local Translations = {
         id_card = 'Identificación',
         driver_license = 'Licencia de conducir',
         weaponlicense = 'Licencia de armas',
-        new_job = '¡Felicidades por tu nuevo trabajo! (%{job})'
+        new_job = '¡Felicidades por tu nuevo trabajo! (%{job})',
+        driving_school = 'Escuela de manejo'
     },
     email = {
         mr = 'Sr',
