@@ -114,16 +114,16 @@ QBCore.Commands.Add("drivinglicense", Lang:t('info.give_drivers_license'), {{"id
                     if Config.DrivingSchools[i].instructors[id] == Player.PlayerData.citizenid then
                         SearchedPlayer.PlayerData.metadata["licences"]["driver"] = true
                         SearchedPlayer.Functions.SetMetaData("licences", SearchedPlayer.PlayerData.metadata["licences"])
-                        TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, Lang:t('you_passed'), "success", 5000)
-                        TriggerClientEvent('QBCore:Notify', source, (Lang:t('drivers_license_granted')):format(SearchedPlayer.PlayerData.source), "success", 5000)
+                        TriggerClientEvent('QBCore:Notify', SearchedPlayer.PlayerData.source, Lang:t('success.you_passed'), "success", 5000)
+                        TriggerClientEvent('QBCore:Notify', source, (Lang:t('success.drivers_license_granted')):format(SearchedPlayer.PlayerData.source), "success", 5000)
                         break
                     end
                 end
             end
         else
-            TriggerClientEvent('QBCore:Notify', source, Lang:t('already_has_permission'), "error")
+            TriggerClientEvent('QBCore:Notify', source, Lang:t('error.already_has_permission'), "error")
         end
     else
-        TriggerClientEvent('QBCore:Notify', source, Lang:t('player_not_online'), "error")
+        TriggerClientEvent('QBCore:Notify', source, Lang:t('error.player_not_online'), "error")
     end
 end)
