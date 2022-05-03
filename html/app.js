@@ -81,7 +81,7 @@ $(document).on("click", ".identity-page-block", function(e){
         $(".hover-description").fadeIn(10);
         selectedIdentity = this;
         $(".request-identity-button").fadeIn(100);
-        $(".request-identity-button").html(`<p>Buy $${selectedIdentityCost}</p>`);
+        $(".request-identity-button").html("<p>Buy</p>");
     } else if (selectedIdentity == this) {
         $(this).removeClass("identity-selected");
         selectedIdentity = null;
@@ -90,7 +90,7 @@ $(document).on("click", ".identity-page-block", function(e){
         $(selectedIdentity).removeClass("identity-selected");
         $(this).addClass("identity-selected");
         selectedIdentity = this;
-        $(".request-identity-button").html("<p>Buy</p>");
+        $(".request-identity-button").html(`<p>Buy $${selectedIdentityCost}</p>`);
     }
 });
 
