@@ -5,7 +5,7 @@ local availableJobs = {
     ["tow"] = Lang:t('info.tow_truck'),
     ["reporter"] = Lang:t('info.news_reporter'),
     ["garbage"] = Lang:t('info.garbage_collector'),
-    ["bus"] = Lang:t('info.bus_driver'),
+    ["bus"] = Lang:t('info.bus_driver')
 }
 
 -- Functions
@@ -104,7 +104,7 @@ RegisterNetEvent('qb-cityhall:server:getIDs', giveStarterItems)
 
 -- Commands
 
-QBCore.Commands.Add("drivinglicense", Lang:t('info.give_drivers_license'), {{"id", Lang:t('person_id')}}, true, function(source, args)
+QBCore.Commands.Add("drivinglicense", Lang:t('info.give_drivers_license'), {{"id", Lang:t('info.person_id')}}, true, function(source, args)
     local Player = QBCore.Functions.GetPlayer(source)
     local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
     if SearchedPlayer then
