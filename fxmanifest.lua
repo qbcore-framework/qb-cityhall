@@ -8,7 +8,7 @@ ui_page 'html/index.html'
 
 shared_scripts {
     '@qb-core/shared/locale.lua',
-    'locales/es.lua',
+    'locales/en.lua',
     'config.lua'
 }
 
