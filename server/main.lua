@@ -34,7 +34,7 @@ end
 
 -- Callbacks
 
-QBCore.Functions.CreateCallback('qb-cityhall:server:receiveJobs', function(source, cb)
+QBCore.Functions.CreateCallback('qb-cityhall:server:receiveJobs', function(_, cb)
     cb(availableJobs)
 end)
 
