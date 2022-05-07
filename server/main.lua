@@ -13,7 +13,7 @@ local availableJobs = {
 local function giveStarterItems()
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then return end
-    for k, v in pairs(QBCore.Shared.StarterItems) do
+    for _, v in pairs(QBCore.Shared.StarterItems) do
         local info = {}
         if v.item == "id_card" then
             info.citizenid = Player.PlayerData.citizenid
@@ -34,7 +34,7 @@ end
 
 -- Callbacks
 
-QBCore.Functions.CreateCallback('qb-cityhall:server:receiveJobs', function(source, cb)
+QBCore.Functions.CreateCallback('qb-cityhall:server:receiveJobs', function(_, cb)
     cb(availableJobs)
 end)
 
