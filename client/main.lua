@@ -249,7 +249,7 @@ end)
 RegisterNUICallback('requestId', function(id)
     local license = Config.Cityhalls[closestCityhall].licenses[id.type]
     if inRangeCityhall and license and id.cost == license.cost then
-        TriggerServerEvent('qb-cityhall:server:requestId', id.type, id.cost)
+        TriggerServerEvent('qb-cityhall:server:requestId', id.type, closestCityhall)
         QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, id.cost), 'success', 3500)
     else
         QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
