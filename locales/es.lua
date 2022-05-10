@@ -6,7 +6,7 @@ local Translations = {
         already_has_permission = 'No se puede dar permiso para la licencia de conducir, esta persona ya tiene permiso'
     },
     success = {
-        received_license = 'Has recibido tu %{value} por $%{value2}',
+        received_license = 'Has recibido tu %{value} de $%{value2}',
         you_passed = '¡Has pasado tu prueba! Recoge tu licencia de conducir en la municipalidad',
         drivers_license_granted = 'El jugador con ID %{value} ha obtenido acceso para una licencia de conducir'
     },
