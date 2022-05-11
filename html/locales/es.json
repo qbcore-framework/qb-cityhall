@@ -1,5 +1,5 @@
 {
-	"buy": "Comprar ${{value}}",
+	"buy": "Comprar por ${{value}}",
 	"cityhall": "Municipalidad",
 	"identity": "Identidad",
 	"employment": "Trabajo",
