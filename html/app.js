@@ -1,3 +1,21 @@
+i18next
+.use(i18nextHttpBackend)
+.init({
+    debug: false,
+    lng: 'en',
+    backend: {
+        loadPath: 'locales/{{lng}}.json'
+    }
+}, function(err, t) {
+        // for options see
+        // https://github.com/i18next/jquery-i18next#initialize-the-plugin
+        jqueryI18next.init(i18next, $);
+
+        // start localizing, details:
+        // https://github.com/i18next/jquery-i18next#usage-of-selector-function
+        $('.container').localize();
+});
+
 let mouseOver = false;
 let selectedIdentity = null;
 let selectedIdentityType = null;
@@ -5,11 +23,11 @@ let selectedIdentityCost = null;
 let selectedJob = null;
 let selectedJobId = null;
 
-Open = function() {
+const Open = function() {
     $(".container").fadeIn(150);
 }
 
-Close = function() {
+const Close = function() {
     $(".container").fadeOut(150, function(){
         ResetPages();
     });
@@ -18,14 +36,14 @@ Close = function() {
     $(selectedIdentity).removeClass("job-selected");
 }
 
-SetJobs = function(jobs) {
+const SetJobs = function(jobs) {
     $.each(jobs, (job, name) => {
         let html = `<div class="job-page-block" data-job="${job}"><p>${name}</p></div>`;
         $('.job-page-blocks').append(html);
     })
 }
 
-ResetPages = function() {
+const ResetPages = function() {
     $(".cityhall-option-blocks").show();
     $(".cityhall-identity-page").hide();
     $(".cityhall-job-page").hide();
@@ -81,7 +99,7 @@ $(document).on("click", ".identity-page-block", function(e){
         $(".hover-description").fadeIn(10);
         selectedIdentity = this;
         $(".request-identity-button").fadeIn(100);
-        $(".request-identity-button").html(`<p>Buy $${selectedIdentityCost}</p>`);
+        $(".request-identity-button").html("<p>" + i18next.t('buy', { value: selectedIdentityCost }) + "</p>");
     } else if (selectedIdentity == this) {
         $(this).removeClass("identity-selected");
         selectedIdentity = null;
@@ -90,7 +108,7 @@ $(document).on("click", ".identity-page-block", function(e){
         $(selectedIdentity).removeClass("identity-selected");
         $(this).addClass("identity-selected");
         selectedIdentity = this;
-        $(".request-identity-button").html(`<p>Buy $${selectedIdentityCost}</p>`);
+        $(".request-identity-button").html("<p>" + i18next.t('buy', { value: selectedIdentityCost }) + "</p>");
     }
 });
 
