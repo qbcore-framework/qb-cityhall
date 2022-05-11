@@ -2,7 +2,7 @@ i18next
 .use(i18nextHttpBackend)
 .init({
     debug: false,
-    lng: 'en',
+    lng: 'en', // Change JS/HTML language
     backend: {
         loadPath: 'locales/{{lng}}.json'
     }
