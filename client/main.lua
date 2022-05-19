@@ -241,12 +241,13 @@ end)
 
 -- NUI Callbacks
 
-RegisterNUICallback('close', function()
+RegisterNUICallback('close', function(_, cb)
     setCityhallPageState(false, false)
     if not Config.UseTarget and inRangeCityhall then exports['qb-core']:DrawText('[E] Open Cityhall') end -- Reopen interaction when you're still inside the zone
+    cb('ok')
 end)
 
-RegisterNUICallback('requestId', function(id)
+RegisterNUICallback('requestId', function(id, cb)
     local license = Config.Cityhalls[closestCityhall].licenses[id.type]
     if inRangeCityhall and license and id.cost == license.cost then
         TriggerServerEvent('qb-cityhall:server:requestId', id.type, closestCityhall)
@@ -254,6 +255,7 @@ RegisterNUICallback('requestId', function(id)
     else
         QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
     end
+    cb('ok')
 end)
 
 RegisterNUICallback('requestLicenses', function(_, cb)
@@ -267,12 +269,13 @@ RegisterNUICallback('requestLicenses', function(_, cb)
     cb(availableLicenses)
 end)
 
-RegisterNUICallback('applyJob', function(job)
+RegisterNUICallback('applyJob', function(job, cb)
     if inRangeCityhall then
         TriggerServerEvent('qb-cityhall:server:ApplyJob', job, Config.Cityhalls[closestCityhall].coords)
     else
         QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
     end
+    cb('ok')
 end)
 
 -- Threads
