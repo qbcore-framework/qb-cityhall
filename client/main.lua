@@ -158,7 +158,9 @@ local function spawnPeds()
                 local zone = BoxZone:Create(current.coords.xyz, options.length, options.width, {
                     name = "zone_cityhall_"..ped,
                     heading = current.coords.w,
-                    debugPoly = false
+                    debugPoly = false,
+                    minZ = current.coords.z - 3.0,
+                    maxZ = current.coords.z + 2.0
                 })
                 zone:onPlayerInOut(function(inside)
                     if isLoggedIn and closestCityhall and closestDrivingSchool then
