@@ -110,7 +110,7 @@ RegisterNetEvent('qb-cityhall:server:getIDs', giveStarterItems)
 
 -- Commands
 
-QBCore.Commands.Add("drivinglicense", "Give a drivers license to someone", {{"id", "ID of a person"}}, true, function(source, args)
+QBCore.Commands.Add("givelicense", "Give a drivers license to someone", {{"id", "ID of a person"}}, true, function(source, args)
     local Player = QBCore.Functions.GetPlayer(source)
     local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
     if SearchedPlayer then

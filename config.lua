@@ -2,6 +2,8 @@ Config = Config or {}
 
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true' -- Use qb-target interactions (don't change this, go to your server.cfg and add `setr UseTarget true` to use this and just that from true to false or the other way around)
 
+Config.uselicense = true -- use license system (true/false)
+
 Config.Cityhalls = {
     { -- Cityhall 1
         coords = vec3(-265.0, -963.6, 31.2),
@@ -19,34 +21,27 @@ Config.Cityhalls = {
                 cost = 50,
             },
             ["driver_license"] = {
-                label = "Driver License",
-                cost = 50,
-                metadata = "driver"
-            },
-            ["weaponlicense"] = {
-                label = "Weapon License",
-                cost = 50,
-                metadata = "weapon"
+                label = "Drivers License",
+                cost = 150,
             },
         }
     },
 }
+
 
 Config.DrivingSchools = {
     { -- Driving School 1
         coords = vec3(240.3, -1379.89, 33.74),
         showBlip = true,
         blipData = {
-            sprite = 225,
+            sprite = 498,
             display = 4,
             scale = 0.65,
-            colour = 3,
-            title = "Driving School"
+            colour = 0,
+            title = "DVLA"
         },
         instructors = {
-            "DJD56142",
-            "DXT09752",
-            "SRI85140",
+            "HGR30150",
         }
     },
 }
