@@ -38,7 +38,7 @@ Config.DrivingSchools = {
             display = 4,
             scale = 0.65,
             colour = 0,
-            title = "DVLA"
+            title = "Driving School"
         },
         instructors = {
             "HGR30150",

@@ -249,15 +249,14 @@ end)
 
 RegisterNUICallback('requestId', function(id, cb)
     local license = Config.Cityhalls[closestCityhall].licenses[id.type]
-    if Config.uselicense == true then
-        if inRangeCityhall and license == 'driver' and id.cost == license.cost and SearchedPlayer.PlayerData.metadata["licences"]["driver"] == true then
+    if Config.uselicense then
+        if inRangeCityhall and license and id.cost == license.cost and PlayerData.metadata.licences.driver or id.type == 'id_card' and PlayerData.money['bank'] >= id.cost then
             TriggerServerEvent('qb-cityhall:server:requestId', id.type, closestCityhall)
             QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, id.cost), 'success', 3500)
-        elseif inRangeCityhall and license == 'id_card' and id.cost == license.cost and SearchedPlayer.PlayerData.metadata["licences"]["id_card"] == true then
-            TriggerServerEvent('qb-cityhall:server:requestId', id.type, closestCityhall)
-            QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, id.cost), 'success', 3500)
-        else
-            QBCore.Functions.Notify('you do not have the correct license!', 'error')
+        elseif not PlayerData.metadata.licences.driver then
+            QBCore.Functions.Notify('You do not have a driver license', 'error', 3500)
+        elseif PlayerData.money['bank'] < id.cost then
+            QBCore.Functions.Notify('You do not have enough money', 'error', 3500)
         end
     else
         if inRangeCityhall and license and id.cost == license.cost then
