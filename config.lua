@@ -20,7 +20,7 @@ Config.Cityhalls = {
                 label = "ID Card",
                 cost = 50,
             },
-            ["driver_license"] = {
+            ["driving_license"] = {
                 label = "Drivers License",
                 cost = 150,
             },
