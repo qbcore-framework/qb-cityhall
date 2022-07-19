@@ -158,9 +158,7 @@ local function spawnPeds()
                 local zone = BoxZone:Create(current.coords.xyz, options.length, options.width, {
                     name = "zone_cityhall_"..ped,
                     heading = current.coords.w,
-                    debugPoly = false,
-                    minZ = current.coords.z - 3.0,
-                    maxZ = current.coords.z + 2.0
+                    debugPoly = false
                 })
                 zone:onPlayerInOut(function(inside)
                     if isLoggedIn and closestCityhall and closestDrivingSchool then
@@ -251,11 +249,22 @@ end)
 
 RegisterNUICallback('requestId', function(id, cb)
     local license = Config.Cityhalls[closestCityhall].licenses[id.type]
-    if inRangeCityhall and license and id.cost == license.cost then
-        TriggerServerEvent('qb-cityhall:server:requestId', id.type, closestCityhall)
-        QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, id.cost), 'success', 3500)
+    if Config.uselicense then
+        if inRangeCityhall and license and id.cost == license.cost and PlayerData.metadata.licences.driver or id.type == 'id_card' and PlayerData.money['bank'] >= id.cost then
+            TriggerServerEvent('qb-cityhall:server:requestId', id.type, closestCityhall)
+            QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, id.cost), 'success', 3500)
+        elseif not PlayerData.metadata.licences.driver then
+            QBCore.Functions.Notify('You do not have a driver license', 'error', 3500)
+        elseif PlayerData.money['bank'] < id.cost then
+            QBCore.Functions.Notify('You do not have enough money', 'error', 3500)
+        end
     else
-        QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
+        if inRangeCityhall and license and id.cost == license.cost then
+            TriggerServerEvent('qb-cityhall:server:requestId', id.type, closestCityhall)
+            QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, id.cost), 'success', 3500)
+        else
+            QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
+        end
     end
     cb('ok')
 end)
