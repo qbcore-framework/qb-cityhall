@@ -8,7 +8,7 @@ body {
 
 .container {
     display: none;
-    height: 100vh;
+    height: 110vh;
 }
 
 .cityhall-main-container{
@@ -32,23 +32,23 @@ body {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     font-size: 6vh;
-    color: #ededed;
+    color: #FFFFFF;
     line-height: 10vh;
     width: 97vh;
     top: 2vh;
     left: 1.5vh;
     border-radius: 2vh;
     height: 10vh;
-    background: #dc143c;
+    background: #ff003e;
 }
 
 .cityhall-option-blocks {
     position: relative;
-    height: 33vh;
-    width: 65vh;
+    height: 30vh;
+    width: 75vh;
     margin: 0 auto;
     top: 13vh;
-    border-radius: 1vh;
+    border-radius: 4vh;
     /*background: rgba(37, 37, 37, 0.418)*/
     
 }
@@ -60,7 +60,7 @@ body {
     width: 80vh;
     margin: 0 auto;
     top: 10vh;
-    border-radius: 1vh;
+    border-radius: 4vh;
     background: rgba(37, 37, 37, 0.418)
 }
 
@@ -91,14 +91,14 @@ body {
 }
 
 .cityhall-option-block:hover {
-    border-bottom: 9px solid #dc143c;
+    border-bottom: 9px solid #ff003e;;
     opacity: 0.9;
 }
 
 .cityhall-option-block > i {
     font-size: 16vh;
     line-height: 21vh;
-    color: #dc143c;
+    color: #ff003e;;
 }
 
 .cityhall-option-block > p {
@@ -144,7 +144,7 @@ body {
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 0.1vh;
-    color: #ededed;
+    color: #FFFFFF;
     font-size: 1.6vh;
 }
 
@@ -159,14 +159,14 @@ body {
 }
 
 .hover-description > p {
-    color: white;
+    color: #FFFFFF;
     font-family: 'Poppins', sans-serif;
     font-size: 1.3vh;
 }
 
 .identity-selected {
-    border-bottom: 0px solid #fff;
-    border-left: 0.5vh solid #ededed;
+    border-bottom: 0px solid #FFFFFF;
+    border-left: 0.5vh solid #FFFFFF;
 }
 
 .request-identity-button {
@@ -177,12 +177,12 @@ body {
     margin: 1vh;
     width: 20vh;
     height: 5vh;
-    background: #28A745;
+    background: #25a745;
     border-radius: 0.5vh;
 }
 
 .request-identity-button > p {
-    color: #ededed;
+    color: #FFFFFF;
     text-align: center;
     font-family: sans-serif;
     text-transform: uppercase;
@@ -212,7 +212,7 @@ body {
 }
 
 .job-page-block:hover {
-    background: #ededed;
+    background: #FFFFFF;
 }
 
 .job-page-block > p:hover {
@@ -227,7 +227,7 @@ body {
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 0.1vh;
-    color: #ededed;
+    color: #FFFFFF;
     font-size: 1.6vh;
 }
 
@@ -248,7 +248,7 @@ body {
 }
 
 .apply-job-button > p {
-    color: #ededed;
+    color: #FFFFFF;
     text-align: center;
     font-family: sans-serif;
     text-transform: uppercase;
@@ -259,7 +259,7 @@ body {
 }
 
 .job-selected {
-    border-left: 0.5vh solid #ededed;
+    border-left: 0.5vh solid #FFFFFF;
 }
 
 .back-to-main {
@@ -269,13 +269,13 @@ body {
     margin: 1vh;
     width: 20vh;
     height: 5vh;
-    background: #dc143c;
+    background: #ff003e;;
     border-radius: 0.5vh;
     transition: all 0.1s linear;
 }
 
 .back-to-main > p {
-    color: #ededed;
+    color: #FFFFFF;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     text-transform: uppercase;
