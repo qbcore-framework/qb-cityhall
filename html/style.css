@@ -8,7 +8,7 @@ body {
 
 .container {
     display: none;
-    height: 110vh;
+    height: 100vh;
 }
 
 .cityhall-main-container{
@@ -32,23 +32,24 @@ body {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     font-size: 6vh;
-    color: #FFFFFF;
+    color: #ededed;
     line-height: 10vh;
     width: 97vh;
     top: 2vh;
     left: 1.5vh;
     border-radius: 2vh;
     height: 10vh;
-    background: #ff003e;
+    background-image: radial-gradient( circle farthest-corner at 7.2% 19%,  rgba(120,0,0,1) 0%, rgba(239,75,75,1) 100.2% );
+    cursor: none;
 }
 
 .cityhall-option-blocks {
     position: relative;
-    height: 30vh;
-    width: 75vh;
+    height: 33vh;
+    width: 65vh;
     margin: 0 auto;
     top: 13vh;
-    border-radius: 4vh;
+    border-radius: 1vh;
     /*background: rgba(37, 37, 37, 0.418)*/
     
 }
@@ -60,7 +61,7 @@ body {
     width: 80vh;
     margin: 0 auto;
     top: 10vh;
-    border-radius: 4vh;
+    border-radius: 1vh;
     background: rgba(37, 37, 37, 0.418)
 }
 
@@ -86,19 +87,22 @@ body {
     top: 1vh;
     text-align: center;
     border-bottom: 6px solid rgba(255, 255, 255, 0);
-    transition: all 0.2s linear;
+    background-image: linear-gradient(to left,#b4ceff,#e1ebf8,#c76356);
+    background-size: 200%;
+    transition: 0.6s;
     border-radius: 1vh;
+    cursor: pointer;
 }
 
 .cityhall-option-block:hover {
-    border-bottom: 9px solid #ff003e;;
-    opacity: 0.9;
+    background-position: right;
+    transform: scale(1.03);
 }
 
 .cityhall-option-block > i {
     font-size: 16vh;
     line-height: 21vh;
-    color: #ff003e;;
+    color: #dc143c;
 }
 
 .cityhall-option-block > p {
@@ -120,31 +124,35 @@ body {
 .identity-page-block {
     width: 100%;
     height: 15%;
-    background: #2873A7;
-    transition: all 0.1s ease-in-out;
+    background-image: radial-gradient( circle 860px at 11.8% 33.5%,  rgba(240,30,92,1) 0%, rgba(244,49,74,1) 30.5%, rgba(249,75,37,1) 56.1%, rgba(250,88,19,1) 75.6%, rgba(253,102,2,1) 100.2% );
+    box-shadow: inset 0 0 0 0 rgb(187, 187, 187);
+    transition: ease-out 0.3s;
     border-radius: 0.5vh;
     /* border-bottom: 2px solid rgba(255, 255, 255, 0); */
 }
 
 .identity-page-block:hover {
-    background: #ededed;
-    transition: ease-in 0.3s;
+   box-shadow: inset 219px 0 10px 0 #ededed;
+   cursor: pointer;
+   transform: scale(1.03);
+   color: #000;
 }
 
 .identity-page-block > p:hover {
-    color: #2873A7;
-    transition: ease-in 0.3s;
+    font-weight: 600;
+    color: black;
 }
 
 .identity-page-block > p {
     position: relative;
+    transition: ease-out 0.3s;
     text-align: center;
     line-height: 6vh;
     font-family: 'Poppins', sans-serif;
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 0.1vh;
-    color: #FFFFFF;
+    color: #ededed;
     font-size: 1.6vh;
 }
 
@@ -159,14 +167,15 @@ body {
 }
 
 .hover-description > p {
-    color: #FFFFFF;
+    color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 1.3vh;
 }
 
 .identity-selected {
-    border-bottom: 0px solid #FFFFFF;
-    border-left: 0.5vh solid #FFFFFF;
+    border-bottom: 0px solid #fff;
+    border-left: 0.3vh solid #ededed;
+    box-shadow: inset 0 0 10px 0 white;
 }
 
 .request-identity-button {
@@ -177,12 +186,20 @@ body {
     margin: 1vh;
     width: 20vh;
     height: 5vh;
-    background: #25a745;
+    background-image: linear-gradient(to left,#C4E538,#009432,#C4E538);
+    background-size: 200%;
+    transition: 0.6s;
     border-radius: 0.5vh;
+    cursor: pointer;
+}
+
+.request-identity-button:hover{
+    background-position: right;
+    transform: scale(1.03);
 }
 
 .request-identity-button > p {
-    color: #FFFFFF;
+    color: #ededed;
     text-align: center;
     font-family: sans-serif;
     text-transform: uppercase;
@@ -204,22 +221,12 @@ body {
 
 .job-page-block {
     width: 100%;
-    height: 5vh;
-    background: #2873A7;
+    height: 5.5vh;
+    background-image: radial-gradient( circle 860px at 11.8% 33.5%,  rgba(240,30,92,1) 0%, rgba(244,49,74,1) 30.5%, rgba(249,75,37,1) 56.1%, rgba(250,88,19,1) 75.6%, rgba(253,102,2,1) 100.2% );
     border-radius: 0.5vh;
-    transition: all 0.1s ease-in-out;
-    border-bottom: 2px solid rgba(255, 255, 255, 0);
-}
-
-.job-page-block:hover {
-    background: #FFFFFF;
-}
-
-.job-page-block > p:hover {
-    color: #2873A7;
-}
-
-.job-page-block > p {
+    box-shadow: inset 0 0 0 0 rgb(187, 187, 187);
+    transition: ease-out 0.3s;
+    cursor: pointer;
     position: relative;
     text-align: center;
     line-height: 2.5vh;
@@ -227,8 +234,17 @@ body {
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 0.1vh;
-    color: #FFFFFF;
+    color: #ededed;
     font-size: 1.6vh;
+}
+
+.job-page-block:hover{
+    box-shadow: inset 250px 0 10px 0 #ededed;
+    cursor: pointer;
+    transform: scale(1.03);
+    font-weight: 600;
+    color: black;
+    transition: ease-out 0.3s;
 }
 
 .apply-job-button {
@@ -239,16 +255,20 @@ body {
     margin: 1vh;
     width: 20vh;
     height: 5vh;
-    background: #28A745;
+    background-image: linear-gradient(to left,#C4E538,#009432,#C4E538);
+    background-size: 200%;
+    transition: 0.6s;
     border-radius: 0.5vh;
+    cursor: pointer;
 }
 
 .apply-job-button:hover {
-    background: #28A745;
+    background-position: right;
+    transform: scale(1.03);
 }
 
 .apply-job-button > p {
-    color: #FFFFFF;
+    color: #ededed;
     text-align: center;
     font-family: sans-serif;
     text-transform: uppercase;
@@ -259,7 +279,9 @@ body {
 }
 
 .job-selected {
-    border-left: 0.5vh solid #FFFFFF;
+    border-left: 0.3vh solid #ededed;
+    box-shadow: inset 0 0 10px 0 white;
+    border-bottom: 0px solid #fff;
 }
 
 .back-to-main {
@@ -269,13 +291,20 @@ body {
     margin: 1vh;
     width: 20vh;
     height: 5vh;
-    background: #ff003e;;
+    background-image: linear-gradient(to left,#FFC312,#EE5A24,#FFC312);
     border-radius: 0.5vh;
-    transition: all 0.1s linear;
+    background-size: 200%;
+    transition: 0.6s;
+    cursor: pointer;
+}
+
+.back-to-main:hover{
+    background-position: right;
+    transform: scale(1.03);
 }
 
 .back-to-main > p {
-    color: #FFFFFF;
+    color: #ededed;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     text-transform: uppercase;
