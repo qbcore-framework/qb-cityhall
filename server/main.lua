@@ -9,6 +9,15 @@ local availableJobs = {
     ["hotdog"] = "Hot Dog Stand"
 }
 
+-- Exports
+
+local function AddCityJob(jobName, label)
+    availableJobs[jobName] = label
+    return true, "success"
+end
+
+exports('AddCityJob', AddCityJob)
+
 -- Functions
 
 local function giveStarterItems()
