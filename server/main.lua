@@ -12,7 +12,7 @@ local availableJobs = {
 -- Exports
 
 local function AddCityJob(jobName, label)
-    if availableJobs[jobName] ~= nil then 
+    if availableJobs[jobName] ~= nil then
         return false, "already added"
     else
         availableJobs[jobName] = label
