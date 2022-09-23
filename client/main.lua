@@ -138,7 +138,7 @@ local function spawnPeds()
                 }
             elseif current.cityhall then
                 opts = {
-                    label = Lang:t('info.open_city_hall'),
+                    label = Lang:t('info.city_services_menu'),
                     icon = 'fa-solid fa-city',
                     action = function()
                         inRangeCityhall = true
@@ -170,7 +170,7 @@ local function spawnPeds()
                                 exports['qb-core']:DrawText(Lang:t('info.take_driving_lessons'))
                             elseif current.cityhall then
                                 inRangeCityhall = true
-                                exports['qb-core']:DrawText(Lang:t('info.open_cityhall'))
+                                exports['qb-core']:DrawText(Lang:t('info.city_services_menu'))
                             end
                         else
                             exports['qb-core']:HideText()
@@ -245,7 +245,7 @@ end)
 
 RegisterNUICallback('close', function(_, cb)
     setCityhallPageState(false, false)
-    if not Config.UseTarget and inRangeCityhall then exports['qb-core']:DrawText(Lang:t('info.open_cityhall')) end -- Reopen interaction when you're still inside the zone
+    if not Config.UseTarget and inRangeCityhall then exports['qb-core']:DrawText(Lang:t('info.city_services_menu')) end -- Reopen interaction when you're still inside the zone
     cb('ok')
 end)
 

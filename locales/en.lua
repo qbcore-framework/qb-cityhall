@@ -19,7 +19,6 @@ local Translations = {
         weaponlicense = 'Firearms License',
         new_job = 'Congratulations with your new job! (%{job})',
         take_driving_lessons = '[E] Take Driving Lessons',
-        open_cityhall = '[E] Open Cityhall',
         class_c_license = 'Class C Driver License',
         email_sent = 'An email has been sent to driving schools, and you will be contacted automatically',
         give_drivers_license = 'Give a drivers license to someone',
