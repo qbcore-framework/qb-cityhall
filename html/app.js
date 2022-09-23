@@ -3,7 +3,7 @@ i18next
 .init({
     debug: false,
     fallbackLng: 'en',
-    lng: 'es', // Change JS/HTML language
+    lng: 'en', // Change JS/HTML language
     backend: {
         loadPath: 'locales/{{lng}}.json'
     }
