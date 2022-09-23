@@ -130,7 +130,7 @@ local function spawnPeds()
             local opts = nil
             if current.drivingschool then
                 opts = {
-                    label = 'Take Driving Lessons',
+                    label = Lang:t('info.take_driving_lessons'),
                     icon = 'fa-solid fa-car-side',
                     action = function()
                         TriggerServerEvent('qb-cityhall:server:sendDriverTest', Config.DrivingSchools[closestDrivingSchool].instructors)
@@ -138,7 +138,7 @@ local function spawnPeds()
                 }
             elseif current.cityhall then
                 opts = {
-                    label = 'Open Cityhall',
+                    label = Lang:t('info.open_city_hall'),
                     icon = 'fa-solid fa-city',
                     action = function()
                         inRangeCityhall = true
@@ -167,10 +167,10 @@ local function spawnPeds()
                         if inside then
                             if current.drivingschool then
                                 inRangeDrivingSchool = true
-                                exports['qb-core']:DrawText('[E] Take Driving Lessons')
+                                exports['qb-core']:DrawText(Lang:t('info.take_driving_lessons'))
                             elseif current.cityhall then
                                 inRangeCityhall = true
-                                exports['qb-core']:DrawText('[E] Open Cityhall')
+                                exports['qb-core']:DrawText(Lang:t('info.open_cityhall'))
                             end
                         else
                             exports['qb-core']:HideText()
@@ -245,7 +245,7 @@ end)
 
 RegisterNUICallback('close', function(_, cb)
     setCityhallPageState(false, false)
-    if not Config.UseTarget and inRangeCityhall then exports['qb-core']:DrawText('[E] Open Cityhall') end -- Reopen interaction when you're still inside the zone
+    if not Config.UseTarget and inRangeCityhall then exports['qb-core']:DrawText(Lang:t('info.open_cityhall')) end -- Reopen interaction when you're still inside the zone
     cb('ok')
 end)
 
@@ -253,7 +253,7 @@ RegisterNUICallback('requestId', function(id, cb)
     local license = Config.Cityhalls[closestCityhall].licenses[id.type]
     if inRangeCityhall and license and id.cost == license.cost then
         TriggerServerEvent('qb-cityhall:server:requestId', id.type, closestCityhall)
-        QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, id.cost), 'success', 3500)
+        QBCore.Functions.Notify((Lang:t('success.recived_license')):format(license.label, id.cost), 'success', 3500)
     else
         QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
     end

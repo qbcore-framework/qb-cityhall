@@ -11,21 +11,21 @@ Config.Cityhalls = {
             display = 4,
             scale = 0.65,
             colour = 0,
-            title = "City Services"
+            title = Lang:t('info.bilp_text')
         },
         licenses = {
             ["id_card"] = {
-                label = "ID Card",
+                label = Lang:t('info.id_card'),
                 cost = 50,
             },
             ["driver_license"] = {
-                label = "Driver License",
-                cost = 50,
+                label = Lang:t('info.driver_license'),
+                cost = 100,
                 metadata = "driver"
             },
             ["weaponlicense"] = {
-                label = "Weapon License",
-                cost = 50,
+                label = Lang:t('info.weaponlicense'),
+                cost = 150,
                 metadata = "weapon"
             },
         }
@@ -41,7 +41,7 @@ Config.DrivingSchools = {
             display = 4,
             scale = 0.65,
             colour = 3,
-            title = "Driving School"
+            title = Lang:t('info.driving_school')
         },
         instructors = {
             "DJD56142",

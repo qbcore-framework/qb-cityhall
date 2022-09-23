@@ -24,7 +24,8 @@ client_scripts {
 files {
     'html/*.js',
     'html/*.html',
-    'html/*.css'
+    'html/*.css',
+    'html/locales/*.json'
 }
 
 lua54 'yes'
