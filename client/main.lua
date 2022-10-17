@@ -333,3 +333,11 @@ CreateThread(function()
         end
     end
 end)
+
+RegisterNetEvent("qb-cityhall:client:addJob", function(job, name)
+    SendNUIMessage({
+        action = 'addJob',
+        job = job,
+        name = name
+    })
+end)

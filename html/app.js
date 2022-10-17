@@ -25,6 +25,11 @@ SetJobs = function(jobs) {
     })
 }
 
+AddJob = function(job, name) {
+    let html = `<div class="job-page-block" data-job="${job}"><p>${name}</p></div>`;
+    $('.job-page-blocks').append(html);
+}
+
 ResetPages = function() {
     $(".cityhall-option-blocks").show();
     $(".cityhall-identity-page").hide();
@@ -42,6 +47,9 @@ $(document).ready(function(){
                 break;
             case "setJobs":
                 SetJobs(event.data.jobs);
+                break;
+            case "addJob":
+                AddJob(event.data.job, event.data.name);
                 break;
         }
     })
