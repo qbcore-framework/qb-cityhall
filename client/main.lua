@@ -196,6 +196,7 @@ local function deletePeds()
             DeletePed(current.pedHandle)
         end
     end
+    pedsSpawned = false
 end
 
 -- Events
