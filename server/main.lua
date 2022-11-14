@@ -1,5 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local availableJobs = {}
+local availableJobs
 if QBCore.Shared.QBJobsStatus then
     availableJobs = exports['qb-jobs']:CityHallJobPop()
 else
