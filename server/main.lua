@@ -1,18 +1,23 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local availableJobs = {
-    ["trucker"] = "Trucker",
-    ["taxi"] = "Taxi",
-    ["tow"] = "Tow Truck",
-    ["reporter"] = "News Reporter",
-    ["garbage"] = "Garbage Collector",
-    ["bus"] = "Bus Driver",
-    ["hotdog"] = "Hot Dog Stand"
-}
+local availableJobs = {}
+if QBCore.Shared.QBJobsStatus then
+    availableJobs = exports['qb-jobs']:CityHallJobPop()
+else
+    availableJobs = {
+        ["trucker"] = "Trucker",
+        ["taxi"] = "Taxi",
+        ["tow"] = "Tow Truck",
+        ["reporter"] = "News Reporter",
+        ["garbage"] = "Garbage Collector",
+        ["bus"] = "Bus Driver",
+        ["hotdog"] = "Hot Dog Stand"
+    }
+end
 
 -- Exports
 
 local function AddCityJob(jobName, label)
-    if availableJobs[jobName] ~= nil then
+    if not availableJobs or availableJobs[jobName] ~= nil then
         return false, "already added"
     else
         availableJobs[jobName] = label

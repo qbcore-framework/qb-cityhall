@@ -9,7 +9,6 @@ local inCityhallPage = false
 local inRangeCityhall = false
 local inRangeDrivingSchool = false
 local pedsSpawned = false
-local table_clone = table.clone
 local blips = {}
 
 -- Functions
@@ -263,7 +262,7 @@ end)
 
 RegisterNUICallback('requestLicenses', function(_, cb)
     local licensesMeta = PlayerData.metadata["licences"]
-    local availableLicenses = table_clone(Config.Cityhalls[closestCityhall].licenses)
+    local availableLicenses = Config.Cityhalls[closestCityhall].licenses
     for license, data in pairs(availableLicenses) do
         if data.metadata and not licensesMeta[data.metadata] then
             availableLicenses[license] = nil
