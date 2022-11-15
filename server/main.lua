@@ -1,8 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local availableJobs
-if QBCore.Shared.QBJobsStatus then
-    availableJobs = exports['qb-jobs']:CityHallJobPop()
-else
+local availableJobs = {}
+if not QBCore.Shared.QBJobsStatus then
     availableJobs = {
         ["trucker"] = "Trucker",
         ["taxi"] = "Taxi",
@@ -21,6 +19,7 @@ local function AddCityJob(jobName, label)
         return false, "already added"
     else
         availableJobs[jobName] = label
+        TriggerClientEvent('cityhall:Client:AddCityJob',-1)
         return true, "success"
     end
 end

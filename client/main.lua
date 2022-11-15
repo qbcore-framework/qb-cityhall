@@ -10,6 +10,7 @@ local inRangeCityhall = false
 local inRangeDrivingSchool = false
 local pedsSpawned = false
 local blips = {}
+local availableJobs = {}
 
 -- Functions
 
@@ -198,8 +199,19 @@ local function deletePeds()
     pedsSpawned = false
 end
 
--- Events
+local function getJobs()
+    QBCore.Functions.TriggerCallback('qb-cityhall:server:receiveJobs', function(result)
+        SendNUIMessage({
+            action = 'setJobs',
+            jobs = result
+        })
+    end)
+end
 
+-- Events
+RegisterNetEvent('cityhall:Client:AddCityJob', function(jobName,label)
+    getJobs()
+end)
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
     isLoggedIn = true
@@ -297,12 +309,7 @@ end)
 CreateThread(function()
     initBlips()
     spawnPeds()
-    QBCore.Functions.TriggerCallback('qb-cityhall:server:receiveJobs', function(result)
-        SendNUIMessage({
-            action = 'setJobs',
-            jobs = result
-        })
-    end)
+    getJobs()
     if not Config.UseTarget then
         while true do
             local sleep = 1000
