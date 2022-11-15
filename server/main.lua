@@ -17,7 +17,7 @@ end
 -- Exports
 
 local function AddCityJob(jobName, label)
-    if not availableJobs or availableJobs[jobName] ~= nil then
+    if availableJobs[jobName] ~= nil then
         return false, "already added"
     else
         availableJobs[jobName] = label
