@@ -10,7 +10,6 @@ local inRangeCityhall = false
 local inRangeDrivingSchool = false
 local pedsSpawned = false
 local blips = {}
-local availableJobs = {}
 
 -- Functions
 
@@ -209,9 +208,6 @@ local function getJobs()
 end
 
 -- Events
-RegisterNetEvent('cityhall:Client:AddCityJob', function(jobName,label)
-    getJobs()
-end)
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
     isLoggedIn = true
@@ -226,6 +222,10 @@ end)
 
 RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
     PlayerData = val
+end)
+
+RegisterNetEvent('qb-cityhall:Client:AddCityJob', function()
+    getJobs()
 end)
 
 RegisterNetEvent('qb-cityhall:client:getIds', function()

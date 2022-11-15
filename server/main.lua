@@ -19,7 +19,7 @@ local function AddCityJob(jobName, label)
         return false, "already added"
     else
         availableJobs[jobName] = label
-        TriggerClientEvent('cityhall:Client:AddCityJob',-1)
+        TriggerClientEvent('qb-cityhall:Client:AddCityJob',-1)
         return true, "success"
     end
 end
