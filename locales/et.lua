@@ -6,6 +6,7 @@ local Translations = {
         recived_license = 'Oled saanud oma kraami: %{value} $50 eest.'
     },
     info = {
+        new_job_app = 'Your application was sent to the boss of (%{job})',
         bilp_text = 'Linna teenused',
         city_services_menu = '~g~E~w~ - Teenuste menüü',
         id_card = 'ID Kaart',
@@ -14,6 +15,9 @@ local Translations = {
         new_job = 'Leidsid endale uue töökoha: (%{job})'
     },
     email = {
+        jobAppSender = "%{job}",
+        jobAppSub = "Thank you for applying to %(job).",
+        jobAppMsg = "Hello %{gender} %{lastname}<br /><br />%{job} has received your application.<br /><br />The boss is looking into your request and will reach out to you for an interview at their earliest convienance.<br /><br />Once again, thank you for your application.",
         mr = 'Mr',
         mrs = 'Mrs',
         sender = 'Kölbard',

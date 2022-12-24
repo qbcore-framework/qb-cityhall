@@ -2,31 +2,45 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local availableJobs = {}
 if not QBCore.Shared.QBJobsStatus then
     availableJobs = {
-        ["trucker"] = "Trucker",
-        ["taxi"] = "Taxi",
-        ["tow"] = "Tow Truck",
-        ["reporter"] = "News Reporter",
-        ["garbage"] = "Garbage Collector",
-        ["bus"] = "Bus Driver",
-        ["hotdog"] = "Hot Dog Stand"
+        ["trucker"] = {["label"] = "Trucker", ["isManaged"] = false},
+        ["taxi"] = {["label"] = "Taxi", ["isManaged"] = false},
+        ["tow"] = {["label"] = "Tow Truck", ["isManaged"] = false},
+        ["reporter"] = {["label"] = "News Reporter", ["isManaged"] = false},
+        ["garbage"] = {["label"] = "Garbage Collector", ["isManaged"] = false},
+        ["bus"] = {["label"] = "Bus Driver", ["isManaged"] = false},
+        ["hotdog"] = {["label"] = "Hot Dog Stand", ["isManaged"] = false}
     }
 end
 
 -- Exports
 
-local function AddCityJob(jobName, label)
-    if availableJobs[jobName] ~= nil then
-        return false, "already added"
-    else
-        availableJobs[jobName] = label
-        TriggerClientEvent('qb-cityhall:Client:AddCityJob', -1)
-        return true, "success"
-    end
+local function AddCityJob(jobName, toCH)
+    if availableJobs[jobName] then return false, "already added" end
+    availableJobs[jobName] = {
+        ["label"] = toCH.label,
+        ["isManaged"] = toCH.isManaged
+    }
+    return true, "success"
 end
 
 exports('AddCityJob', AddCityJob)
 
 -- Functions
+
+local function sendEmail()
+    SetTimeout(math.random(2500, 4000), function()
+        local gender = Lang:t('email.mr')
+        if PlayerData.charinfo.gender == 1 then
+            gender = Lang:t('email.mrs')
+        end
+        TriggerServerEvent('qb-phone:server:sendNewMail', {
+            sender = Lang:t('email.sender'),
+            subject = Lang:t('email.subject'),
+            message =  Lang:t('email.message', {gender = gender, lastname = charinfo.lastname, firstname = charinfo.firstname, phone = charinfo.phone}),
+            button = {}
+        })
+    end)
+end
 
 local function giveStarterItems()
     local Player = QBCore.Functions.GetPlayer(source)
@@ -82,7 +96,7 @@ RegisterNetEvent('qb-cityhall:server:requestId', function(item, hall)
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
     else
-        return DropPlayer(src, 'Attempted exploit abuse')
+        return false -- DropPlayer(src, 'Attempted exploit abuse')
     end
     if not Player.Functions.AddItem(item, 1, nil, info) then return end
     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'add')
@@ -116,12 +130,14 @@ RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
     if not Player then return end
     local ped = GetPlayerPed(src)
     local pedCoords = GetEntityCoords(ped)
-    local JobInfo = QBCore.Shared.Jobs[job]
+    local data = {
+        ["src"] = src,
+        ["job"] = job
+    }
     if #(pedCoords - cityhallCoords) >= 20.0 or not availableJobs[job] then
-        return DropPlayer(source, "Attempted exploit abuse")
+        return false -- DropPlayer(source, "Attempted exploit abuse")
     end
-    Player.Functions.SetJob(job, 0)
-    TriggerClientEvent('QBCore:Notify', src, Lang:t('info.new_job', {job = JobInfo.label}))
+    exports["qb-jobs"]:submitApplication(data)
 end)
 
 RegisterNetEvent('qb-cityhall:server:getIDs', giveStarterItems)
