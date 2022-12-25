@@ -27,21 +27,6 @@ exports('AddCityJob', AddCityJob)
 
 -- Functions
 
-local function sendEmail()
-    SetTimeout(math.random(2500, 4000), function()
-        local gender = Lang:t('email.mr')
-        if PlayerData.charinfo.gender == 1 then
-            gender = Lang:t('email.mrs')
-        end
-        TriggerServerEvent('qb-phone:server:sendNewMail', {
-            sender = Lang:t('email.sender'),
-            subject = Lang:t('email.subject'),
-            message =  Lang:t('email.message', {gender = gender, lastname = charinfo.lastname, firstname = charinfo.firstname, phone = charinfo.phone}),
-            button = {}
-        })
-    end)
-end
-
 local function giveStarterItems()
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then return end
