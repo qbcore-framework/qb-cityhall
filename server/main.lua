@@ -99,7 +99,7 @@ RegisterNetEvent('qb-cityhall:server:sendDriverTest', function(instructors)
                 message = Lang:t('email.message'),
                 button = {}
             }
-            TriggerEvent("qb-phone:server:sendNewMailToOffline", citizenid, mailData)
+            exports["qb-phone"]:sendNewMailToOffline(citizenid, mailData)
         end
     end
     TriggerClientEvent('QBCore:Notify', src, Lang:t('info.email_sent'), "success", 5000)
