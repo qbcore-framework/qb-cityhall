@@ -20,7 +20,6 @@ Close = function() {
 }
 
 SetJobs = function(jobs) {
-    $('.job-page-blocks').empty();
     $.each(jobs, (job, name) => {
         let html = `<div class="job-page-block" data-job="${job}"><p>${name.label}</p></div>`;
         $('.job-page-blocks').append(html);
