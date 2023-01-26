@@ -168,8 +168,8 @@ local function spawnPeds()
                     name = "zone_cityhall_"..ped,
                     heading = current.coords.w,
                     debugPoly = false,
-                    minZ = current.coords.z - 3.0,
-                    maxZ = current.coords.z + 2.0
+                    minZ = current.coords.z - 1.0,
+                    maxZ = current.coords.z + 1.0
                 })
                 zone:onPlayerInOut(function(inside)
                     if isLoggedIn and closestCityhall and closestDrivingSchool then
@@ -286,11 +286,8 @@ RegisterNUICallback('requestLicenses', function(_, cb)
 end)
 
 RegisterNUICallback('applyJob', function(job, cb)
-    if inRangeCityhall then
         TriggerServerEvent('qb-cityhall:server:ApplyJob', job, Config.Cityhalls[closestCityhall].coords)
-    else
-        QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
-    end
+        TriggerServerEvent("QBCore:UpdatePlayer")
     cb('ok')
 end)
 
