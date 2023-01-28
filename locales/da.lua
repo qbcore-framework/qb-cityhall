@@ -3,7 +3,7 @@ local Translations = {
         not_in_range = 'Du er for langt væk fra jobcentret'
     },
     success = {
-        recived_license = 'Du modtog dit %{value} for DKK50'
+        recived_license = 'Du modtog din %{value} for 50 kr.'
     },
     info = {
         bilp_text = 'Borger service',
@@ -15,7 +15,7 @@ local Translations = {
     },
     email = {
         mr = 'Hr',
-        mrs = 'Frue',
+        mrs = 'Fru',
         sender = 'Borgerservice',
         subject = 'Køretimer er påkrævet',
         message = 'Hej %{gender} %{lastname}<br /><br />Vi har lige modtaget en besked om, at nogen vil tage køretimer<br />Hvis du er villig til at undervise, så kontakt os:<br />Navn: <strong>%{firstname} %{lastname}</strong><br />Telefon nummer: <strong>%{phone}</strong><br/><br/>Venlige hilsner,<br />Borgerservice'
