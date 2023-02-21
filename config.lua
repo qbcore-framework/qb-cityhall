@@ -2,6 +2,16 @@ Config = Config or {}
 
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true' -- Use qb-target interactions (don't change this, go to your server.cfg and add `setr UseTarget true` to use this and just that from true to false or the other way around)
 
+Config.AvailableJobs = {
+    ["trucker"] = "Trucker",
+    ["taxi"] = "Taxi",
+    ["tow"] = "Tow Truck",
+    ["reporter"] = "News Reporter",
+    ["garbage"] = "Garbage Collector",
+    ["bus"] = "Bus Driver",
+    ["hotdog"] = "Hot Dog Stand"
+}
+
 Config.Cityhalls = {
     { -- Cityhall 1
         coords = vec3(-265.0, -963.6, 31.2),

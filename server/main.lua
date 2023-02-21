@@ -1,21 +1,12 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local availableJobs = {
-    ["trucker"] = "Trucker",
-    ["taxi"] = "Taxi",
-    ["tow"] = "Tow Truck",
-    ["reporter"] = "News Reporter",
-    ["garbage"] = "Garbage Collector",
-    ["bus"] = "Bus Driver",
-    ["hotdog"] = "Hot Dog Stand"
-}
 
 -- Exports
 
 local function AddCityJob(jobName, label)
-    if availableJobs[jobName] ~= nil then
+    if Config.AvailableJobs[jobName] ~= nil then
         return false, "already added"
     else
-        availableJobs[jobName] = label
+        Config.AvailableJobs[jobName] = label
         return true, "success"
     end
 end
@@ -49,7 +40,7 @@ end
 -- Callbacks
 
 QBCore.Functions.CreateCallback('qb-cityhall:server:receiveJobs', function(_, cb)
-    cb(availableJobs)
+    cb(Config.AvailableJobs)
 end)
 
 -- Events
@@ -113,7 +104,7 @@ RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
     local ped = GetPlayerPed(src)
     local pedCoords = GetEntityCoords(ped)
     local JobInfo = QBCore.Shared.Jobs[job]
-    if #(pedCoords - cityhallCoords) >= 20.0 or not availableJobs[job] then
+    if #(pedCoords - cityhallCoords) >= 20.0 or not Config.AvailableJobs[job] then
         return DropPlayer(source, "Attempted exploit abuse")
     end
     Player.Functions.SetJob(job, 0)
