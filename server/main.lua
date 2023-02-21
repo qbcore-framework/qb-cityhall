@@ -1,5 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-
+if QBCore.Shared.QBJobsStatus then Config.AvailableJobs = nil end
 -- Exports
 
 local function AddCityJob(jobName, label)
