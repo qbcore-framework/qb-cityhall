@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 
 description 'QB-CityHall'
-version '2.1.1'
+version '2.1.2'
 
 ui_page 'html/index.html'
 

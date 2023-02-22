@@ -1,15 +1,8 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local availableJobs = {}
+
 if not QBCore.Shared.QBJobsStatus then
-    availableJobs = {
-        ["trucker"] = {["label"] = "Trucker", ["isManaged"] = false},
-        ["taxi"] = {["label"] = "Taxi", ["isManaged"] = false},
-        ["tow"] = {["label"] = "Tow Truck", ["isManaged"] = false},
-        ["reporter"] = {["label"] = "News Reporter", ["isManaged"] = false},
-        ["garbage"] = {["label"] = "Garbage Collector", ["isManaged"] = false},
-        ["bus"] = {["label"] = "Bus Driver", ["isManaged"] = false},
-        ["hotdog"] = {["label"] = "Hot Dog Stand", ["isManaged"] = false}
-    }
+    availableJobs = Config.AvailableJobs
 end
 
 -- Exports
@@ -100,7 +93,7 @@ RegisterNetEvent('qb-cityhall:server:sendDriverTest', function(instructors)
             local mailData = {
                 sender = "Township",
                 subject = "Driving lessons request",
-                message = "Hello,<br><br>We have just received a message that someone wants to take driving lessons.<br>If you are willing to teach, please contact them:<br>Name: <strong>".. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Phone Number: <strong>"..Player.PlayerData.charinfo.phone.."</strong><br><br>Kind regards,<br>Township Los Santos",
+                message = "Hello,<br><br>We have just received a message that someone wants to take driving lessons.<br>If you are willing to teach, please contact them:<br>Name: <strong>" .. Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. "<br />Phone Number: <strong>" .. Player.PlayerData.charinfo.phone .. "</strong><br><br>Kind regards,<br>Township Los Santos",
                 button = {}
             }
             exports["qb-phone"]:sendNewMailToOffline(citizenid, mailData)
@@ -115,6 +108,7 @@ RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
     if not Player then return end
     local ped = GetPlayerPed(src)
     local pedCoords = GetEntityCoords(ped)
+
     local data = {
         ["src"] = src,
         ["job"] = job
@@ -122,23 +116,24 @@ RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
     if #(pedCoords - cityhallCoords) >= 20.0 or not availableJobs[job] then
         return false -- DropPlayer(source, "Attempted exploit abuse")
     end
-    if QBCore.Shared.QBJobsStatus then exports["qb-jobs"]:submitApplication(data)
+    if QBCore.Shared.QBJobsStatus then
+        exports["qb-jobs"]:submitApplication(data, "Jobs")
     else
         local JobInfo = QBCore.Shared.Jobs[job]
         Player.Functions.SetJob(data.job, 0)
-        TriggerClientEvent('QBCore:Notify', data.src, Lang:t('info.new_job', {job = JobInfo.label}))
+        TriggerClientEvent('QBCore:Notify', data.src, Lang:t('info.new_job', { job = JobInfo.label }))
     end
 end)
 
 RegisterNetEvent('qb-cityhall:server:getIDs', giveStarterItems)
 
 RegisterNetEvent('QBCore:Client:UpdateObject', function()
-	QBCore = exports['qb-core']:GetCoreObject()
+    QBCore = exports['qb-core']:GetCoreObject()
 end)
 
 -- Commands
 
-QBCore.Commands.Add("drivinglicense", "Give a drivers license to someone", {{"id", "ID of a person"}}, true, function(source, args)
+QBCore.Commands.Add("drivinglicense", "Give a drivers license to someone", { { "id", "ID of a person" } }, true, function(source, args)
     local Player = QBCore.Functions.GetPlayer(source)
     local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
     if SearchedPlayer then
