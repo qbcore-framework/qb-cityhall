@@ -1,14 +1,19 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-if QBCore.Shared.QBJobsStatus then Config.AvailableJobs = nil end
+local availableJobs = {}
+
+if not QBCore.Shared.QBJobsStatus then
+    availableJobs = Config.AvailableJobs
+end
+
 -- Exports
 
-local function AddCityJob(jobName, label)
-    if Config.AvailableJobs[jobName] ~= nil then
-        return false, "already added"
-    else
-        Config.AvailableJobs[jobName] = label
-        return true, "success"
-    end
+local function AddCityJob(jobName, toCH)
+    if availableJobs[jobName] then return false, "already added" end
+    availableJobs[jobName] = {
+        ["label"] = toCH.label,
+        ["isManaged"] = toCH.isManaged
+    }
+    return true, "success"
 end
 
 exports('AddCityJob', AddCityJob)
@@ -69,7 +74,7 @@ RegisterNetEvent('qb-cityhall:server:requestId', function(item, hall)
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
     else
-        return DropPlayer(src, 'Attempted exploit abuse')
+        return false -- DropPlayer(src, 'Attempted exploit abuse')
     end
     if not Player.Functions.AddItem(item, 1, nil, info) then return end
     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'add')
@@ -103,15 +108,27 @@ RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
     if not Player then return end
     local ped = GetPlayerPed(src)
     local pedCoords = GetEntityCoords(ped)
-    local JobInfo = QBCore.Shared.Jobs[job]
-    if #(pedCoords - cityhallCoords) >= 20.0 or not Config.AvailableJobs[job] then
-        return DropPlayer(source, "Attempted exploit abuse")
+
+    local data = {
+        ["src"] = src,
+        ["job"] = job
+    }
+    if #(pedCoords - cityhallCoords) >= 20.0 or not availableJobs[job] then
+        return false -- DropPlayer(source, "Attempted exploit abuse")
     end
-    Player.Functions.SetJob(job, 0)
-    TriggerClientEvent('QBCore:Notify', src, Lang:t('info.new_job', {job = JobInfo.label}))
+    if QBCore.Shared.QBJobsStatus then exports["qb-jobs"]:submitApplication(data)
+    else
+        local JobInfo = QBCore.Shared.Jobs[job]
+        Player.Functions.SetJob(data.job, 0)
+        TriggerClientEvent('QBCore:Notify', data.src, Lang:t('info.new_job', {job = JobInfo.label}))
+    end
 end)
 
 RegisterNetEvent('qb-cityhall:server:getIDs', giveStarterItems)
+
+RegisterNetEvent('QBCore:Client:UpdateObject', function()
+	QBCore = exports['qb-core']:GetCoreObject()
+end)
 
 -- Commands
 
