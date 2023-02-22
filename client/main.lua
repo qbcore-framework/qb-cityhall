@@ -93,7 +93,7 @@ local function initBlips()
     for i = 1, #Config.Cityhalls do
         local hall = Config.Cityhalls[i]
         if hall.showBlip then
-            blips[#blips+1] = createBlip({
+            blips[#blips + 1] = createBlip({
                 coords = hall.coords,
                 sprite = hall.blipData.sprite,
                 display = hall.blipData.display,
@@ -107,7 +107,7 @@ local function initBlips()
     for i = 1, #Config.DrivingSchools do
         local school = Config.DrivingSchools[i]
         if school.showBlip then
-            blips[#blips+1] = createBlip({
+            blips[#blips + 1] = createBlip({
                 coords = school.coords,
                 sprite = school.blipData.sprite,
                 display = school.blipData.display,
@@ -157,7 +157,7 @@ local function spawnPeds()
             end
             if opts then
                 exports['qb-target']:AddTargetEntity(ped, {
-                    options = {opts},
+                    options = { opts },
                     distance = 2.0
                 })
             end
@@ -165,7 +165,7 @@ local function spawnPeds()
             local options = current.zoneOptions
             if options then
                 local zone = BoxZone:Create(current.coords.xyz, options.length, options.width, {
-                    name = "zone_cityhall_"..ped,
+                    name = "zone_cityhall_" .. ped,
                     heading = current.coords.w,
                     debugPoly = false,
                     minZ = current.coords.z - 3.0,
@@ -243,7 +243,7 @@ RegisterNetEvent('qb-cityhall:client:sendDriverEmail', function(charinfo)
         TriggerServerEvent('qb-phone:server:sendNewMail', {
             sender = Lang:t('email.sender'),
             subject = Lang:t('email.subject'),
-            message =  Lang:t('email.message', {gender = gender, lastname = charinfo.lastname, firstname = charinfo.firstname, phone = charinfo.phone}),
+            message = Lang:t('email.message', { gender = gender, lastname = charinfo.lastname, firstname = charinfo.firstname, phone = charinfo.phone }),
             button = {}
         })
     end)
