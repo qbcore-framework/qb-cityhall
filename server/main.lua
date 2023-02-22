@@ -45,7 +45,7 @@ end
 -- Callbacks
 
 QBCore.Functions.CreateCallback('qb-cityhall:server:receiveJobs', function(_, cb)
-    cb(Config.AvailableJobs)
+    cb(availableJobs)
 end)
 
 -- Events
