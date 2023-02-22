@@ -116,7 +116,7 @@ RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
     if #(pedCoords - cityhallCoords) >= 20.0 or not availableJobs[job] then
         return false -- DropPlayer(source, "Attempted exploit abuse")
     end
-    if QBCore.Shared.QBJobsStatus then exports["qb-jobs"]:submitApplication(data)
+    if QBCore.Shared.QBJobsStatus then exports["qb-jobs"]:submitApplication(data,"Jobs")
     else
         local JobInfo = QBCore.Shared.Jobs[job]
         Player.Functions.SetJob(data.job, 0)
