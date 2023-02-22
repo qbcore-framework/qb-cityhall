@@ -9,7 +9,6 @@ local inCityhallPage = false
 local inRangeCityhall = false
 local inRangeDrivingSchool = false
 local pedsSpawned = false
-local table_clone = table.clone
 local blips = {}
 
 -- Functions
@@ -42,7 +41,17 @@ local function getClosestSchool()
     return closest
 end
 
+local function getJobs()
+    QBCore.Functions.TriggerCallback('qb-cityhall:server:receiveJobs', function(result)
+        SendNUIMessage({
+            action = 'setJobs',
+            jobs = result
+        })
+    end)
+end
+
 local function setCityhallPageState(bool, message)
+    getJobs()
     if message then
         local action = bool and "open" or "close"
         SendNUIMessage({
@@ -196,10 +205,11 @@ local function deletePeds()
             DeletePed(current.pedHandle)
         end
     end
+    pedsSpawned = false
 end
 
--- Events
 
+-- Events
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
     isLoggedIn = true
@@ -214,6 +224,10 @@ end)
 
 RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
     PlayerData = val
+end)
+
+RegisterNetEvent('qb-cityhall:Client:AddCityJob', function()
+    getJobs()
 end)
 
 RegisterNetEvent('qb-cityhall:client:getIds', function()
@@ -262,7 +276,7 @@ end)
 
 RegisterNUICallback('requestLicenses', function(_, cb)
     local licensesMeta = PlayerData.metadata["licences"]
-    local availableLicenses = table_clone(Config.Cityhalls[closestCityhall].licenses)
+    local availableLicenses = Config.Cityhalls[closestCityhall].licenses
     for license, data in pairs(availableLicenses) do
         if data.metadata and not licensesMeta[data.metadata] then
             availableLicenses[license] = nil
@@ -297,12 +311,6 @@ end)
 CreateThread(function()
     initBlips()
     spawnPeds()
-    QBCore.Functions.TriggerCallback('qb-cityhall:server:receiveJobs', function(result)
-        SendNUIMessage({
-            action = 'setJobs',
-            jobs = result
-        })
-    end)
     if not Config.UseTarget then
         while true do
             local sleep = 1000

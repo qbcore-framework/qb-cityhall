@@ -50,7 +50,7 @@ body {
     top: 13vh;
     border-radius: 1vh;
     /*background: rgba(37, 37, 37, 0.418)*/
-    
+
 }
 
 .cityhall-identity-page {
@@ -72,9 +72,27 @@ body {
     margin: 0 auto;
     top: 10vh;
     border-radius: 1vh;
+    overflow-y:auto;
     background: rgba(37, 37, 37, 0.418);
 }
 
+.cityhall-job-page::-webkit-scrollbar-track {
+    background: #171717;        /* color of the tracking area */
+}
+.cityhall-job-page::-webkit-scrollbar-thumb {
+    background-color: #DC143C;    /* color of the scroll thumb */
+}
+.cityhall-job-page::-webkit-scrollbar {
+    width: 2vh;
+}
+.cityhall-job-page::-webkit-scrollbar-track {
+    border-radius: 20px;
+    border: 3px solid #171717;
+}
+.cityhall-job-page::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    border: 3px solid #171717;
+}
 .cityhall-option-block {
     position: relative;
     width: 30vh;
@@ -204,7 +222,6 @@ body {
 
 .job-page-block {
     width: 100%;
-    height: 5vh;
     background: #2873A7;
     border-radius: 0.5vh;
     transition: all 0.1s ease-in-out;
