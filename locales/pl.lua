@@ -6,7 +6,6 @@ local Translations = {
         recived_license = 'Otrzymałeś %{value} za $50'
     },
     info = {
-        new_job_app = 'Your application was sent to the boss of (%{job})',
         bilp_text = 'Usługi Miejskie',
         city_services_menu = '~g~E~w~ - Menu Usług Miejskich',
         id_card = 'Dowód Osobisty',
@@ -15,9 +14,6 @@ local Translations = {
         new_job = 'Gratulacje z powodu nowej pracy! (%{job})'
     },
     email = {
-        jobAppSender = "%{job}",
-        jobAppSub = "Thank you for applying to %(job).",
-        jobAppMsg = "Hello %{gender} %{lastname}<br /><br />%{job} has received your application.<br /><br />The boss is looking into your request and will reach out to you for an interview at their earliest convienance.<br /><br />Once again, thank you for your application.",
         mr = 'Pan',
         mrs = 'Pani',
         sender = 'Ratusz',

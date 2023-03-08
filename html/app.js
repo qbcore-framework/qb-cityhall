@@ -1,3 +1,22 @@
+i18next
+.use(i18nextHttpBackend)
+.init({
+    debug: false,
+    fallbackLng: 'en',
+    lng: 'es', // Change JS/HTML language
+    backend: {
+        loadPath: 'locales/{{lng}}.json'
+    }
+}, function(err, t) {
+        // for options see
+        // https://github.com/i18next/jquery-i18next#initialize-the-plugin
+        jqueryI18next.init(i18next, $);
+
+        // start localizing, details:
+        // https://github.com/i18next/jquery-i18next#usage-of-selector-function
+        $('.container').localize();
+});
+
 let mouseOver = false;
 let selectedIdentity = null;
 let selectedIdentityType = null;
@@ -83,7 +102,7 @@ $(document).on("click", ".identity-page-block", function(e){
         $(".hover-description").fadeIn(10);
         selectedIdentity = this;
         $(".request-identity-button").fadeIn(100);
-        $(".request-identity-button").html(`<p>Buy $${selectedIdentityCost}</p>`);
+        $(".request-identity-button").html("<p>" + i18next.t('buy', { value: selectedIdentityCost }) + "</p>");
     } else if (selectedIdentity == this) {
         $(this).removeClass("identity-selected");
         selectedIdentity = null;
@@ -92,7 +111,7 @@ $(document).on("click", ".identity-page-block", function(e){
         $(selectedIdentity).removeClass("identity-selected");
         $(this).addClass("identity-selected");
         selectedIdentity = this;
-        $(".request-identity-button").html("<p>Buy</p>");
+        $(".request-identity-button").html("<p>" + i18next.t('buy', { value: selectedIdentityCost }) + "</p>");
     }
 });
 
