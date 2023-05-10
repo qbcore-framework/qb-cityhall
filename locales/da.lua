@@ -6,18 +6,18 @@ local Translations = {
         recived_license = 'Du modtog dit %{value} for DKK50'
     },
     info = {
-        new_job_app = 'Your application was sent to the boss of (%{job})',
+        new_job_app = 'Din ansøgning blev sendt til chefen af (%{job})',
         bilp_text = 'Borger service',
         city_services_menu = '~g~E~w~ -Åben borger service',
         id_card = 'ID kort',
         driver_license = 'Kørekort',
-        weaponlicense = 'Våben licens',
+        weaponlicense = 'Våben Licens',
         new_job = 'Tillykke med dit nye job som (%{job})!'
     },
     email = {
         jobAppSender = "%{job}",
-        jobAppSub = "Thank you for applying to %(job).",
-        jobAppMsg = "Hello %{gender} %{lastname}<br /><br />%{job} has received your application.<br /><br />The boss is looking into your request and will reach out to you for an interview at their earliest convienance.<br /><br />Once again, thank you for your application.",
+        jobAppSub = "Tak fordi du ansøgte til %(job).",
+        jobAppMsg = "Hej %{gender} %{lastname}<br /><br />%{job} har modtaget din ansøgning.<br /><br />Chefen er ved at undersøge din anmodning og vil kontakte dig til en samtale, så snart det passer dem.<br /><br />Endnu en gang, tak for din ansøgning.",
         mr = 'Hr',
         mrs = 'Frue',
         sender = 'Borgerservice',
