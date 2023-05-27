@@ -5,7 +5,8 @@ let selectedIdentityCost = null;
 let selectedJob = null;
 let selectedJobId = null;
 
-Open = function() {
+Open = function(jobs) {
+    SetJobs(jobs);
     $(".container").fadeIn(150);
 }
 
@@ -19,8 +20,9 @@ Close = function() {
 }
 
 SetJobs = function(jobs) {
+    $('.job-page-blocks').empty();
     $.each(jobs, (job, name) => {
-        let html = `<div class="job-page-block" data-job="${job}"><p>${name}</p></div>`;
+        let html = `<div class="job-page-block" data-job="${job}"><p>${name.label}</p></div>`;
         $('.job-page-blocks').append(html);
     })
 }
@@ -35,7 +37,7 @@ $(document).ready(function(){
     window.addEventListener('message', function(event) {
         switch(event.data.action) {
             case "open":
-                Open();
+                Open(event.data.jobs);
                 break;
             case "close":
                 Close();
@@ -106,6 +108,7 @@ $(".request-identity-button").click(function(e){
 $(document).on("click", ".job-page-block", function(e){
     e.preventDefault();
     selectedJobId = $(this).data('job');
+//    selectedJobId["application"] = $(this).data('application')
     if (selectedJob == null) {
         $(this).addClass("job-selected");
         selectedJob = this;
