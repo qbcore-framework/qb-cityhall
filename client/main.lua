@@ -73,7 +73,7 @@ local function createBlip(options)
     SetBlipColour(blip, options.colour or 1)
     SetBlipAsShortRange(blip, options.shortRange or false)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(options.title or 'No Title Given')
+    AddTextComponentSubstringPlayerName(options.title or 'No Title Given')
     EndTextCommandSetBlipName(blip)
     return blip
 end
