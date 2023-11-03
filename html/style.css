@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 body {
     overflow: hidden;
@@ -11,7 +11,7 @@ body {
     height: 100vh;
 }
 
-.cityhall-main-container{
+.cityhall-main-container {
     position: relative;
     background-position: center center;
     backface-visibility: hidden;
@@ -25,11 +25,10 @@ body {
     box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.226);
 }
 
-
 .cityhall-header {
     position: relative;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-size: 6vh;
     color: #ededed;
@@ -50,7 +49,6 @@ body {
     top: 13vh;
     border-radius: 1vh;
     /*background: rgba(37, 37, 37, 0.418)*/
-
 }
 
 .cityhall-identity-page {
@@ -61,7 +59,7 @@ body {
     margin: 0 auto;
     top: 10vh;
     border-radius: 1vh;
-    background: rgba(37, 37, 37, 0.418)
+    background: rgba(37, 37, 37, 0.418);
 }
 
 .cityhall-job-page {
@@ -72,15 +70,15 @@ body {
     margin: 0 auto;
     top: 10vh;
     border-radius: 1vh;
-    overflow-y:auto;
+    overflow-y: auto;
     background: rgba(37, 37, 37, 0.418);
 }
 
 .cityhall-job-page::-webkit-scrollbar-track {
-    background: #171717;        /* color of the tracking area */
+    background: #171717; /* color of the tracking area */
 }
 .cityhall-job-page::-webkit-scrollbar-thumb {
-    background-color: #DC143C;    /* color of the scroll thumb */
+    background-color: #dc143c; /* color of the scroll thumb */
 }
 .cityhall-job-page::-webkit-scrollbar {
     width: 2vh;
@@ -123,7 +121,7 @@ body {
     color: #171717;
     font-weight: 500;
     text-transform: uppercase;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     letter-spacing: 0.1vh;
     font-size: 2.6vh;
 }
@@ -138,7 +136,7 @@ body {
 .identity-page-block {
     width: 100%;
     height: 15%;
-    background: #2873A7;
+    background: #2873a7;
     transition: all 0.1s ease-in-out;
     border-radius: 0.5vh;
     /* border-bottom: 2px solid rgba(255, 255, 255, 0); */
@@ -150,7 +148,7 @@ body {
 }
 
 .identity-page-block > p:hover {
-    color: #2873A7;
+    color: #2873a7;
     transition: ease-in 0.3s;
 }
 
@@ -158,7 +156,7 @@ body {
     position: relative;
     text-align: center;
     line-height: 6vh;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 0.1vh;
@@ -178,7 +176,7 @@ body {
 
 .hover-description > p {
     color: white;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 1.3vh;
 }
 
@@ -195,7 +193,7 @@ body {
     margin: 1vh;
     width: 20vh;
     height: 5vh;
-    background: #28A745;
+    background: #28a745;
     border-radius: 0.5vh;
 }
 
@@ -222,7 +220,7 @@ body {
 
 .job-page-block {
     width: 100%;
-    background: #2873A7;
+    background: #2873a7;
     border-radius: 0.5vh;
     transition: all 0.1s ease-in-out;
     border-bottom: 2px solid rgba(255, 255, 255, 0);
@@ -233,14 +231,14 @@ body {
 }
 
 .job-page-block > p:hover {
-    color: #2873A7;
+    color: #2873a7;
 }
 
 .job-page-block > p {
     position: relative;
     text-align: center;
     line-height: 2.5vh;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     text-transform: uppercase;
     font-weight: 400;
     letter-spacing: 0.1vh;
@@ -256,12 +254,12 @@ body {
     margin: 1vh;
     width: 20vh;
     height: 5vh;
-    background: #28A745;
+    background: #28a745;
     border-radius: 0.5vh;
 }
 
 .apply-job-button:hover {
-    background: #28A745;
+    background: #28a745;
 }
 
 .apply-job-button > p {
@@ -294,7 +292,7 @@ body {
 .back-to-main > p {
     color: #ededed;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     text-transform: uppercase;
     font-size: 2vh;
     font-weight: 400;
