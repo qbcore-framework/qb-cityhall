@@ -276,10 +276,10 @@ end)
 
 RegisterNUICallback('requestLicenses', function(_, cb)
     local licensesMeta = PlayerData.metadata["licences"]
-    local availableLicenses = Config.Cityhalls[closestCityhall].licenses
-    for license, data in pairs(availableLicenses) do
-        if data.metadata and not licensesMeta[data.metadata] then
-            availableLicenses[license] = nil
+    local availableLicenses = {}
+    for license, data in pairs(Config.Cityhalls[closestCityhall].licenses) do
+        if not data.metadata or licensesMeta[data.metadata] then
+            availableLicenses[license] = data
         end
     end
     cb(availableLicenses)
