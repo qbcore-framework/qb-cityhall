@@ -34,7 +34,7 @@ local function giveStarterItems()
             info.birthdate = Player.PlayerData.charinfo.birthdate
             info.type = 'Class C Driver License'
         end
-        Player.Functions.AddItem(v.item, 1, nil, info)
+        exports['qb-inventory']:AddItem(source, v.item, 1, false, info, 'qb-cityhall:giveStarterItems')
     end
 end
 
@@ -72,8 +72,8 @@ RegisterNetEvent('qb-cityhall:server:requestId', function(item, hall)
     else
         return false -- DropPlayer(src, 'Attempted exploit abuse')
     end
-    if not Player.Functions.AddItem(item, 1, nil, info) then return end
-    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'add')
+    if not exports['qb-inventory']:AddItem(source, item, 1, false, info, 'qb-cityhall:server:requestId') then return end
+    TriggerClientEvent('qb-inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'add')
 end)
 
 RegisterNetEvent('qb-cityhall:server:sendDriverTest', function(instructors)
