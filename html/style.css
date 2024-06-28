@@ -147,7 +147,7 @@ body {
     transition: ease-in 0.3s;
 }
 
-.identity-page-block > p:hover {
+.identity-page-block:hover > p {
     color: #2873a7;
     transition: ease-in 0.3s;
 }
@@ -181,8 +181,11 @@ body {
 }
 
 .identity-selected {
-    border-bottom: 0px solid #fff;
     border-left: 0.5vh solid #ededed;
+}
+
+.identity-selected:hover {
+    border-left: 0.5vh solid #2873a7;
 }
 
 .request-identity-button {
@@ -230,7 +233,7 @@ body {
     background: #ededed;
 }
 
-.job-page-block > p:hover {
+.job-page-block:hover > p {
     color: #2873a7;
 }
 
@@ -275,6 +278,10 @@ body {
 
 .job-selected {
     border-left: 0.5vh solid #ededed;
+}
+
+.job-selected:hover {
+    border-left: 0.5vh solid #2873a7;
 }
 
 .back-to-main {
