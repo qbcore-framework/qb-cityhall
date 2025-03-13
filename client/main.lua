@@ -5,7 +5,6 @@ local playerPed = PlayerPedId()
 local playerCoords = GetEntityCoords(playerPed)
 local closestCityhall = nil
 local closestDrivingSchool = nil
-local inCityhallPage = false
 local inRangeCityhall = false
 local inRangeDrivingSchool = false
 local pedsSpawned = false
@@ -41,29 +40,6 @@ local function getClosestSchool()
     return closest
 end
 
-local function getJobs()
-    QBCore.Functions.TriggerCallback('qb-cityhall:server:receiveJobs', function(result)
-        SendNUIMessage({
-            action = 'setJobs',
-            jobs = result
-        })
-    end)
-end
-
-local function setCityhallPageState(bool, message)
-    getJobs()
-    if message then
-        local action = bool and "open" or "close"
-        SendNUIMessage({
-            action = action
-        })
-    end
-    SetNuiFocus(bool, bool)
-    inCityhallPage = bool
-    if not Config.UseTarget or bool then return end
-    inRangeCityhall = false
-end
-
 local function createBlip(options)
     if not options.coords or type(options.coords) ~= 'table' and type(options.coords) ~= 'vector3' then return error(('createBlip() expected coords in a vector3 or table but received %s'):format(options.coords)) end
     local blip = AddBlipForCoord(options.coords.x, options.coords.y, options.coords.z)
@@ -72,7 +48,7 @@ local function createBlip(options)
     SetBlipScale(blip, options.scale or 1.0)
     SetBlipColour(blip, options.colour or 1)
     SetBlipAsShortRange(blip, options.shortRange or false)
-    BeginTextCommandSetBlipName("STRING")
+    BeginTextCommandSetBlipName('STRING')
     AddTextComponentSubstringPlayerName(options.title or 'No Title Given')
     EndTextCommandSetBlipName(blip)
     return blip
@@ -120,6 +96,103 @@ local function initBlips()
     end
 end
 
+local function openCityhallMenu()
+    local mainMenu = {
+        {
+            header = 'City Hall',
+            isMenuHeader = true
+        },
+        {
+            header = 'ID Card',
+            txt = 'Get your ID Card',
+            params = {
+                event = 'qb-cityhall:client:openIdentityMenu'
+            }
+        },
+        {
+            header = 'Job Center',
+            txt = 'Available Jobs',
+            params = {
+                event = 'qb-cityhall:client:openJobMenu'
+            }
+        },
+        {
+            header = 'Close Menu',
+            txt = '',
+            params = {
+                event = 'qb-menu:client:closeMenu'
+            }
+        }
+    }
+
+    exports['qb-menu']:openMenu(mainMenu)
+end
+
+local function openIdentityMenu()
+    QBCore.Functions.TriggerCallback('qb-cityhall:server:getIdentityData', function(licenses)
+        local identityMenu = {
+            {
+                header = 'Identity',
+                isMenuHeader = true
+            },
+            {
+                header = '← Go Back',
+                params = {
+                    event = 'qb-cityhall:client:openCityhallMenu'
+                }
+            }
+        }
+
+        for license, data in pairs(licenses) do
+            table.insert(identityMenu, {
+                header = data.label,
+                txt = 'Cost: $' .. data.cost,
+                params = {
+                    event = 'qb-cityhall:client:requestId',
+                    args = {
+                        type = license,
+                        cost = data.cost
+                    }
+                }
+            })
+        end
+
+        exports['qb-menu']:openMenu(identityMenu)
+    end, closestCityhall)
+end
+
+local function openJobMenu()
+    QBCore.Functions.TriggerCallback('qb-cityhall:server:receiveJobs', function(jobs)
+        local jobMenu = {
+            {
+                header = 'Job Center',
+                isMenuHeader = true
+            },
+            {
+                header = '← Go Back',
+                params = {
+                    event = 'qb-cityhall:client:openCityhallMenu'
+                }
+            }
+        }
+
+        for jobName, jobData in pairs(jobs) do
+            table.insert(jobMenu, {
+                header = jobData.label,
+                txt = 'Apply for this job',
+                params = {
+                    event = 'qb-cityhall:client:applyJob',
+                    args = {
+                        job = jobName
+                    }
+                }
+            })
+        end
+
+        exports['qb-menu']:openMenu(jobMenu)
+    end)
+end
+
 local function spawnPeds()
     if not Config.Peds or not next(Config.Peds) or pedsSpawned then return end
     for i = 1, #Config.Peds do
@@ -151,7 +224,7 @@ local function spawnPeds()
                     icon = 'fa-solid fa-city',
                     action = function()
                         inRangeCityhall = true
-                        setCityhallPageState(true, true)
+                        openCityhallMenu()
                     end
                 }
             end
@@ -165,7 +238,7 @@ local function spawnPeds()
             local options = current.zoneOptions
             if options then
                 local zone = BoxZone:Create(current.coords.xyz, options.length, options.width, {
-                    name = "zone_cityhall_" .. ped,
+                    name = 'zone_cityhall_' .. ped,
                     heading = current.coords.w,
                     debugPoly = false,
                     minZ = current.coords.z - 3.0,
@@ -208,8 +281,8 @@ local function deletePeds()
     pedsSpawned = false
 end
 
-
 -- Events
+
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     PlayerData = QBCore.Functions.GetPlayerData()
     isLoggedIn = true
@@ -226,12 +299,42 @@ RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
     PlayerData = val
 end)
 
-RegisterNetEvent('qb-cityhall:Client:AddCityJob', function()
-    getJobs()
+RegisterNetEvent('qb-cityhall:client:openCityhallMenu', function()
+    openCityhallMenu()
+end)
+
+RegisterNetEvent('qb-cityhall:client:openIdentityMenu', function()
+    openIdentityMenu()
+end)
+
+RegisterNetEvent('qb-cityhall:client:openJobMenu', function()
+    openJobMenu()
 end)
 
 RegisterNetEvent('qb-cityhall:client:getIds', function()
     TriggerServerEvent('qb-cityhall:server:getIDs')
+end)
+
+RegisterNetEvent('qb-cityhall:client:requestId', function(data)
+    if inRangeCityhall then
+        local license = Config.Cityhalls[closestCityhall].licenses[data.type]
+        if license and data.cost == license.cost then
+            TriggerServerEvent('qb-cityhall:server:requestId', data.type, closestCityhall)
+            QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, data.cost), 'success', 3500)
+        else
+            QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
+        end
+    else
+        QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
+    end
+end)
+
+RegisterNetEvent('qb-cityhall:client:applyJob', function(data)
+    if inRangeCityhall then
+        TriggerServerEvent('qb-cityhall:server:ApplyJob', data.job, Config.Cityhalls[closestCityhall].coords)
+    else
+        QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
+    end
 end)
 
 RegisterNetEvent('qb-cityhall:client:sendDriverEmail', function(charinfo)
@@ -253,45 +356,6 @@ AddEventHandler('onResourceStop', function(resource)
     if resource ~= GetCurrentResourceName() then return end
     deleteBlips()
     deletePeds()
-end)
-
--- NUI Callbacks
-
-RegisterNUICallback('close', function(_, cb)
-    setCityhallPageState(false, false)
-    if not Config.UseTarget and inRangeCityhall then exports['qb-core']:DrawText('[E] Open Cityhall') end -- Reopen interaction when you're still inside the zone
-    cb('ok')
-end)
-
-RegisterNUICallback('requestId', function(id, cb)
-    local license = Config.Cityhalls[closestCityhall].licenses[id.type]
-    if inRangeCityhall and license and id.cost == license.cost then
-        TriggerServerEvent('qb-cityhall:server:requestId', id.type, closestCityhall)
-        QBCore.Functions.Notify(('You have received your %s for $%s'):format(license.label, id.cost), 'success', 3500)
-    else
-        QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
-    end
-    cb('ok')
-end)
-
-RegisterNUICallback('requestLicenses', function(_, cb)
-    local licensesMeta = PlayerData.metadata["licences"]
-    local availableLicenses = {}
-    for license, data in pairs(Config.Cityhalls[closestCityhall].licenses) do
-        if not data.metadata or licensesMeta[data.metadata] then
-            availableLicenses[license] = data
-        end
-    end
-    cb(availableLicenses)
-end)
-
-RegisterNUICallback('applyJob', function(job, cb)
-    if inRangeCityhall then
-        TriggerServerEvent('qb-cityhall:server:ApplyJob', job, Config.Cityhalls[closestCityhall].coords)
-    else
-        QBCore.Functions.Notify(Lang:t('error.not_in_range'), 'error')
-    end
-    cb('ok')
 end)
 
 -- Threads
@@ -316,15 +380,13 @@ CreateThread(function()
             local sleep = 1000
             if isLoggedIn and closestCityhall and closestDrivingSchool then
                 if inRangeCityhall then
-                    if not inCityhallPage then
-                        sleep = 0
-                        if IsControlJustPressed(0, 38) then
-                            setCityhallPageState(true, true)
-                            exports['qb-core']:KeyPressed()
-                            Wait(500)
-                            exports['qb-core']:HideText()
-                            sleep = 1000
-                        end
+                    sleep = 0
+                    if IsControlJustPressed(0, 38) then
+                        openCityhallMenu()
+                        exports['qb-core']:KeyPressed()
+                        Wait(500)
+                        exports['qb-core']:HideText()
+                        sleep = 1000
                     end
                 elseif inRangeDrivingSchool then
                     sleep = 0

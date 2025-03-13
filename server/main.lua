@@ -44,6 +44,22 @@ QBCore.Functions.CreateCallback('qb-cityhall:server:receiveJobs', function(_, cb
     cb(availableJobs)
 end)
 
+QBCore.Functions.CreateCallback('qb-cityhall:server:getIdentityData', function(source, cb, hallId)
+    local Player = QBCore.Functions.GetPlayer(source)
+    if not Player then return cb({}) end
+
+    local licensesMeta = Player.PlayerData.metadata['licences']
+    local availableLicenses = {}
+
+    for license, data in pairs(Config.Cityhalls[hallId].licenses) do
+        if not data.metadata or licensesMeta[data.metadata] then
+            availableLicenses[license] = data
+        end
+    end
+
+    cb(availableLicenses)
+end)
+
 -- Events
 
 RegisterNetEvent('qb-cityhall:server:requestId', function(item, hall)
@@ -70,7 +86,7 @@ RegisterNetEvent('qb-cityhall:server:requestId', function(item, hall)
         info.lastname = Player.PlayerData.charinfo.lastname
         info.birthdate = Player.PlayerData.charinfo.birthdate
     else
-        return false -- DropPlayer(src, 'Attempted exploit abuse')
+        return false
     end
     if not exports['qb-inventory']:AddItem(source, item, 1, false, info, 'qb-cityhall:server:requestId') then return end
     TriggerClientEvent('qb-inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'add')
@@ -110,10 +126,10 @@ RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
         ['job'] = job
     }
     if #(pedCoords - cityhallCoords) >= 20.0 or not availableJobs[job] then
-        return false -- DropPlayer(source, "Attempted exploit abuse")
+        return false
     end
     local JobInfo = QBCore.Shared.Jobs[job]
-    Player.Functions.SetJob(data.job, 0)
+    Player.Functions.SetJob(data.job)
     TriggerClientEvent('QBCore:Notify', data.src, Lang:t('info.new_job', { job = JobInfo.label }))
 end)
 
