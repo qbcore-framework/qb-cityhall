@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = exports['qb-core']:GetCoreObject({ 'Functions' })
 local PlayerData = QBCore.Functions.GetPlayerData()
 local isLoggedIn = LocalPlayer.state.isLoggedIn
 local playerPed = PlayerPedId()
@@ -295,7 +295,8 @@ RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
     deletePeds()
 end)
 
-RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
+RegisterNetEvent('QBCore:Client:OnPlayerUpdated', function(key, val)
+    if key ~= 'all' then return end
     PlayerData = val
 end)
 

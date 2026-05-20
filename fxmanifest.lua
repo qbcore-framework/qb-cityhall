@@ -13,10 +13,10 @@ shared_scripts {
     'config.lua'
 }
 
-server_script 'server/main.lua'
+server_script 'server.lua'
 
 client_scripts {
     '@PolyZone/client.lua',
     '@PolyZone/BoxZone.lua',
-    'client/main.lua'
+    'client.lua'
 }

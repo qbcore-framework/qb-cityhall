@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = exports['qb-core']:GetCoreObject({ 'Functions', 'Shared', 'Commands' })
 local availableJobs = Config.AvailableJobs
 
 -- Exports
@@ -17,7 +17,7 @@ exports('AddCityJob', AddCityJob)
 -- Functions
 
 local function giveStarterItems()
-    local Player = QBCore.Functions.GetPlayer(source)
+    local Player = exports['qb-core']:GetPlayer(source)
     if not Player then return end
     for _, v in pairs(QBCore.Shared.StarterItems) do
         local info = {}
@@ -45,7 +45,7 @@ QBCore.Functions.CreateCallback('qb-cityhall:server:receiveJobs', function(_, cb
 end)
 
 QBCore.Functions.CreateCallback('qb-cityhall:server:getIdentityData', function(source, cb, hallId)
-    local Player = QBCore.Functions.GetPlayer(source)
+    local Player = exports['qb-core']:GetPlayer(source)
     if not Player then return cb({}) end
 
     local licensesMeta = Player.PlayerData.metadata['licences']
@@ -64,10 +64,10 @@ end)
 
 RegisterNetEvent('qb-cityhall:server:requestId', function(item, hall)
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = exports['qb-core']:GetPlayer(src)
     if not Player then return end
     local itemInfo = Config.Cityhalls[hall].licenses[item]
-    if not Player.Functions.RemoveMoney('cash', itemInfo.cost, 'cityhall id') then return TriggerClientEvent('QBCore:Notify', src, ('You don\'t have enough money on you, you need %s cash'):format(itemInfo.cost), 'error') end
+    if not Player.RemoveMoney('cash', itemInfo.cost, 'cityhall id') then return TriggerClientEvent('QBCore:Notify', src, ('You don\'t have enough money on you, you need %s cash'):format(itemInfo.cost), 'error') end
     local info = {}
     if item == 'id_card' then
         info.citizenid = Player.PlayerData.citizenid
@@ -94,7 +94,7 @@ end)
 
 RegisterNetEvent('qb-cityhall:server:sendDriverTest', function(instructors)
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = exports['qb-core']:GetPlayer(src)
     if not Player then return end
     for i = 1, #instructors do
         local citizenid = instructors[i]
@@ -116,7 +116,7 @@ end)
 
 RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
+    local Player = exports['qb-core']:GetPlayer(src)
     if not Player then return end
     local ped = GetPlayerPed(src)
     local pedCoords = GetEntityCoords(ped)
@@ -129,21 +129,21 @@ RegisterNetEvent('qb-cityhall:server:ApplyJob', function(job, cityhallCoords)
         return false
     end
     local JobInfo = QBCore.Shared.Jobs[job]
-    Player.Functions.SetJob(data.job)
+    Player.SetJob(data.job)
     TriggerClientEvent('QBCore:Notify', data.src, Lang:t('info.new_job', { job = JobInfo.label }))
 end)
 
 RegisterNetEvent('qb-cityhall:server:getIDs', giveStarterItems)
 
 RegisterNetEvent('QBCore:Client:UpdateObject', function()
-    QBCore = exports['qb-core']:GetCoreObject()
+    QBCore = exports['qb-core']:GetCoreObject({ 'Functions', 'Shared', 'Commands' })
 end)
 
 -- Commands
 
 QBCore.Commands.Add('drivinglicense', 'Give a drivers license to someone', { { 'id', 'ID of a person' } }, true, function(source, args)
-    local Player = QBCore.Functions.GetPlayer(source)
-    local SearchedPlayer = QBCore.Functions.GetPlayer(tonumber(args[1]))
+    local Player = exports['qb-core']:GetPlayer(source)
+    local SearchedPlayer = exports['qb-core']:GetPlayer(tonumber(args[1]))
     if SearchedPlayer then
         if not SearchedPlayer.PlayerData.metadata['licences']['driver'] then
             for i = 1, #Config.DrivingSchools do
